@@ -1,0 +1,14 @@
+{
+  "name": "testifyai",
+  "version": "1.0.0",
+  "description": "AI Testing program",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "asraa",
+  "license": "ISC",
+  "dependencies": {
+    "morgan": "^1.10.0"
+  }
+}
