@@ -1,3 +1,4 @@
+// data base connection 
 const mongoose = require("mongoose");
 
 module.exports = () => {
