@@ -1,18 +1,31 @@
 import React, { useState } from 'react';
+import axios from 'axios';
 import './ForgotPassword.css';
 
 const ForgotPassword = () => {
+  const [email, setEmail] = useState('');
   const [newPassword, setNewPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [message, setMessage] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
+    
+    // Check if the new password and confirm password match
     if (newPassword !== confirmPassword) {
-      alert('The passwords is not match');
+      setMessage('Passwords do not match');
       return;
     }
-    // معالجة إعادة تعيين كلمة المرور
-    alert('Updated Successfully ');
+
+    try {
+      const response = await axios.post('http://localhost:3001/api/forgot-password', {
+        email,
+        newPassword,
+      });
+      setMessage(response.data.message);
+    } catch (error) {
+      setMessage('Error updating password');
+    }
   };
 
   return (
@@ -20,7 +33,17 @@ const ForgotPassword = () => {
       <h2>Reset Password</h2>
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="new-password">The new Password</label>
+          <label htmlFor="email">Email</label>
+          <input
+            type="email"
+            id="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            required
+          />
+        </div>
+        <div className="form-group">
+          <label htmlFor="new-password">New Password</label>
           <input
             type="password"
             id="new-password"
@@ -30,7 +53,7 @@ const ForgotPassword = () => {
           />
         </div>
         <div className="form-group">
-          <label htmlFor="confirm-password">  Confirm The new Password :</label>
+          <label htmlFor="confirm-password">Confirm New Password</label>
           <input
             type="password"
             id="confirm-password"
@@ -39,7 +62,8 @@ const ForgotPassword = () => {
             required
           />
         </div>
-        <button type="submit"> Update Your Password </button>
+        <button type="submit">Update Your Password</button>
+        <p>{message}</p>
       </form>
     </div>
   );

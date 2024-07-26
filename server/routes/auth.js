@@ -31,6 +31,36 @@ router.post("/", async (req, res) => {
   }
 });
 
+// Password reset route
+router.post("/forgot-password", async (req, res) => {
+  try {
+    const { email, newPassword } = req.body;
+
+    // Validate input
+    if (!email || !newPassword) {
+      return res.status(400).send({ message: "Email and new password are required" });
+    }
+
+    // Find user by email
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ message: "User not found" });
+    }
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    
+    // Update password in the database
+    user.password = hashedPassword;
+    await user.save();
+
+    res.status(200).send({ message: "Password updated successfully in the MONGODB" });
+  } catch (error) {
+    console.error("Error updating password:", error);
+    res.status(500).send({ message: "Internal server error" });
+  }
+});
+
 const validate = (data) => {
   const schema = Joi.object({
     email: Joi.string().email().required().label("Email"),
@@ -38,5 +68,7 @@ const validate = (data) => {
   });
   return schema.validate(data);
 };
+
+module.exports = router;
 
 module.exports = router;

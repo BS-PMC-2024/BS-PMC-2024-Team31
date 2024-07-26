@@ -28,6 +28,43 @@ app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   next();
 });
+
+// Endpoint for resetting the password
+app.post('/api/forgot-password', async (req, res) => {
+  const { email, newPassword } = req.body;
+
+  if (!email || !newPassword) {
+    return res.status(400).json({ message: 'Email and new password are required' });
+  }
+
+  try {
+    // Find user by email
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    console.log('Current password hash:', user.password);
+
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    console.log('New password hash:', hashedPassword);
+
+    // Update password in the database
+    user.password = hashedPassword;
+    await user.save();
+
+    console.log('Password updated for user:', user);
+
+    res.status(200).json({ message: 'Password updated successfully' });
+  } catch (error) {
+    console.error('Error updating password:', error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 app.post('/api/login', async (req, res) => {
   const { email, password } = req.body;
 
@@ -60,35 +97,6 @@ app.post('/api/login', async (req, res) => {
   }
 });
 
-// Endpoint for resetting the password
-app.post('/api/forgot-password', async (req, res) => {
-  const { email, newPassword } = req.body;
-
-  if (!email || !newPassword) {
-    return res.status(400).json({ message: 'Email and new password are required' });
-  }
-
-  try {
-    // Find user by email
-    const user = await User.findOne({ email });
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    // Hash the new password
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    // Update password in the database
-    user.password = hashedPassword;
-    await user.save();
-
-    res.status(200).json({ message: 'Password updated successfully' });
-  } catch (error) {
-    console.error('Error updating password:', error);
-    res.status(500).json({ message: 'Internal server error' });
-  }
-});
 
 // Auth routes
 app.use("/api/auth", authRoutes);
