@@ -4,12 +4,18 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 
 const Login = () => {
+  
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
+
   const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
+  };
+  const handleForgotPassword = () => {
+    // link for reset password 
+    window.location.href = '/forgot-password';
   };
 
   const handleSubmit = async (e) => {
@@ -67,12 +73,11 @@ const Login = () => {
               className={styles.input}
             />
 
-          <Link to="/reset-password">
-          <button type="button" className={styles.red_btn}>
+          
+        <button type="button" onClick={handleForgotPassword} className="forgot-password-btn">
             Forgot Password?
           </button>
-         </Link>
-
+      
             {error && <div className={styles.error_msg}>{error}</div>}
             <button type="submit" className={styles.green_btn} data-testid="login-button">
               Sign In
