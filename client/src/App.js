@@ -8,6 +8,8 @@ import Signup from './components/Singup';
 import HomePageStudent from './components/HomePageStudent'; // Import new component
 import HomePageWorker from './components/HomePageWorker'; // Import new component
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
+import Edit from './components/Edit/EditProfile'; // Import the Edit component
+
 function App() {
   const handleLogout = () => {
     localStorage.clear();
@@ -26,6 +28,7 @@ function App() {
         <Route path='/signup' exact element={<Signup />} />
         <Route path='/login' exact element={<Login />} />
         <Route path='/' exact element={<Login />} />
+        <Route path="/edit-profile" element={<Edit />} /> {/* Ensure this route exists */}
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route path='/homePageStudent' exact element={<HomePageStudent />} /> {/* Add new route */}
         <Route path='/homePageWorker' exact element={<HomePageWorker />} /> {/* Add new route */}

@@ -1,9 +1,12 @@
 import React from 'react';
 import './HomeWorker.css';
+import { useNavigate } from 'react-router-dom';
 
 function Home() {
+  const navigate = useNavigate();
+
   const handleEdit = () => {
-    alert("Edit button clicked");
+    navigate('/edit-profile');
   };
 
   const handleLogout = () => {
