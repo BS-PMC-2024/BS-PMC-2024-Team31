@@ -1,9 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const User = require('../models/user');
-const multer = require('multer');
-const path = require('path');
-const upload = require('./config/multerConfig');
+const upload = require('../config/multerConfig'); // تأكد من استخدام المسار الصحيح
 
 router.put('/update-profile', upload.single('profileImage'), async (req, res) => {
   try {
@@ -14,7 +12,7 @@ router.put('/update-profile', upload.single('profileImage'), async (req, res) =>
     const updateData = { bio };
 
     if (req.file) {
-      updateData.profileImage = req.file.filename; // احفظ اسم الملف أو المسار
+      updateData.profileImage = req.file.filename;
     }
 
     const user = await User.findOneAndUpdate({ email }, updateData, { new: true });
@@ -31,3 +29,5 @@ router.put('/update-profile', upload.single('profileImage'), async (req, res) =>
     res.status(500).send({ message: 'Server error' });
   }
 });
+
+module.exports = router;
