@@ -43,6 +43,7 @@
 .table tbody tr:nth-child(odd) {
   background-color: #ffffff;
 }
+
 .container {
   display: flex;
   flex-direction: column;
@@ -54,8 +55,10 @@
 
 .buttons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Align buttons horizontally */
   gap: 15px; /* Space between buttons */
+  justify-content: center; /* Center align buttons horizontally */
+  margin-bottom: 20px; /* Space below the button container */
 }
 
 .button {
