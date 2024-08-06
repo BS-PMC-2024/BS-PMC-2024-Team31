@@ -8,12 +8,10 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  //bio: { type: String, default: '' },
-  profileImage: { type: String, default: '' }, // إضافة حقل profileImage
+  profileImage: { type: String, default: '' },
   isAdmin: { type: Boolean, default: false },
   bio: { type: String, default: '' },
-
-  userType: { type: String, enum: ["worker", "student"], required: true }, // New field
+  userType: { type: String, enum: ["worker", "student"], required: true },
 });
 
 userSchema.methods.generateAuthToken = function () {
@@ -23,27 +21,17 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 const validate = (data) => {
   const schema = Joi.object({
-    firstName: Joi.string()
-      .required()
-      .label("First Name"),
-    lastName: Joi.string()
-      .required()
-      .label("Last Name"),
-    email: Joi.string()
-      .email()
-      .required()
-      .label("Email"),
-    password: passwordComplexity()
-      .required()
-      .label("Password"),
-    userType: Joi.string().valid("worker", "student").required().label("User Type"), // Updated validation  
+    firstName: Joi.string().required().label("First Name"),
+    lastName: Joi.string().required().label("Last Name"),
+    email: Joi.string().email().required().label("Email"),
+    password: passwordComplexity().required().label("Password"),
+    userType: Joi.string().valid("worker", "student").required().label("User Type"),
   });
   return schema.validate(data);
 };
 
 module.exports = { User, validate };
-//////////
