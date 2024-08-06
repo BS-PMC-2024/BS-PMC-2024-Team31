@@ -12,6 +12,9 @@ const userSchema = new mongoose.Schema({
   profileImage: { type: String, default: '' }, // إضافة حقل profileImage
   isAdmin: { type: Boolean, default: false },
   bio: { type: String, default: '' },
+  ratedBy: { type: [String], default: [] },
+  ratings: { type: [Number], default: [] },
+  comments: { type: [String], default: [] },
 
   userType: { type: String, enum: ["worker", "student"], required: true }, // New field
 });
