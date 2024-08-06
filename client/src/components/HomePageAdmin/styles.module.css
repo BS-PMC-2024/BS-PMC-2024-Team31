@@ -1,0 +1,89 @@
+/* General table styles */
+.tableContainer {
+  width: 100%;
+  margin: 20px 0;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  padding: 12px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.table th {
+  background-color: #bce7dc;
+  color: #333;
+}
+
+.table tr:hover {
+  background-color: #f1f1f1;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+}
+
+.table thead {
+  background-color: #bce7dc;
+}
+
+.table tbody tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.table tbody tr:nth-child(odd) {
+  background-color: #ffffff;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f0f4f8; /* Light background color for contrast */
+}
+
+.buttons {
+  display: flex;
+  flex-direction: row; /* Align buttons horizontally */
+  gap: 15px; /* Space between buttons */
+  justify-content: center; /* Center align buttons horizontally */
+  margin-bottom: 20px; /* Space below the button container */
+}
+
+.button {
+  background-color: #bce7dc; /* Button color */
+  color: #333; /* Text color */
+  border: none;
+  border-radius: 8px; /* Rounded corners */
+  padding: 12px 24px; /* Padding for button size */
+  font-size: 16px; /* Font size */
+  font-weight: bold; /* Bold text */
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transitions */
+}
+
+.button:hover {
+  background-color: #a0d1c2; /* Darker shade on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+.button:focus {
+  outline: none; /* Remove default focus outline */
+  box-shadow: 0 0 0 3px rgba(179, 225, 219, 0.5); /* Custom focus outline */
+}
+
+.error {
+  color: red;
+  margin-top: 20px;
+}

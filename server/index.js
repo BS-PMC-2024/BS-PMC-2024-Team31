@@ -12,6 +12,7 @@ const path = require('path');
 const bcrypt = require('bcrypt');
 const { User } = require("./models/user");
 
+// Use routes
 // database connection
 connection();
 
@@ -23,6 +24,10 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Import routes
 const updateProfileRoute = require('./routes/updateProfile');
+const adminRoutes = require('./routes/admins');
+
+// Use routes
+app.use("/api/admins", adminRoutes);
 
 // Use routes
 app.use(updateProfileRoute);
@@ -36,7 +41,7 @@ app.post('/api/search', async (req, res) => {
     if (!searchQueries || searchQueries.length === 0) {
       return res.status(400).send({ message: 'No search queries provided' });
     }
-    const response = await axios.post('http://localhost:3002/search', req.body, {
+    const response = await axios.post('http://localhost:3000/search', req.body, {
       headers: {
         'Content-Type': 'application/json'
       }
