@@ -22,6 +22,7 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use("/api/admins", adminRoutes); // Use the admin routes
+app.use("/api/users", usersRoutes);
 
 // Import routes
 const updateProfileRoute = require('./routes/updateProfile');
