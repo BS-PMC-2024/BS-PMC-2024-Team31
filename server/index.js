@@ -1,35 +1,33 @@
 require("dotenv").config();
 const axios = require("axios");
 const express = require("express");
+const mongoose = require("mongoose");
 const app = express();
 const cors = require("cors");
 const connection = require("./db");
 const usersRoutes = require("./routes/users");
 const userRoutes = require("./routes/user");
-const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const path = require('path');
 const bcrypt = require('bcrypt');
 const { User } = require("./models/user");
+const adminRoutes = require('./routes/admins'); // Import the routes
 
-// Use routes
-// database connection
+// Database connection
 connection();
 
-// middlewares
+// Middlewares
 app.use(express.json());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use("/api/admins", adminRoutes); // Use the admin routes
 
 // Import routes
 const updateProfileRoute = require('./routes/updateProfile');
-const adminRoutes = require('./routes/admins');
 
 // Use routes
 app.use("/api/admins", adminRoutes);
-
-// Use routes
 app.use(updateProfileRoute);
 app.use("/api/auth", authRoutes);
 app.use("/api/users", usersRoutes);
@@ -78,25 +76,37 @@ app.post('/api/forgot-password', async (req, res) => {
   }
 });
 
-app.get('/api/product/{id}', async (req, res) => {
-  // Product details endpoint
+// Implement or remove these endpoints as needed
+app.get('/api/product/:id', async (req, res) => {
+  // Product details endpoint implementation
 });
 
 app.get('/api/cart', async (req, res) => {
-  // Cart items endpoint
+  // Cart items endpoint implementation
 });
 
 app.post('/api/cart/add', async (req, res) => {
-  // Add item to cart endpoint
+  // Add item to cart endpoint implementation
 });
 
 app.post('/api/cart/remove', async (req, res) => {
-  // Remove item from cart endpoint
+  // Remove item from cart endpoint implementation
 });
 
 app.post('/api/cart/checkout', async (req, res) => {
-  // Checkout cart endpoint
+  // Checkout cart endpoint implementation
 });
 
+app.post('/api/admins/add', async (req, res) => {
+  // Your route logic for adding admin
+});
+
+// Connect to MongoDB
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
 const port = process.env.PORT || 3001;
-app.listen(port, console.log(`Listening on port ${port}...`));
+app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+});

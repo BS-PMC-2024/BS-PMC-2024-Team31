@@ -12,6 +12,8 @@ import Edit from './components/Edit/EditProfile'; // Import the Edit component
 import Profile from './components/Profile/Profile'; // Import the Profile component
 import EditUsername from './components/EditUsername/EditUsername'; // استيراد مكون تحرير اسم المستخدم
 import HomePageAdmin from './components/HomePageAdmin';
+import AddAdmin from './components/AddAdmin'; // Adjust this if necessary
+
 function App() {
   const handleLogout = () => {
     localStorage.clear();
@@ -37,6 +39,7 @@ function App() {
         <Route path="/profile" element={<Profile />} /> {/* Ensure this route exists */}
         <Route path="/edit-username" exact element={<EditUsername />} /> {/* مسار جديد لتحرير اسم المستخدم */}
         <Route path='/homepageadmin' element={<HomePageAdmin />} />
+        <Route path="/addAdmin" element={<AddAdmin />} />
         <Route path='/' element={<Navigate replace to="/login" />} />
       </Routes>
     </BrowserRouter>

@@ -49,6 +49,7 @@ const HomePageAdmin = () => {
       console.error('Error removing admin:', error.response || error);
     }
   };
+
   const fetchUsers = async () => {
     setLoading(true);
     try {
@@ -82,8 +83,9 @@ const HomePageAdmin = () => {
   };
 
   const handleAddAdminClick = () => {
-    navigate('/add-admin');
+    navigate('/addAdmin'); // Navigate to the AddAdmin page
   };
+  
 
   return (
     <div className={styles.container}>
@@ -102,12 +104,7 @@ const HomePageAdmin = () => {
         <div className={styles.tableContainer}>
           <h2>Admins List</h2>
           <div className={styles.adminButtons}>
-          <button 
-                className={styles.button} 
-                onClick={handleAddAdminClick}
-          >
-               Add Admin
-          </button>          
+            <button className={styles.button} onClick={handleAddAdminClick}>Add Admin</button>
           </div>
           <table className={styles.table}>
             <thead>
