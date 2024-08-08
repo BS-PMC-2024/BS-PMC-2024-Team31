@@ -1,34 +1,29 @@
+//routes/user.js
 const router = require("express").Router();
 const { json } = require("express");
 const authenticate = require('../middleware/authenticate'); // Authentication middleware
 ///
 const {User} = require('../models/user'); // Assuming you have a User model
 
+// Define the route for fetching the user profile
 router.get('/profile', authenticate, async (req, res) => {
   try {
-    const userId = req.userId;
-    const user = await User.findById(userId); // Fetch user from database
-
-    if (!user) {
-      return res.status(404).json({ message: 'User not found' });
-    }
-
-    res.json({
-      email: user.email,
-      firstName: user.firstName, // Ensure this field exists
-      profileImage: user.profileImage,
-    });
-  } catch (error) {
-    console.error('Error fetching user profile:', error);
-    res.status(500).json({ message: 'Server error' });
+    const user = await User.findById(req.userId).select('firstName email profileImage');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
 
 router.get("/email/:email", async (req, res) => {
   try {
     const email = req.params.email;
-    console.log(email);
+    console.log("Fetching user with email:", email); // تسجيل البريد الإلكتروني
     let user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
     user = user.toObject();
     delete user.password;
     res.json(user);
@@ -41,11 +36,10 @@ router.get("/email/:email", async (req, res) => {
 router.put("/id/:id", async (req, res) => {
   try {
     const { firstName, lastName } = req.body;
+    console.log("Updating user with ID:", req.params.id); // تسجيل المعرف
     const user = await User.findById(req.params.id);
     if (!user)
-      return res
-        .status(404)
-        .send({ message: "User with given ID doesn't exist!" });
+      return res.status(404).send({ message: "User with given ID doesn't exist!" });
     user.firstName = firstName;
     user.lastName = lastName;
     await user.save();
@@ -55,19 +49,7 @@ router.put("/id/:id", async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 });
-router.post('/saveAll', async (req, res) => {
-  try {
-    // Clear existing unit tests or handle accordingly
-    await UnitTest.deleteMany({}); // Caution: This will delete all existing unit tests
 
-    // Insert new unit tests
-    await UnitTest.insertMany(req.body);
-
-    res.status(200).json({ message: 'All unit tests saved successfully' });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
-});
 
 router.post("/toggle-admin", async (req, res) => {
   try {
@@ -100,6 +82,14 @@ router.use((err, req, res, next) => {
   res.status(500).send('Something broke!');
 });
 // Middleware to authenticate user (depends on your authentication method)
+router.get('/', async (req, res) => {
+  try {
+    const users = await User.find(); // Fetch all users
+    res.json(users);
+  } catch (error) {
+    res.status(500).json({ message: 'Server error', error });
+  }
+});
 
 router.post('/login', async (req, res) => {
   try {
@@ -119,6 +109,34 @@ router.post('/login', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).send('Server error');
+  }});
+router.put('/update-name', async (req, res) => {
+    const { userId, firstName, lastName } = req.body;
+
+    try {
+        const user = await User.findById(userId);
+        if (!user) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        user.firstName = firstName;
+        user.lastName = lastName;
+
+        await user.save();
+        res.status(200).json({ message: 'User information updated successfully' });
+    } catch (error) {
+        res.status(500).json({ message: 'Server error', error });
+    }
+});
+// In routes/user.js
+router.get('/user/:email', authenticate, async (req, res) => {
+  try {
+    const user = await User.findOne({ email: req.params.email }).select('firstName email profileImage');
+    if (!user) return res.status(404).json({ message: 'User not found' });
+    res.json(user);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
 });
+
 module.exports = router;

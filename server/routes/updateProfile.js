@@ -11,10 +11,20 @@ router.post('/update', async (req, res) => {
   if (!email || !newPassword || !role) {
     return res.status(400).json({ message: 'Email, new password, and role are required' });
   }
+const upload = require('../config/multerConfig'); // تأكد من استخدام المسار الصحيح
 
   try {
-    // Find user by email
     const user = await User.findOne({ email });
+    console.log('Request body:', req.body);
+    console.log('File:', req.file);
+
+    const { email, bio } = req.body;
+    const updateData = { bio };
+
+    if (req.file) {
+      updateData.profileImage = req.file.filename;
+    }
+
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });

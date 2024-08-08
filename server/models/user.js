@@ -1,3 +1,4 @@
+//models/user.js
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
@@ -12,6 +13,9 @@ const userSchema = new mongoose.Schema({
   userType: { type: String, enum: ["worker", "student"], required: true },
   unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }] // Reference to UnitTest model
 })
+ 
+
+
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
@@ -25,20 +29,11 @@ const User = mongoose.model("user", userSchema);
 
 const validate = (data) => {
   const schema = Joi.object({
-    firstName: Joi.string()
-      .required()
-      .label("First Name"),
-    lastName: Joi.string()
-      .required()
-      .label("Last Name"),
-    email: Joi.string()
-      .email()
-      .required()
-      .label("Email"),
-    password: passwordComplexity()
-      .required()
-      .label("Password"),
-    userType: Joi.string().valid("worker", "student").required().label("User Type"), // Updated validation  
+    firstName: Joi.string().required().label("First Name"),
+    lastName: Joi.string().required().label("Last Name"),
+    email: Joi.string().email().required().label("Email"),
+    password: passwordComplexity().required().label("Password"),
+    userType: Joi.string().valid("worker", "student").required().label("User Type"),
   });
   return schema.validate(data);
 };
@@ -58,4 +53,3 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 };
 
 module.exports = { User, validate };
-//////////

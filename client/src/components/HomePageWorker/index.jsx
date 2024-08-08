@@ -1,3 +1,4 @@
+//component/homeworker.js
 import React, { useState, useEffect } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import axios from 'axios';
@@ -34,11 +35,11 @@ function HomeWorker() {
             'Authorization': `Bearer ${token}`,
           },
         });
-
+    
         if (!response.ok) {
           throw new Error('Network response was not ok');
         }
-
+    
         const contentType = response.headers.get('content-type');
         if (contentType && contentType.includes('application/json')) {
           const data = await response.json();
@@ -52,10 +53,10 @@ function HomeWorker() {
         console.error('Fetch error:', error);
       }
     };
-
+    
     fetchUserProfile();
   }, []);
-
+  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUnitTestData({ ...unitTestData, [name]: value });
@@ -99,16 +100,46 @@ function HomeWorker() {
     }
   };
   
-
+  const handleViewProfile = async (email) => {
+    try {
+      const token = localStorage.getItem('token');
+      const url = `http://localhost:3001/api/user/profile/${email}`; // Using the defined endpoint
+      
+      const response = await axios.get(url, {
+        headers: {
+          'Authorization': `Bearer ${token}`, // Include token if authentication is needed
+        },
+      });
+  
+      if (response.status === 200) {
+        const userProfile = response.data; // User profile data
+  
+        // Display user's first name and other details
+        setUser({
+          ...userProfile,
+          profileImage: userProfile.profileImage || generateDefaultImageURL(userProfile.email),
+        });
+        setShowProfileView(true); // Show the profile view
+      } else {
+        console.log('Failed to fetch user profile:', response.data);
+        setErrorMessage('Failed to fetch user profile');
+      }
+    } catch (error) {
+      console.error('Fetch error:', error.response ? error.response.data : error.message);
+      setErrorMessage(error.message);
+    }
+  };
+  
+  
   const markAsDone = (index) => {
     const updatedUnitTests = [...unitTests];
     updatedUnitTests[index].status = 'Done';
     setUnitTests(updatedUnitTests);
   };
 
-  const handleEditProfileClick = () => {
+  /*const handleEditProfileClick = () => {
     setShowEditProfile(true);
-  };
+  };*/
 
   const handleCloseEditProfile = () => {
     setShowEditProfile(false);
@@ -131,9 +162,6 @@ function HomeWorker() {
     window.location.href = '/login'; // Or use routing library
   };
 
-  const handleViewProfile = () => {
-    setShowProfileView(true); // This assumes you want to show the profile view
-  };
 
   const handleSaveProfile = async (updatedData) => {
     const token = localStorage.getItem('token');
@@ -309,18 +337,18 @@ function HomeWorker() {
       )}
 
       {showProfileView && (
-        <div className="profile-view">
-          <h2>Profile Information</h2>
-          <img
-            src={user.profileImage || generateDefaultImageURL(user.email)}
-            alt="Profile"
-            className="profile-image"
-          />
-          <p><strong>Username:</strong> {user.username || 'Loading...'}</p>
-          <p><strong>Email:</strong> {user.email || 'Loading...'}</p>
-          <button onClick={() => setShowProfileView(false)}>Close</button>
-        </div>
-      )}
+  <div className="profile-view">
+    <button className="close-button" onClick={() => setShowProfileView(false)}>&times;</button>
+    <h2>Profile Information</h2>
+    <img
+      src={user.profileImage || generateDefaultImageURL(user.email)}
+      alt="Profile"
+      className="profile-image"
+    />
+    <p><strong>Username:</strong> {user.username || 'Loading...'}</p>
+    <p><strong>Email:</strong> {user.email || 'Loading...'}</p>
+  </div>
+)}
     </div>
   );
 }

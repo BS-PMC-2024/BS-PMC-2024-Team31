@@ -29,7 +29,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-
+//sever/index.
 app.use('/uploads', express.static('uploads')); // Serve static files from the uploads folder
 app.use('/api/profile', profileRoutes);
 app.use('/api/unitTests', unitTestRoutes);
