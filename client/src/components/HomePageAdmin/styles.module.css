@@ -87,3 +87,9 @@
   color: red;
   margin-top: 20px;
 }
+
+.adminButtons {
+  display: flex;
+  gap: 15px; /* Space between buttons */
+  margin-bottom: 20px; /* Space below the buttons */
+}

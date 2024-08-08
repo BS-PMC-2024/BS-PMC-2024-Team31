@@ -55,5 +55,20 @@ router.post('/toggle', async (req, res) => {
         res.status(500).send({ message: 'Internal Server Error' });
     }
 });
+// Route to remove an admin
+router.post('/remove', async (req, res) => {
+    try {
+        const { email } = req.body;
+        const result = await User.deleteOne({ email, isAdmin: true });
+        if (result.deletedCount > 0) {
+            res.status(200).send({ message: 'Admin removed successfully' });
+        } else {
+            res.status(404).send({ message: 'Admin not found' });
+        }
+    } catch (error) {
+        console.error('Error removing admin:', error);
+        res.status(500).send({ message: 'Internal Server Error' });
+    }
+});
 
 module.exports = router;
