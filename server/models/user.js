@@ -11,7 +11,11 @@ const userSchema = new mongoose.Schema({
   profileImage: { type: String, default: '' },
   isAdmin: { type: Boolean, default: false },
   bio: { type: String, default: '' },
-  userType: { type: String, enum: ["worker", "student"], required: true },
+  ratedBy: { type: [String], default: [] },
+  ratings: { type: [Number], default: [] },
+  comments: { type: [String], default: [] },
+
+  userType: { type: String, enum: ["worker", "student"], required: true }, // New field
 });
 
 userSchema.methods.generateAuthToken = function () {

@@ -3,7 +3,8 @@ import './HomeStudent.css';
 
 function Home() {
   const handleEdit = () => {
-    alert("Edit button clicked");
+    localStorage.clear();
+    window.location = '/profile';
   };
 
   const handleLogout = () => {

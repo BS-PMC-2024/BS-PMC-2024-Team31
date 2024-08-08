@@ -1,0 +1,114 @@
+/* Profile.css */
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    padding-top: 70px; /* Adjust for navbar height */
+  }
+  
+  .profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: #bce7dc;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .header-left, .header-right {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-left .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .header-left .dropbtn {
+    background-color: #a7cab1;
+    color: white;
+    padding: 10px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+  
+  .header-left .dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+  }
+  
+  .header-left .dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    width: 100%;
+    border: none;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+  }
+  
+  .header-left .dropdown-content button:hover {
+    background-color: #f1f1f1;
+  }
+  
+  .header-left .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  .header-left .dropdown:hover .dropbtn {
+    background-color: #9ab8a4;
+  }
+  
+  .header-right span {
+    font-size: 1.2rem;
+    font-weight: bold;
+  }
+  
+  .profile-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+    text-align: center;
+  }
+  
+  .profile-content h2 {
+    margin-bottom: 20px;
+    font-size: 1.5rem;
+    color: #392b289f;
+  }
+  
+  .profile-buttons {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 50%; /* Make the container half the width of the screen */
+  }
+  
+  .profile-button {
+    padding: 20px 40px;
+    font-size: 16px;
+    cursor: pointer;
+    background-color: #a7cab1;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    margin: 10px;
+    width: 100%; /* Make the buttons take full width of the container */
+  }
+  
+  .profile-button:hover {
+    background-color: #9ab8a4;
+  }
+  
