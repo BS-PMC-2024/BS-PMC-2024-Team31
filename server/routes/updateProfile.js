@@ -1,33 +1,37 @@
+// server/routes/updateProfile.js
 const express = require('express');
 const router = express.Router();
-const User = require('../models/user');
-const multer = require('multer');
-const path = require('path');
-const upload = require('./config/multerConfig');
+const User = require('../models/user'); // Adjust the path as needed
+const bcrypt = require('bcrypt');
 
-router.put('/update-profile', upload.single('profileImage'), async (req, res) => {
+// Route to update profile
+router.post('/update', async (req, res) => {
+  const { email, newPassword, role } = req.body;
+
+  if (!email || !newPassword || !role) {
+    return res.status(400).json({ message: 'Email, new password, and role are required' });
+  }
+
   try {
-    console.log('Request body:', req.body);
-    console.log('File:', req.file);
-
-    const { email, bio } = req.body;
-    const updateData = { bio };
-
-    if (req.file) {
-      updateData.profileImage = req.file.filename; // احفظ اسم الملف أو المسار
-    }
-
-    const user = await User.findOneAndUpdate({ email }, updateData, { new: true });
+    // Find user by email
+    const user = await User.findOne({ email });
 
     if (!user) {
-      console.log('User not found');
-      return res.status(404).send({ message: 'User not found' });
+      return res.status(404).json({ message: 'User not found' });
     }
 
-    console.log('Profile updated successfully');
-    res.send({ message: 'Profile updated successfully', user });
+    // Hash the new password
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update user details
+    user.password = hashedPassword;
+    user.role = role; // Assuming you have a 'role' field
+    await user.save();
+
+    res.status(200).json({ message: 'Profile updated successfully' });
   } catch (error) {
-    console.error('Error updating profile:', error);
-    res.status(500).send({ message: 'Server error' });
+    res.status(500).json({ message: 'Error updating profile' });
   }
 });
+
+module.exports = router;

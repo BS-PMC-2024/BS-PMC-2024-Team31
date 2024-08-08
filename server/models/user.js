@@ -2,19 +2,16 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
-
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  //bio: { type: String, default: '' },
-  profileImage: { type: String, default: '' }, // إضافة حقل profileImage
+  profileImage: { type: String, default: '' },
   isAdmin: { type: Boolean, default: false },
-  bio: { type: String, default: '' },
-
-  userType: { type: String, enum: ["worker", "student"], required: true }, // New field
-});
+  userType: { type: String, enum: ["worker", "student"], required: true },
+  unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }] // Reference to UnitTest model
+})
 
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
@@ -22,6 +19,7 @@ userSchema.methods.generateAuthToken = function () {
   });
   return token;
 };
+
 
 const User = mongoose.model("user", userSchema);
 
@@ -43,6 +41,20 @@ const validate = (data) => {
     userType: Joi.string().valid("worker", "student").required().label("User Type"), // Updated validation  
   });
   return schema.validate(data);
+};
+const bcrypt = require('bcrypt');
+const saltRounds = 10;
+
+// Inside your schema methods or pre-save hook
+userSchema.pre('save', async function(next) {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, saltRounds);
+  }
+  next();
+});
+
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  return bcrypt.compare(candidatePassword, this.password);
 };
 
 module.exports = { User, validate };

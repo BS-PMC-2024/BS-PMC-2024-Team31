@@ -26,4 +26,12 @@ router.post('/upload-image', upload.single('image'), (req, res) => {
   });
 });
 
+router.get('/api/user', async (req, res) => {
+  try {
+    const user = await User.findById(req.user._id).select('-password');
+    res.send(user);
+  } catch (error) {
+    res.status(500).send({ message: 'Internal server error' });
+  }
+});
 module.exports = router;

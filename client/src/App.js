@@ -1,40 +1,47 @@
-import React from 'react';
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import React, { useState } from 'react';
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import './App.css';
-import NavigateButton from './NavigateButton';
+import Profile from './components/Edit/Profile'; // 
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login";
 import Signup from './components/Singup';
-import HomePageStudent from './components/HomePageStudent'; // Import new component
-import HomePageWorker from './components/HomePageWorker'; // Import new component
+import HomePageStudent from './components/HomePageStudent'; 
+import HomePageWorker from './components/HomePageWorker'; 
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
-import Edit from './components/Edit/EditProfile'; // Import the Edit component
-
+import 'bootstrap/dist/css/bootstrap.min.css'
 function App() {
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location = '/';
-  }
+ 
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
-  const navigateLogin = () => {
-    window.location = '/login';
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.clear();
   };
 
   return (
-    <BrowserRouter>
-      <NavigateButton />
-      <Navbar handleLogout={handleLogout} navigateLogin={navigateLogin} />
-      <Routes>
-        <Route path='/signup' exact element={<Signup />} />
-        <Route path='/login' exact element={<Login />} />
-        <Route path='/' exact element={<Login />} />
-        <Route path="/edit-profile" element={<Edit />} /> {/* Ensure this route exists */}
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        <Route path='/homePageStudent' exact element={<HomePageStudent />} /> {/* Add new route */}
-        <Route path='/homePageWorker' exact element={<HomePageWorker />} /> {/* Add new route */}
-        <Route path='/' element={<Navigate replace to="/login" />} />
-      </Routes>
-    </BrowserRouter>
+
+    <Router>
+      <div className="App">
+        {isLoggedIn && <Navbar onLogout={handleLogout} />}
+        <Routes>
+
+          <Route path="/login" element={<Login onLogin={handleLogin} />} />
+
+          <Route path="/homePageWorker" element={<HomePageWorker />} />
+          <Route path='/signup' element={<Signup />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/' element={<Login />} />
+          <Route path="/profile" element={<Profile />} /> {/* استخدم مكون Profile هنا */}
+          <Route path="/forgot-password" element={<ForgotPassword />} />
+          <Route path='/homePageStudent' element={<HomePageStudent />} />
+        </Routes>
+      </div>
+    </Router>
+
   );
 }
 

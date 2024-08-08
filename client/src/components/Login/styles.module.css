@@ -83,7 +83,7 @@
 	border: none;
 	outline: none;
 	padding: 12px 0;
-	background-color: white;
+	background-color: #5ca571;
 	border-radius: 20px;
 	width: 180px;
 	font-weight: bold;
@@ -92,10 +92,22 @@
 }
 
 .green_btn {
-	background-color:#a7cab1;
+	background-color:#5ca571;
 	color: white;
 	margin: 10px;
 }
 .forgot-password-btn:hover {
 	background-color: #0056b3;
   }
+  .password_container {
+	position: relative;
+  }
+  
+  .eye_icon {
+	position: absolute;
+	top: 50%;
+	right: 10px;
+	transform: translateY(-50%);
+	cursor: pointer;
+  }
+  

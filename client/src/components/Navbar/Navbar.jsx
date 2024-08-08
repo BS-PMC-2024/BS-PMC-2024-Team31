@@ -31,6 +31,11 @@ const Navbar = ({ handleLogout }) => {
             <li>
               <h1 exact to="/" activeClassName="active-link">Welcome</h1>
             </li>
+            <li>
+              <NavLink to="/developers" className="nav-link" activeClassName="active-link">
+                Developers
+              </NavLink>
+            </li>
             {isLoggedIn ? (
               <li>
                 <button
