@@ -2,7 +2,6 @@ require("dotenv").config();
 const axios = require("axios");
 const express = require("express");
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
 const cors = require("cors");
 const connection = require("./db");
 const usersRoutes = require("./routes/users");
@@ -16,8 +15,6 @@ const app = express();
 
 // Database connection
 connection();
-const mongoose = require('mongoose');
-
 mongoose.connect(process.env.DB, { // تأكد من أن `DB_URI` هو اسم المتغير الصحيح في .env
   useNewUrlParser: true,
   useUnifiedTopology: true,
@@ -29,11 +26,9 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
-//sever/index.
-app.use('/uploads', express.static('uploads')); // Serve static files from the uploads folder
+
 app.use('/api/profile', profileRoutes);
 app.use('/api/unitTests', unitTestRoutes);
-app.use('/api/users', usersRoutes);
 app.use('/api/user', userRoutes);
 app.use("/api/auth", authRoutes);
 

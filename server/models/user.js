@@ -12,11 +12,11 @@ const userSchema = new mongoose.Schema({
   isAdmin: { type: Boolean, default: false },
   userType: { type: String, enum: ["worker", "student"], required: true },
   unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }] // Reference to UnitTest model
-})
- 
 
+  // Remove userType
+});
 
-
+// Keep methods and validation logic as is
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
     expiresIn: "7d",
@@ -33,7 +33,7 @@ const validate = (data) => {
     lastName: Joi.string().required().label("Last Name"),
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().required().label("Password"),
-    userType: Joi.string().valid("worker", "student").required().label("User Type"),
+    // Remove userType validation
   });
   return schema.validate(data);
 };
