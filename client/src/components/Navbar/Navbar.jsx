@@ -4,13 +4,16 @@ import "./Navbar.css";
 import StarRating from "../StarRating/StarRating"; // Import the StarRating component
 import logo from '../../assests/images/logo.png'; // Update the path to your logo image
 
+import AccessibilityMenu from "../Navbar/AccessibilityMenu"; // Import the AccessibilityMenu component
+
 const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showStarRating, setShowStarRating] = useState(false);
+  const [showAccessibilityMenu, setShowAccessibilityMenu] = useState(false);
   const isLoggedIn = localStorage.getItem("token") ? true : false;
 
   const confirmLogout = () => {
-    setShowStarRating(true); // Show the star rating when the user clicks "Logout"
+    setShowStarRating(true);
   };
 
   const cancelLogout = () => {
@@ -23,7 +26,11 @@ const Navbar = () => {
   };
 
   const submitStarRating = () => {
-    setShowLogoutConfirm(true); // Show the logout confirmation after submitting the star rating
+    setShowLogoutConfirm(true);
+  };
+
+  const toggleAccessibilityMenu = () => {
+    setShowAccessibilityMenu(prev => !prev);
   };
 
   return (
@@ -67,6 +74,15 @@ const Navbar = () => {
                 </NavLink>
               </li>
             )}
+            <li>
+              <button
+                className="white_btn"
+                onClick={toggleAccessibilityMenu}
+                data-testid="Accessibility-button"
+              >
+                Accessibility
+              </button>
+            </li>
           </ul>
         </div>
       </nav>
@@ -85,6 +101,10 @@ const Navbar = () => {
           <button onClick={completeLogout}>Yes</button>
           <button onClick={cancelLogout}>No</button>
         </div>
+      )}
+
+      {showAccessibilityMenu && (
+        <AccessibilityMenu onClose={toggleAccessibilityMenu} />
       )}
     </>
   );
