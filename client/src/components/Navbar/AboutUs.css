@@ -1,0 +1,47 @@
+/* src/pages/AboutUs.css */
+.about-us {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.about-info {
+  margin-bottom: 20px;
+}
+
+.about-info h2 {
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.faq {
+  margin-top: 20px;
+}
+
+.faq h2 {
+  border-bottom: 2px solid #007bff;
+  padding-bottom: 10px;
+  margin-bottom: 10px;
+}
+
+.faq-list {
+  list-style: none;
+  padding: 0;
+}
+
+.faq-item {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.faq-item h3 {
+  margin: 0;
+  color: #333;
+}
+
+.faq-item p {
+  margin: 5px 0;
+}

@@ -6,6 +6,8 @@ import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login";
 import HomePageStudent from './components/HomePageStudent'; 
 import HomePageAdmin from './components/HomePageAdmin'; 
+import ContactUs from './components/Navbar/ContactUs'; // Adjust the import path as needed
+import AboutUs from './components/Navbar/AboutUs'; // Adjust the import path as needed
 
 import HomePageWorker from './components/HomePageWorker'; 
 import HomePage from './components/HomePage/HomePage'; 
@@ -30,10 +32,13 @@ function App() {
         <Navbar onLogout={handleLogout} /> {/* Navbar יהיה קבוע בכל הדפים */}
         <div className="content"> {/* הוסף קונטיינר לתוכן */}
           <Routes>
+          <Route path="/aboutus" element={<AboutUs />} />
+
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/homePageWorker" element={<HomePageWorker />} />
             <Route path="/homePageAdmin" element={<HomePageAdmin />} />
+            <Route path="/contactus" element={<ContactUs />} />
 
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Navigate replace to="/homepage" />} /> {/* Redirect root to /homepage */}
