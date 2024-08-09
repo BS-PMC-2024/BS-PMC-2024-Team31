@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
-import Navbar from '../Navbar/Navbar';
 import styles from "./styles.module.css";
 
 const Login = () => {
@@ -56,12 +55,11 @@ const Login = () => {
 
   return (
     <div>
-      <Navbar /> {/* Ensure the Navbar component is included */}
       <div className={styles.login_container}>
         <div className={styles.login_form_container}>
           <div className={styles.left}>
             <form className={styles.form_container} onSubmit={handleSubmit}>
-              <h1 style={{ color: '#a7cab1' }}>Login To Your Account</h1>
+              <h1 style={{ color: '#46564a' }}>Login To Your Account</h1>
               <input
                 type="email"
                 placeholder="Email"
@@ -97,14 +95,6 @@ const Login = () => {
                 Sign In
               </button>
             </form>
-          </div>
-          <div className={styles.right}>
-            <h1>New Here?</h1>
-            <Link to="/signup">
-              <button type="button" className={styles.white_btn}>
-                Sign Up
-              </button>
-            </Link>
           </div>
         </div>
       </div>

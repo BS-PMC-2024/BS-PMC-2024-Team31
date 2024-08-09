@@ -1,11 +1,11 @@
 /* General Navbar Styles */
 nav {
   height: 70px;
-  background-color: #bce7dc;
+  background-color: #b7a3c3;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #b9c8bd;
+  background: #b7a3c3;
   padding: 9px 1px;
   box-shadow: 0 5px 15px rgba(53, 65, 89, 0.06);
 }
@@ -35,7 +35,7 @@ nav {
 #navbar li .white_btn {
   border: none;
   outline: none;
-  background-color: #a7cab1;
+  background-color: #caa7c8;
   border-radius: 5px;
   width: 120px;
   height: 35px;
@@ -84,7 +84,7 @@ nav {
 
 /* Dropdown Styles */
 .dropdown {
-  background-color: #c1d0e3;
+  background-color: #200421;
   position: absolute;
   display: flex;
   flex-direction: column;

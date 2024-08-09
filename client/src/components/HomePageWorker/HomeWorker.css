@@ -7,9 +7,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #bce7dc;
-  padding: 2px;
-  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.1);
+  background-color:white ;
+  padding: 1px;
+  box-shadow: 0 3px 3px rgba(240, 25, 25, 0.1);
 }
 
 .header-left {
@@ -34,7 +34,7 @@
 }
 
 .logout-btn {
-  background: none;
+  background: #9237bc;
   border: none;
   font-size: 16px;
   cursor: pointer;
@@ -48,12 +48,12 @@
 .profile-menu {
   position: absolute;
   top: 100%;
-  right: 0;
+  right: 10;
   background-color: #fff;
-  color: #333;
+  color:none;
   border: 1px solid #ddd;
   border-radius: 4px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  box-shadow: none;
   padding: 10px;
   z-index: 1000;
   text-align: right; /* Ensures the text and buttons are aligned to the right */
@@ -70,7 +70,7 @@
 }
 
 .profile-menu button:hover {
-  background-color: #f1f1f1;
+  background-color: #5f1d4e;
 }
 
 .header-right {
@@ -79,25 +79,25 @@
 }
 
 .top-buttons-container {
-  padding: 20px;
+  padding: 10px;
   display: flex;
   justify-content: flex-start;
 }
 
 .add-button {
-  background: none;
+  background: #9237bc;
   border: none;
   font-size: 16px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  color: #392b289f;
+  color:none;
   position: relative;
   margin-left: 20px;
 }
 
 .add-button:hover {
-  background-color: #cddaec;
+  background-color: #ac58c1;
 }
 
 .home-content {
@@ -105,12 +105,12 @@
 }
 
 .unit-test-form {
-  margin-top: 20px;
+  margin-top: 30px;
 }
 
 
 .done {
-  color:#2c4841;
+  color:#9237bc;
   font-weight: bold;
 }
 
@@ -121,7 +121,7 @@
   top: 100%;
   right: 0;
   background-color: #fff;
-  color: #333;
+  color: #e47c7c;
   border: 1px solid #ddd;
   border-radius: 4px;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
@@ -159,7 +159,7 @@
 
 
 .error-message {
-  color: rgb(112, 218, 147);
+  color: rgb(146, 56, 56);
   font-size: 16px;
   margin-top: 10px;
 }
@@ -181,7 +181,7 @@
   background-color: #3498db; /* Blue background */
   color: #fff; /* White text */
   border: none; /* Remove default border */
-  padding: 5px 10px; /* Smaller padding */
+  padding: 5px 5px; /* Smaller padding */
   margin-right: 8px; /* Adjust space between buttons */
   cursor: pointer; /* Change cursor to pointer */
   border-radius: 4px; /* Slightly rounded corners */
@@ -195,7 +195,7 @@
 
 /* Style for the 'Save All' button */
 .save-all-button {
-  background-color: #27ae60; /* Green background */
+  background-color: #8c38b0; /* Green background */
   color: #fff; /* White text */
   border: none; /* Remove default border */
   padding: 5px 10px; /* Smaller padding */
@@ -205,7 +205,7 @@
 }
 
 .save-all-button:hover {
-  background-color: #c2cdc7; /* Darker green on hover */
+  background-color: #cdc2cd; /* Darker green on hover */
 }
 
 /* Container for the unit test form and table */
@@ -224,7 +224,7 @@
 .unit-test-form select {
   outline: none;
   border: 1px solid #ddd;
-  width: 100%;
+  width: 50%;
   padding: 12px;
   border-radius: 5px;
   background-color: #f5f5f5;
@@ -245,41 +245,42 @@
 }
 
 .unit-test-form .add-unit-test-button {
-  background-color: #a7cab1;
+  background-color:  #825c8a;
   color: #ffffff;
+  width: 50%;
 }
 
 .unit-test-form .save-all-button {
-  background-color: #1e876d;
+  background-color: #ba2bd7;
   color: #ffffff;
+  width: 30%;
 } 
 
-.unit-test-form .add-unit-test-button:hover,
-.unit-test-form .save-all-button:hover {
-  background-color: #9cbf9b; /* Darker shade for hover effect */
+.unit-test-form .add-unit-test-button:hover{
+  background-color:  #847088; /* Darker shade for hover effect */
 }
 
 /* Unit test table */
 .unit-test-table {
-  width: 100%;
+  width: 80%;
   border-collapse: collapse;
   margin-top: 20px;
   background-color: #ffffff;
   border-radius: 10px;
   box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
-    0px 3px 4px 0px rgb(0 0 0 / 14%),
+    0px 3px 4px 0px rgba(52, 18, 18, 0.14),
     0px 1px 8px 0px rgb(0 0 0 / 12%);
 }
 
 .unit-test-table th,
 .unit-test-table td {
-  border: 1px solid #ddd;
-  padding: 12px;
+  border: 10px solid #ddd;
+  padding:30px;
   text-align: left;
 }
 
 .unit-test-table th {
-  background-color: #a7cab1; /* Header background color */
+  background-color: #ab72c1; /* Header background color */
   color: #ffffff; /* Header text color */
   font-weight: bold;
 }

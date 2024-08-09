@@ -1,8 +1,6 @@
 import { useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-import Navbar from '../Navbar/Navbar'; // Corrected import path
-
 import styles from "./styles.module.css";
 import emailjs from "@emailjs/browser";
 
@@ -48,20 +46,11 @@ const Signup = () => {
 
   return (
     <div>
-      <Navbar /> {/* Ensure the Navbar component is included */}
       <div className={styles.signup_container}>
         <div className={styles.signup_form_container}>
-          <div className={styles.left}>
-            <h1 style={{ color: '#a7cab1' }}>Welcome Back</h1>
-            <Link to="/login">
-              <button type="button" className={styles.white_btn}>
-                Sign in
-              </button>
-            </Link>
-          </div>
           <div className={styles.right}>
             <form className={styles.form_container} onSubmit={handleSubmit}>
-              <h1 style={{ color: '#a7cab1' }}>Create Account</h1>
+              <h1 style={{ color: '#cdc8cf' }}>Create Account</h1>
               <input
                 type="text"
                 placeholder="First Name"

@@ -1,22 +1,29 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
+import StarRating from "../StarRating/StarRating"; // Import the StarRating component
 import logo from '../../assests/images/logo.png'; // Update the path to your logo image
-const Navbar = ({ handleLogout }) => {
+
+const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
+  const [showStarRating, setShowStarRating] = useState(false);
   const isLoggedIn = localStorage.getItem("token") ? true : false;
 
   const confirmLogout = () => {
-    setShowLogoutConfirm(true);
+    setShowStarRating(true); // Show the star rating when the user clicks "Logout"
   };
 
   const cancelLogout = () => {
     setShowLogoutConfirm(false);
   };
 
-  const performLogout = () => {
+  const completeLogout = () => {
     localStorage.clear();
-    window.location = '/login';
+    window.location = '/homepage';
+  };
+
+  const submitStarRating = () => {
+    setShowLogoutConfirm(true); // Show the logout confirmation after submitting the star rating
   };
 
   return (
@@ -25,15 +32,22 @@ const Navbar = ({ handleLogout }) => {
         <NavLink exact to="/" activeClassName="active-link">
           <img src={logo} alt="Logo" width="150" height="90" />
         </NavLink>
-        
+
         <div>
           <ul id="navbar">
             <li>
-              <h1 exact to="/" activeClassName="active-link">Welcome</h1>
+              <NavLink to="/homepage" className="nav-link" activeClassName="active-link">
+                Home
+              </NavLink>
             </li>
             <li>
               <NavLink to="/developers" className="nav-link" activeClassName="active-link">
                 Developers
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contactus" className="nav-link" activeClassName="active-link">
+                Contact Us
               </NavLink>
             </li>
             {isLoggedIn ? (
@@ -57,10 +71,18 @@ const Navbar = ({ handleLogout }) => {
         </div>
       </nav>
 
+      {showStarRating && (
+        <div className="star-rating-container">
+          <h3>Please rate your experience before you leave:</h3>
+          <StarRating />
+          <button onClick={submitStarRating}>Submit Rating</button>
+        </div>
+      )}
+
       {showLogoutConfirm && (
         <div className="logout-confirm">
           <p>Are you sure you want to logout?</p>
-          <button onClick={performLogout}>Yes</button>
+          <button onClick={completeLogout}>Yes</button>
           <button onClick={cancelLogout}>No</button>
         </div>
       )}

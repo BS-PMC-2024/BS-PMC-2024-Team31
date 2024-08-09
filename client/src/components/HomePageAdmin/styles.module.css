@@ -21,7 +21,7 @@
 }
 
 .table th {
-  background-color: #bce7dc;
+  background-color: #9237bc;
   color: #333;
 }
 
@@ -34,7 +34,7 @@
 }
 
 .table thead {
-  background-color: #bce7dc;
+  background-color:#c1b2c8;
 }
 
 .table tbody tr:nth-child(even) {
@@ -63,8 +63,8 @@
 }
 
 .button {
-  background-color: #bce7dc;
-  color: #333;
+  background-color:#580d7b;
+  color: #f3f0f0;
   border: none;
   border-radius: 8px;
   padding: 10px 20px; /* Reduced padding */
@@ -75,13 +75,13 @@
 }
 
 .button:hover {
-  background-color: #a0d1c2;
+  background-color:#c6b6cd;
   transform: scale(1.05);
 }
 
 .button:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(179, 225, 219, 0.5);
+  box-shadow: 0 0 0 3px #d0bfd8;
 }
 
 .error {

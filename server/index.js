@@ -10,6 +10,7 @@ const authRoutes = require('./routes/auth');
 const { User } = require("./models/user");
 const profileRoutes = require('./routes/updateProfile');
 const unitTestRoutes = require('./routes/unitTests');
+const mongoose = require('mongoose');
 
 const app = express();
 
@@ -31,6 +32,7 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/unitTests', unitTestRoutes);
 app.use('/api/user', userRoutes);
 app.use("/api/auth", authRoutes);
+app.use('/api/users', usersRoutes);
 
 // Endpoint for resetting the password and role
 app.post('/api/forgot-password', async (req, res) => {
@@ -93,23 +95,6 @@ app.post('/api/search', async (req, res) => {
   }
 });
 
-app.get('/api/product/:id', async (req, res) => {
-  // Handle fetching a product by ID
-});
-
-// Cart routes
-app.get('/api/cart', async (req, res) => {
-  // Handle getting items in the cart
-});
-app.post('/api/cart/add', async (req, res) => {
-  // Handle adding an item to the cart
-});
-app.post('/api/cart/remove', async (req, res) => {
-  // Handle removing an item from the cart
-});
-app.post('/api/cart/checkout', async (req, res) => {
-  // Handle checking out the cart
-});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

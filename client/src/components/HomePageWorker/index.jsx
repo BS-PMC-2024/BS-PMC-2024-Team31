@@ -103,8 +103,8 @@ function HomeWorker() {
   const handleViewProfile = async (email) => {
     try {
       const token = localStorage.getItem('token');
-      const url = `http://localhost:3001/api/user/profile/${email}`; // Using the defined endpoint
-      
+      const url = `http://localhost:3001/api/user/user/${email}`; // Ensure this is the correct URL
+  
       const response = await axios.get(url, {
         headers: {
           'Authorization': `Bearer ${token}`, // Include token if authentication is needed
@@ -112,9 +112,7 @@ function HomeWorker() {
       });
   
       if (response.status === 200) {
-        const userProfile = response.data; // User profile data
-  
-        // Display user's first name and other details
+        const userProfile = response.data;
         setUser({
           ...userProfile,
           profileImage: userProfile.profileImage || generateDefaultImageURL(userProfile.email),
@@ -122,11 +120,11 @@ function HomeWorker() {
         setShowProfileView(true); // Show the profile view
       } else {
         console.log('Failed to fetch user profile:', response.data);
-        setErrorMessage('Failed to fetch user profile');
+        setErrorMessage('Failed to fetch user profile: ' + response.data.message || 'Unknown error');
       }
     } catch (error) {
       console.error('Fetch error:', error.response ? error.response.data : error.message);
-      setErrorMessage(error.message);
+      setErrorMessage('Fetch error: ' + (error.response ? error.response.data.message : error.message));
     }
   };
   
@@ -251,10 +249,7 @@ function HomeWorker() {
               </div>
             )}
           </div>
-          <button className="logout-btn" onClick={handleLogout}>
-            <span className="logout-icon"><AiOutlineLogout size={24} /></span>
-            Log Out
-          </button>
+         
           <button className="add-button" onClick={handleToggleTable}>
             {showTable ? 'Hide Table' : '+ New Test'}
           </button>
