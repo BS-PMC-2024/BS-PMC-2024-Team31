@@ -1,16 +1,30 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import StarRating from "../StarRating/StarRating"; // Import the StarRating component
-import logo from '../../assests/images/logo.png'; // Update the path to your logo image
-
-import AccessibilityMenu from "../Navbar/AccessibilityMenu"; // Import the AccessibilityMenu component
+import StarRating from "../StarRating/StarRating";
+import logo from '../../assests/images/logo.png';
+import AccessibilityMenu from "../Navbar/AccessibilityMenu";
 
 const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showStarRating, setShowStarRating] = useState(false);
   const [showAccessibilityMenu, setShowAccessibilityMenu] = useState(false);
-  const isLoggedIn = localStorage.getItem("token") ? true : false;
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    // Update the login status based on localStorage
+    const handleStorageChange = () => {
+      setIsLoggedIn(!!localStorage.getItem("token"));
+    };
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const confirmLogout = () => {
     setShowStarRating(true);
@@ -21,11 +35,14 @@ const Navbar = () => {
   };
 
   const completeLogout = () => {
-    localStorage.clear();
-    window.location = '/homepage';
+    localStorage.removeItem("token");
+    setIsLoggedIn(false);
+    setShowLogoutConfirm(false); // Hide confirmation message
+    navigate('/homepage');
   };
 
   const submitStarRating = () => {
+    setShowStarRating(false);
     setShowLogoutConfirm(true);
   };
 
@@ -57,7 +74,13 @@ const Navbar = () => {
                 Contact Us
               </NavLink>
             </li>
-            {isLoggedIn ? (
+            {!isLoggedIn ? (
+              <li>
+                <NavLink to="/login" className="white_btn" data-testid="Login-button">
+                  Login
+                </NavLink>
+              </li>
+            ) : (
               <li>
                 <button
                   className="white_btn"
@@ -66,12 +89,6 @@ const Navbar = () => {
                 >
                   Logout
                 </button>
-              </li>
-            ) : (
-              <li>
-                <NavLink to="/login" className="white_btn" data-testid="Login-button">
-                  Login
-                </NavLink>
               </li>
             )}
             <li>
