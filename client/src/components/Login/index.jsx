@@ -4,43 +4,39 @@ import { Link, useNavigate } from "react-router-dom";
 import styles from "./styles.module.css";
 
 const Login = () => {
-  
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
-
   const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
   };
 
-  const handleForgotPassword = () => {
-    // Link for reset password 
-    window.location.href = '/forgot-password';
-  };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:3000/api/auth"; // Corrected URL string
+      const url = "http://localhost:3001/api/auth"; // Corrected URL string
       const { data: res } = await axios.post(url, data);
+      
+      // Store data in localStorage upon successful login
       localStorage.setItem("email", data.email);
       localStorage.setItem("token", res.data.token);
       localStorage.setItem("isAdmin", res.data.isAdmin);
 
-      const userUrl = `http://localhost:3000/api/user/email/${data.email}`;
-      const { data: user } = await axios.get(userUrl);
-      
       if (res.data.isAdmin) {
-        navigate("/homepageadmin");
-      } else if (user.userType === "student") {
-        navigate("/homePageStudent");
-      } else if (user.userType === "worker") {
-        navigate("/homePageWorker");
+        navigate("/homePageAdmin");
       } else {
-        navigate("/login");
-      }
+        const userUrl = `http://localhost:3001/api/user/email/${data.email}`;
+        const { data: user } = await axios.get(userUrl);
 
+        if (user.userType === "student") {
+          navigate("/homePageStudent");
+        } else if (user.userType === "worker") {
+          navigate("/homePageWorker");
+        } else {
+          navigate("/login");
+        }
+      }
     } catch (error) {
       if (error.response && error.response.status >= 400 && error.response.status <= 500) {
         setError(error.response.data.message);
@@ -76,10 +72,12 @@ const Login = () => {
               className={styles.input}
             />
 
-            <button type="button" onClick={handleForgotPassword} className={styles.forgot_password_btn}>
-              Forgot Password?
-            </button>
-      
+            <Link to="/reset-password">
+              <button type="button" className={styles.red_btn}>
+                Forgot Password?
+              </button>
+            </Link>
+
             {error && <div className={styles.error_msg}>{error}</div>}
             <button type="submit" className={styles.green_btn} data-testid="login-button">
               Sign In

@@ -1,6 +1,6 @@
 require("dotenv").config();
 const axios = require("axios");
-const express = require("express");
+const express = require('express');
 const app = express();
 const cors = require("cors");
 const connection = require("./db");
@@ -10,7 +10,9 @@ const dotenv = require('dotenv');
 const authRoutes = require('./routes/auth');
 const path = require('path');
 const bcrypt = require('bcrypt');
+
 const { User } = require("./models/user");
+
 
 // Use routes
 // database connection
@@ -25,6 +27,7 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 // Import routes
 const updateProfileRoute = require('./routes/updateProfile');
 const adminRoutes = require('./routes/admins');
+
 
 // Use routes
 app.use("/api/admins", adminRoutes);
@@ -77,6 +80,36 @@ app.post('/api/forgot-password', async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
+app.post('/api/user/delete-account', async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
+
+  try {
+    // Find and delete the user from the database
+    const user = await User.findOneAndDelete({ email });
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'Account deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting account:', error.message);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
+
+
+// تكوينات أخرى للخادم وبدء التشغيل
+
+// تكوينات أخرى للخادم وبدء التشغيل
+const PORT = process.env.PORT || 5000;
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
 
 app.get('/api/product/{id}', async (req, res) => {
   // Product details endpoint
@@ -97,6 +130,7 @@ app.post('/api/cart/remove', async (req, res) => {
 app.post('/api/cart/checkout', async (req, res) => {
   // Checkout cart endpoint
 });
+
 
 const port = process.env.PORT || 3001;
 app.listen(port, console.log(`Listening on port ${port}...`));
