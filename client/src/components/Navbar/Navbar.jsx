@@ -1,38 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import "./Navbar.css";
+import StarRating from "../StarRating/StarRating"; // Import the StarRating component
 import logo from '../../assests/images/logo.png'; // Update the path to your logo image
 
-const Navbar = ({ handleLogout }) => {
+import AccessibilityMenu from "../Navbar/AccessibilityMenu"; // Import the AccessibilityMenu component
+
+const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
-  const [showSettingsMenu, setShowSettingsMenu] = useState(false);
-  const [userType, setUserType] = useState("");
-  const [isAdmin, setIsAdmin] = useState(false);
-  
-  useEffect(() => {
-    // Fetch user data from localStorage or API
-    const userTypeFromStorage = localStorage.getItem("userType") || "Guest";
-    const isAdminFromStorage = JSON.parse(localStorage.getItem("isAdmin") || "false");
-
-    setUserType(userTypeFromStorage);
-    setIsAdmin(isAdminFromStorage);
-
-    // Debug logging
-    console.log("User Type:", userTypeFromStorage);
-    console.log("Is Admin:", isAdminFromStorage);
-  }, []);
+  const [showStarRating, setShowStarRating] = useState(false);
+  const [showAccessibilityMenu, setShowAccessibilityMenu] = useState(false);
+  const isLoggedIn = localStorage.getItem("token") ? true : false;
 
   const confirmLogout = () => {
-    setShowLogoutConfirm(true);
+    setShowStarRating(true);
   };
 
   const cancelLogout = () => {
     setShowLogoutConfirm(false);
   };
 
-  const performLogout = () => {
+  const completeLogout = () => {
     localStorage.clear();
-    window.location = '/login';
+    window.location = '/homepage';
+  };
+
+  const submitStarRating = () => {
+    setShowLogoutConfirm(true);
+  };
+
+  const toggleAccessibilityMenu = () => {
+    setShowAccessibilityMenu(prev => !prev);
   };
 
   return (
@@ -41,53 +39,72 @@ const Navbar = ({ handleLogout }) => {
         <NavLink exact to="/" className="logo">
           <img src={logo} alt="Logo" />
         </NavLink>
-        
-        <ul className="nav-links">
-          <li className="nav-item">
-            <span className="welcome-text">
-              Welcome, {isAdmin ? "Admin" : (userType === "Student" || userType === "Worker") ? userType : "Guest"}
-            </span>
-          </li>
-          {localStorage.getItem("token") && (
-            <>
-              <li className="nav-item">
-                <div 
-                  className="settings-menu"
-                  onMouseEnter={() => setShowSettingsMenu(true)}
-                  onMouseLeave={() => setShowSettingsMenu(false)}
+
+        <div>
+          <ul id="navbar">
+            <li>
+              <NavLink to="/homepage" className="nav-link" activeClassName="active-link">
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/aboutus" className="nav-link" activeClassName="active-link">
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contactus" className="nav-link" activeClassName="active-link">
+                Contact Us
+              </NavLink>
+            </li>
+            {isLoggedIn ? (
+              <li>
+                <button
+                  className="white_btn"
+                  onClick={confirmLogout}
+                  data-testid="Logout-button"
                 >
-                  <button className="settings-btn">Settings</button>
-                  {showSettingsMenu && (
-                    <div className="settings-dropdown">
-                      <NavLink to="/edit-profile" className="dropdown-link">Edit Profile</NavLink>
-                      <NavLink to="/delete-profile" className="dropdown-link">Delete Profile</NavLink>
-                    </div>
-                  )}
-                </div>
-              </li>
-              <li className="nav-item">
-                <button className="logout-btn" onClick={confirmLogout}>
                   Logout
                 </button>
               </li>
-            </>
-          )}
-          {!localStorage.getItem("token") && (
-            <li className="nav-item">
-              <NavLink to="/login" className="nav-link">
-                Login
-              </NavLink>
+            ) : (
+              <li>
+                <NavLink to="/login" className="white_btn" data-testid="Login-button">
+                  Login
+                </NavLink>
+              </li>
+            )}
+            <li>
+              <button
+                className="white_btn"
+                onClick={toggleAccessibilityMenu}
+                data-testid="Accessibility-button"
+              >
+                Accessibility
+              </button>
             </li>
-          )}
-        </ul>
+          </ul>
+        </div>
       </nav>
+
+      {showStarRating && (
+        <div className="star-rating-container">
+          <h3>Please rate your experience before you leave:</h3>
+          <StarRating />
+          <button onClick={submitStarRating}>Submit Rating</button>
+        </div>
+      )}
 
       {showLogoutConfirm && (
         <div className="logout-confirm">
           <p>Are you sure you want to logout?</p>
-          <button onClick={performLogout} className="confirm-btn">Yes</button>
-          <button onClick={cancelLogout} className="cancel-btn">No</button>
+          <button onClick={completeLogout}>Yes</button>
+          <button onClick={cancelLogout}>No</button>
         </div>
+      )}
+
+      {showAccessibilityMenu && (
+        <AccessibilityMenu onClose={toggleAccessibilityMenu} />
       )}
     </>
   );

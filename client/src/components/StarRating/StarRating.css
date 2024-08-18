@@ -1,0 +1,21 @@
+#star-rating {
+  text-align: center;
+  margin: 20px 0;
+}
+
+#star-rating .star {
+  font-size: 2.5em;
+  cursor: pointer;
+  color: grey;
+  transition: color 0.2s ease;
+}
+
+#star-rating .star.selected {
+  color: gold;
+}
+
+#rating-message {
+  margin-top: 15px;
+  font-size: 1.2em;
+  color: #333;
+}

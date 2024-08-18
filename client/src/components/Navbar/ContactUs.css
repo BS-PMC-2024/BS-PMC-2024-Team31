@@ -1,0 +1,46 @@
+/* src/pages/ContactUs.css */
+.contact-us {
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.contact-info, .team-info {
+  margin-bottom: 5px;
+}
+
+.contact-info h2, .team-info h2 {
+  border-bottom: 2px solid #007bff;
+  padding-bottom:2px;
+  margin-bottom: 2%;
+}
+
+.contact-info p, .team-info p {
+  font-size: 16px;
+}
+
+.team-list {
+  list-style: none;
+  padding: 0;
+}
+
+.team-member {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 10px;
+}
+
+.team-member h3 {
+  margin: 0;
+  color: #333;
+}
+
+.team-member a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.team-member a:hover {
+  text-decoration: underline;
+}
