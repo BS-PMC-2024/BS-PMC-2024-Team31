@@ -3,11 +3,12 @@ import './HomeStudent.css';
 
 function Home() {
   const handleEdit = () => {
-    localStorage.clear();
+    // الانتقال إلى صفحة التعديل
     window.location = '/profile';
   };
 
   const handleLogout = () => {
+    // مسح بيانات المستخدم من localStorage وتسجيل الخروج
     localStorage.clear();
     window.location = '/';
   };

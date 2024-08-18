@@ -25,6 +25,8 @@ const Login = () => {
     try {
       const url = "http://localhost:3001/api/auth"; // Corrected URL string
       const { data: res } = await axios.post(url, data);
+      
+      // Store data in localStorage upon successful login
       const token = res.data.token; // Adjust based on actual response structure
 
       localStorage.setItem("email", data.email);
