@@ -1,6 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import styles from "./styles.module.css";
 import emailjs from "@emailjs/browser";
 
@@ -22,7 +23,7 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = `http://localhost:3000/api/users`;
+      const url = `http://localhost:3001/api/users`;
       const { data: res } = await axios.post(url, data);
 
       emailjs
@@ -48,9 +49,10 @@ const Signup = () => {
     <div>
       <div className={styles.signup_container}>
         <div className={styles.signup_form_container}>
+        
           <div className={styles.right}>
             <form className={styles.form_container} onSubmit={handleSubmit}>
-              <h1 style={{ color: '#cdc8cf' }}>Create Account</h1>
+              <h1 style={{ color: '#a7cab1' }}>Create Account</h1>
               <input
                 type="text"
                 placeholder="First Name"

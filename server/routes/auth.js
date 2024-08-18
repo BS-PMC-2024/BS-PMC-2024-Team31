@@ -32,7 +32,7 @@ router.post("/", async (req, res) => {
 });
 
 // Password reset route
-router.post("/forgot-password", async (req, res) => {
+/*router.post("/forgot-password", async (req, res) => {
   try {
     const { email, newPassword } = req.body;
 
@@ -59,7 +59,7 @@ router.post("/forgot-password", async (req, res) => {
     console.error("Error updating password:", error);
     res.status(500).send({ message: "Internal server error" });
   }
-});
+});*/
 
 const validate = (data) => {
   const schema = Joi.object({

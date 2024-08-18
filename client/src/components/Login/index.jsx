@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import styles from "./styles.module.css";
 
@@ -25,17 +25,22 @@ const Login = () => {
     try {
       const url = "http://localhost:3001/api/auth"; // Corrected URL string
       const { data: res } = await axios.post(url, data);
-      localStorage.setItem("email", data.email);
-      localStorage.setItem("token", res.token); // Updated to match response structure
-      localStorage.setItem("isAdmin", res.isAdmin);
+      const token = res.data.token; // Adjust based on actual response structure
 
+      localStorage.setItem("email", data.email);
+      localStorage.setItem("token", token); // Updated to match response structure
+      localStorage.setItem("isAdmin", res.isAdmin);
+      
+
+      console.log('Token:', token);
       const userUrl = `http://localhost:3001/api/user/email/${data.email}`;
       const { data: user } = await axios.get(userUrl, {
         headers: {
           'Authorization': `Bearer ${res.token}` // Include token in request headers
         }
       });
-
+      localStorage.setItem("user", JSON.stringify(user));
+      localStorage.setItem("isAdmin", user.isAdmin);
       if (user.userType === "student") {
         navigate("/homePageStudent");
       } else if (user.userType === "worker") {

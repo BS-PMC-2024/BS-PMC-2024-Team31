@@ -3,20 +3,28 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import StarRating from "../StarRating/StarRating";
 import logo from '../../assests/images/logo.png';
-import AccessibilityMenu from "../Navbar/AccessibilityMenu";
+import AccessibilityMenu from "./AccessibilityMenu";
 
 const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showStarRating, setShowStarRating] = useState(false);
   const [showAccessibilityMenu, setShowAccessibilityMenu] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [userFirstName, setUserFirstName] = useState("");
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     // Update the login status based on localStorage
     const handleStorageChange = () => {
       setIsLoggedIn(!!localStorage.getItem("token"));
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        setUserFirstName(user.firstName);
+      }
     };
+
+    handleStorageChange(); // Check the initial state
 
     window.addEventListener('storage', handleStorageChange);
 
@@ -35,7 +43,7 @@ const Navbar = () => {
   };
 
   const completeLogout = () => {
-    localStorage.removeItem("token");
+    localStorage.clear();
     setIsLoggedIn(false);
     setShowLogoutConfirm(false); // Hide confirmation message
     navigate('/homepage');
@@ -50,14 +58,41 @@ const Navbar = () => {
     setShowAccessibilityMenu(prev => !prev);
   };
 
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(prev => !prev);
+  };
+
   return (
     <>
       <nav>
-        <NavLink exact to="/" activeClassName="active-link">
-          <img src={logo} alt="Logo" width="150" height="90" />
-        </NavLink>
+        <div className="nav-container">
+          <div className="logo-container">
+            <NavLink to="/" end>
+              <img src={logo} alt="Logo" className="logo" />
+            </NavLink>
+            {isLoggedIn && (
+              <div className="profile-container">
+                <img
+                  src={generateProfileImageURL(userFirstName)}
+                  alt="Profile"
+                  className="profile-image"
+                  onClick={toggleProfileMenu}
+                />
+                {showProfileMenu && (
+                  <div className="profile-menu">
+                    <NavLink to="/edit-profile" className="profile-menu-item">
+                      Edit Profile
+                    </NavLink>
+                    <NavLink to="/profile" className="profile-menu-item">
+                      View Profile
+                    </NavLink>
+                  </div>
+                )}
+                <span className="welcome-message">Welcome, {userFirstName}!</span>
+              </div>
+            )}
+          </div>
 
-        <div>
           <ul id="navbar">
             <li>
               <NavLink to="/homepage" className="nav-link" activeClassName="active-link">
@@ -125,6 +160,12 @@ const Navbar = () => {
       )}
     </>
   );
+};
+
+// Function to generate profile image URL
+const generateProfileImageURL = (firstName) => {
+  const firstLetter = firstName ? firstName[0].toUpperCase() : 'U'; // Default to 'U' if name is not available
+  return `https://via.placeholder.com/100x100.png?text=${firstLetter}`;
 };
 
 export default Navbar;

@@ -1,6 +1,15 @@
 const router = require("express").Router();
 const { User, validate } = require("../models/user");
 const bcrypt = require("bcrypt");
+router.delete('/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndDelete(req.params.id);
+    if (!user) return res.status(404).send({ message: 'User not found' });
+    res.send({ message: 'User deleted successfully' });
+  } catch (error) {
+    res.status(500).send({ message: 'Error deleting user' });
+  }
+});
 
 router.post("/", async (req, res) => {
   try {
@@ -40,6 +49,14 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.put('/:id', async (req, res) => {
+  try {
+    const user = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    if (!user) return res.status(404).send({ message: 'User not found' });
+    res.send(user);
+  } catch (error) {
+    res.status(500).send({ message: 'Error updating user' });
+  }
+});
 
 module.exports = router;
-

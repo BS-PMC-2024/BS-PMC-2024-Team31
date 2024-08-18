@@ -32,6 +32,8 @@ const validate = (data) => {
     firstName: Joi.string().required().label("First Name"),
     lastName: Joi.string().required().label("Last Name"),
     email: Joi.string().email().required().label("Email"),
+    userType: Joi.string().valid('student', 'worker').required().label("User Type"), // أضف التحقق من userType
+
     password: passwordComplexity().required().label("Password"),
     // Remove userType validation
   });

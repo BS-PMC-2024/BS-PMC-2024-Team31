@@ -1,0 +1,28 @@
+.profile-page .profile-content .profile-image {
+  width: 150px; /* Set the width of the image */
+  height: 150px; /* Set the height of the image */
+  border-radius: 50%; /* Circular image */
+  object-fit: cover; /* Maintain aspect ratio */
+  margin-bottom: 15px; /* Space below the image */
+  cursor: pointer; /* Pointer cursor for click indication */
+}
+
+
+.profile-header {
+  font-size: 1.5rem; /* Adjust the font size */
+  margin-bottom: 15px; /* Space below the header */
+}
+
+.profile-details {
+  font-size: 1.1rem; /* Adjust the font size */
+  line-height: 1.5; /* Increase line height for better readability */
+}
+
+.error-message {
+  color: red; /* Error message color */
+  text-align: center; /* Center the error message */
+}
+
+.loading {
+  text-align: center; /* Center loading text */
+}
