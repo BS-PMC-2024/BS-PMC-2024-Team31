@@ -4,6 +4,9 @@
   flex-direction: column;
   height: 100vh;
   padding-top: 70px; /* Adjust for navbar height */
+  background-color: #ffffff; /* White background color */
+  font-family: 'Arial', sans-serif;
+  margin: 0; /* Remove default margins */
 }
 
 .profile-header {
@@ -11,11 +14,11 @@
   justify-content: space-between;
   align-items: center;
   padding: 10px 20px;
-  background-color: #bce7dc;
+  background-color: #8e7cc3;
   border-bottom: 1px solid #ddd;
 }
 
-.header-left, .header-right {
+.header-left {
   display: flex;
   align-items: center;
 }
@@ -26,13 +29,18 @@
 }
 
 .header-left .dropbtn {
-  background-color: #a7cab1;
+  background-color: #7a63a1;
   color: white;
   padding: 10px;
   font-size: 16px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.header-left .dropbtn:hover {
+  background-color: #6c5290;
 }
 
 .header-left .dropdown-content {
@@ -42,10 +50,12 @@
   min-width: 160px;
   box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
   z-index: 1;
+  border-radius: 5px;
+  overflow: hidden;
 }
 
 .header-left .dropdown-content button {
-  color: black;
+  color: #7a63a1;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -54,23 +64,28 @@
   background: none;
   text-align: left;
   cursor: pointer;
+  font-size: 14px;
 }
 
 .header-left .dropdown-content button:hover {
   background-color: #f1f1f1;
+  color: #6c5290;
 }
 
 .header-left .dropdown:hover .dropdown-content {
   display: block;
 }
 
-.header-left .dropdown:hover .dropbtn {
-  background-color: #9ab8a4;
+.header-right {
+  display: flex;
+  align-items: center;
+  margin-left: auto; /* Push the Edit Profile to the right */
 }
 
 .header-right span {
   font-size: 1.2rem;
   font-weight: bold;
+  color: white;
 }
 
 .profile-content {
@@ -80,37 +95,43 @@
   align-items: center;
   flex-grow: 1;
   text-align: center;
+  padding: 20px; /* Add padding for spacing */
 }
 
 .profile-content h2 {
   margin-bottom: 20px;
-  font-size: 1.5rem;
-  color: #392b289f;
+  font-size: 2rem;
+  color: #5d4974;
+  font-weight: bold;
 }
 
 .profile-buttons {
   display: flex;
-  flex-direction: column;
+  flex-direction: row; /* Arrange buttons horizontally */
+  justify-content: center; /* Center buttons horizontally */
   align-items: center;
-  width: 50%; /* Make the container half the width of the screen */
+  gap: 10px; /* Space between buttons */
+  flex-wrap: wrap; /* Allow buttons to wrap on smaller screens */
 }
 
 .profile-button {
-  padding: 20px 40px;
+  padding: 15px 30px;
   font-size: 16px;
   cursor: pointer;
-  background-color: #a7cab1;
+  background-color: #7a63a1; /* Lilac color for buttons */
   color: white;
   border: none;
   border-radius: 5px;
-  transition: background-color 0.3s ease;
-  margin: 10px;
-  width: 100%; /* Make the buttons take full width of the container */
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  min-width: 150px; /* Minimum button width */
 }
 
 .profile-button:hover {
-  background-color: #9ab8a4;
+  background-color: #6c5290;
+  transform: translateY(-2px);
 }
+
 .modal {
   position: fixed;
   z-index: 1000;
@@ -126,10 +147,19 @@
 }
 
 .modal-content {
-  background-color: #fefefe;
-  padding: 20px;
-  border-radius: 5px;
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
   text-align: center;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+  width: 90%; /* Responsive width */
+  max-width: 500px; /* Maximum width */
+}
+
+.modal h3 {
+  color: #5d4974;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
 }
 
 .modal-button {
@@ -138,8 +168,42 @@
   cursor: pointer;
   border: none;
   border-radius: 5px;
+  background-color: #7a63a1; /* Lilac color */
+  color: white;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
 }
 
 .modal-button:hover {
-  background-color: #ddd;
+  background-color: #6c5290;
+}
+
+/* Dropdown for Reason Selection */
+.reason-dropdown {
+  margin-top: 20px;
+  text-align: left;
+  width: 50%;
+  max-width: 400px; /* Maximum width */
+}
+
+.reason-dropdown label {
+  color: #5d4974;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.reason-dropdown select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #5d4974;
+}
+
+.reason-dropdown select:focus {
+  outline: none;
+  border-color: #7a63a1;
 }

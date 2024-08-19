@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import styles from "./styles.module.css";
 
@@ -23,38 +23,43 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const url = "http://localhost:3001/api/auth"; // Corrected URL string
-      const { data: res } = await axios.post(url, data);
-      
-      // Store data in localStorage upon successful login
-      localStorage.setItem("email", data.email);
-      localStorage.setItem("token", res.token); // Updated to match response structure
-      localStorage.setItem("isAdmin", res.isAdmin);
+        const url = "http://localhost:3001/api/auth";
+        const { data: res } = await axios.post(url, data);
 
-      const userUrl = `http://localhost:3001/api/user/email/${data.email}`;
-      const { data: user } = await axios.get(userUrl, {
-        headers: {
-          'Authorization': `Bearer ${res.token}` // Include token in request headers
+        const { token, isAdmin } = res.data;
+
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("token", token);
+        localStorage.setItem("isAdmin", isAdmin);
+
+        // Store user's first name in localStorage
+        const userUrl = `http://localhost:3001/api/user/email/${data.email}`;
+        const { data: user } = await axios.get(userUrl, {
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+        localStorage.setItem("user", JSON.stringify({ firstName: user.firstName }));
+
+        // Navigate based on user type
+        if (isAdmin) {
+            navigate("/homePageAdmin");
+        } else if (user.userType === "student") {
+            navigate("/homePageStudent");
+        } else if (user.userType === "worker") {
+            navigate("/homePageWorker");
+        } else {
+            navigate("/login");
         }
-      });
-
-      if (user.userType === "student") {
-        navigate("/homePageStudent");
-      } else if (user.userType === "worker") {
-        navigate("/homePageWorker");
-      } else {
-        navigate("/login");
-      }
-
     } catch (error) {
-      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-        setError(error.response.data.message);
-      } else {
-        setError("Server error");
-      }
+        if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+            setError(error.response.data.message);
+        } else {
+            setError("Server error");
+        }
     }
-  };
-
+};
+  
   return (
     <div>
       <div className={styles.login_container}>
