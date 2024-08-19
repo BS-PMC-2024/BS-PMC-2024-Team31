@@ -5,8 +5,10 @@ import './Profile.css';
 
 function Profile() {
   const [showModal, setShowModal] = useState(false);
-  const [selectedReason, setSelectedReason] = useState(''); // State for selected reason
-  const [showReasonDropdown, setShowReasonDropdown] = useState(false); // State to show the reason dropdown
+  const [showRoleConfirm, setShowRoleConfirm] = useState(false);
+  const [selectedReason, setSelectedReason] = useState('');
+  const [showReasonDropdown, setShowReasonDropdown] = useState(false);
+  const [roleChangeMessage, setRoleChangeMessage] = useState('');
   const navigate = useNavigate();
 
   const email = localStorage.getItem("email");
@@ -21,7 +23,7 @@ function Profile() {
   };
 
   const handleDeleteClick = () => {
-    setShowReasonDropdown(true); // Show the dropdown when delete is clicked
+    setShowReasonDropdown(true);
   };
 
   const handleConfirmDelete = async () => {
@@ -37,30 +39,50 @@ function Profile() {
         return;
       }
 
-      const url = "http://localhost:3001/api/user/delete-account"; // Assuming /delete endpoint for deletion
-      await axios.post(url, { email, reason: selectedReason }); // Send the selected reason along with the request
+      const url = "http://localhost:3001/api/user/delete-account";
+      await axios.post(url, { email, reason: selectedReason });
 
       alert('Wait, this operation takes time');
       navigate('/login');
     } catch (error) {
       console.error('Error during account deletion:', error);
-      if (error.response) {
-        console.error('Error response data:', error.response.data);
-        console.error('Error response status:', error.response.status);
-        console.error('Error response headers:', error.response.headers);
-      } else {
-        console.error('Error message:', error.message);
-      }
     }
   };
 
   const handleCancelDelete = () => {
     setShowModal(false);
-    setShowReasonDropdown(false); // Hide the dropdown if cancel is clicked
+    setShowReasonDropdown(false);
   };
 
   const handleReasonChange = (e) => {
     setSelectedReason(e.target.value);
+  };
+
+  const handleRoleChangeClick = () => {
+    console.log('Role change button clicked'); // Debugging
+    setShowRoleConfirm(true); // Show role change confirmation modal
+  };
+  const handleConfirmRoleChange = async () => {
+    setRoleChangeMessage('Your request is being processed.');
+    try {
+      console.log('Sending role change request');
+      const response = await axios.post("http://localhost:3001/api/user/change-role", { email,
+        changeRole: true // Include the changeRole field set to true
+
+       });
+      console.log('Response:', response.data); // Log the response
+      setRoleChangeMessage('Role change request received!');
+    } catch (error) {
+      console.error('Error during role change:', error);
+      setRoleChangeMessage(`Failed to process your request. Error: ${error.response ? error.response.data : 'Unknown error'}`);
+    } finally {
+      setShowRoleConfirm(false);
+    }
+  };
+  
+
+  const handleCancelRoleChange = () => {
+    setShowRoleConfirm(false);
   };
 
   return (
@@ -85,7 +107,7 @@ function Profile() {
           <button className="profile-button" onClick={handleUsernameClick}>Username</button>
           <button className="profile-button">Change Password</button>
           <button className="profile-button" onClick={handleDeleteClick}>Delete</button>
-          <button className="profile-button">Change My Role</button>
+          <button className="profile-button" onClick={handleRoleChangeClick}>Change My Role</button>
         </div>
       </div>
 
@@ -111,6 +133,22 @@ function Profile() {
             <button className="modal-button" onClick={handleConfirmDelete}>Yes</button>
             <button className="modal-button" onClick={handleCancelDelete}>No</button>
           </div>
+        </div>
+      )}
+
+      {showRoleConfirm && (
+        <div className="modal">
+          <div className="modal-content">
+            <h3>Are you sure you want to change your role to Worker?</h3>
+            <button className="modal-button" onClick={handleConfirmRoleChange}>Yes</button>
+            <button className="modal-button" onClick={handleCancelRoleChange}>No</button>
+          </div>
+        </div>
+      )}
+
+      {roleChangeMessage && (
+        <div className="message">
+          {roleChangeMessage}
         </div>
       )}
     </div>

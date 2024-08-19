@@ -1,12 +1,11 @@
-//routes/user.js
+// Import necessary modules
 const router = require("express").Router();
 const { User } = require("../models/user");
 const { json } = require("express");
 
 const authenticate = require('../middleware/authenticate'); // Authentication middleware
 
-
-
+// Define routes
 router.get("/email/:email", async (req, res) => {
   try {
     const email = req.params.email;
@@ -36,26 +35,33 @@ router.put("/id/:id", async (req, res) => {
   }
 });
 
-router.post("/toggle-admin", async (req, res) => {
+// Route to handle role change request
+router.post('/change-role', async (req, res) => {
   try {
-    const { userId } = req.body;
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).send({ message: "User not found" });
-    }
+    // Extract email and changeRole from the request body
+    const { email, changeRole } = req.body;
 
-    user.isAdmin = !user.isAdmin;
-    await user.save();
+    console.log('Received request to change role:', { email, changeRole });
 
-    if (user.isAdmin) {
-      res.status(200).send({ message: "Admin added successfully" });
+    // Find the user by email and update the changeRole field
+    const result = await User.findOneAndUpdate(
+      { email: email },
+      { changeRole: changeRole }, 
+      { new: true } // Returns the updated document
+    );
+
+    if (result) {
+      console.log('Updated user:', result);
+      res.status(200).json({ message: 'Role change updated successfully', user: result });
     } else {
-      res.status(200).send({ message: "Admin removed successfully" });
+      res.status(404).json({ message: 'User not found' });
     }
   } catch (error) {
-    res.status(500).send({ message: "Internal Server Error" });
+    console.error('Error updating role:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
+
 router.put("/delete-account/:email", async (req, res) => {
   try {
     const { email } = req.params;
@@ -75,11 +81,6 @@ router.put("/delete-account/:email", async (req, res) => {
   }
 });
 
-
-router.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Something broke!');
-});
 router.put('/update-name', async (req, res) => {
     const { userId, firstName, lastName } = req.body;
 
@@ -98,5 +99,11 @@ router.put('/update-name', async (req, res) => {
         res.status(500).json({ message: 'Server error', error });
     }
 });
-module.exports = router;
 
+// Error handling middleware
+router.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+module.exports = router;
