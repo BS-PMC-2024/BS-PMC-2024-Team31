@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import './App.css';
-import ViewProfile from './components/Edit/ProfileView'; 
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login";
 import Signup from './components/Singup';

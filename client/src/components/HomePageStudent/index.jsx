@@ -1,34 +1,32 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './HomeStudent.css';
 
 function Home() {
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
   const handleEdit = () => {
-    // الانتقال إلى صفحة التعديل
     window.location = '/profile';
   };
 
   const handleLogout = () => {
-    // مسح بيانات المستخدم من localStorage وتسجيل الخروج
     localStorage.clear();
     window.location = '/';
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible(prev => !prev);
   };
 
   return (
     <div className="home-container">
       <div className="home-header">
-        <div className="header-left">
-          <div className="dropdown">
-            <button className="dropbtn">Setting</button>
-            <div className="dropdown-content">
-              <button onClick={handleEdit}>Edit</button>
-              <button onClick={handleLogout}>Log Out</button>
-            </div>
+        <div className="header-content">
+          <div className="header-right">
+            <span>Student</span>
           </div>
         </div>
-        <div className="header-right">
-          <span>Student</span>
-        </div>
       </div>
+
       <div className="home-content">
         <h2>Select a Language</h2>
         <div className="buttons-container">

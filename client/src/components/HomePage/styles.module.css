@@ -42,6 +42,7 @@
 }
 
 /* Button Styles */
+/* Button Styles */
 .white_btn, .green_btn {
   border: none;
   outline: none;
@@ -51,14 +52,25 @@
   font-weight: bold;
   font-size: 14px;
   cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease; /* Transition for smooth hover effect */
 }
 
 .white_btn {
-  background-color:  #a166c4; /* צבע רקע של הכפתור בצד השני */
+  background-color: #a166c4; /* Lilac color */
   color: white;
 }
 
+.white_btn:hover {
+  background-color: white; /* Change background to white on hover */
+  color: #a166c4; /* Change text color to Lilac on hover */
+}
+
 .green_btn {
-  background-color: #ffffff; /* צבע רקע של הכפתור בצד השני */
-  color: #a166c4;
+  background-color: #ffffff; /* White background */
+  color: #a166c4; /* Lilac color for text */
+}
+
+.green_btn:hover {
+  background-color: #a166c4; /* Change background to Lilac on hover */
+  color: white; /* Change text color to white on hover */
 }
