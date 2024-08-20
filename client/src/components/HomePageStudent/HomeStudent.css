@@ -1,167 +1,16 @@
+/* Container for the whole page */
 .home-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding-top: 70px; /* Adjust for navbar height */
-  }
-  
-  .home-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #bce7dc;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .header-left, .header-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .header-left .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .header-left .dropbtn {
-    background-color: #a7cab1;
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .header-left .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .header-left .dropdown-content button {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    border: none;
-    background: none;
-    text-align: left;
-    cursor: pointer;
-  }
-  
-  .header-left .dropdown-content button:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .header-left .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  .header-left .dropdown:hover .dropbtn {
-    background-color: #9ab8a4;
-  }
-  
-  .header-right span {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  .home-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    text-align: center;
-  }
-  
-  .home-content h2 {
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    color: #392b289f;
-  }
-  
-  .buttons-container {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .home-button {
-    padding: 20px 40px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #a7cab1;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .home-button:hover {
-    background-color: #9ab8a4;
-  }
-  .logout-confirm {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    text-align: center;
-  }
-  
-  .logout-confirm button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  .language-select-container {
-    margin-top: 20px;
-  }
-  
-  .language-select-label {
-    font-size: 16px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 8px;
-    display: block;
-  }
-  
-  .language-select {
-    background-color: #caa7c8;
-    color: white;
-    border: none;
-    padding: 12px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-weight: bold;
-    font-size: 16px;
-    margin-top: 8px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .language-select:hover {
-    background-color: #b58eab; /* لون أغمق للتفاعل عند المرور بالماوس */
-  }
-  
-  
-  
   display: flex;
   flex-direction: column;
   height: 100vh;
   padding-top: 70px; /* Adjust for navbar height */
 }
 
+/* Header Styles */
 .home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   padding: 10px 20px;
   background-color: #7a63a1; /* Lilac color for header background */
   border-bottom: 1px solid #ddd;
@@ -175,7 +24,62 @@
   align-items: center; /* Center align content */
 }
 
-.header-right {
+.header-left, .header-right {
+  display: flex;
+  align-items: center;
+}
+
+.header-left .dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.header-left .dropbtn {
+  background-color: #a17dc3; /* Slightly darker purple for button */
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.header-left .dropdown-content {
+  display: none; /* Default to hidden */
+  position: absolute;
+  top: 100%; /* Position below the button */
+  left: 0; /* Align to the left */
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.header-left .dropdown-content button {
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  width: 100%;
+  border: none;
+  background: none;
+  text-align: left;
+  cursor: pointer;
+}
+
+.header-left .dropdown-content button:hover {
+  background-color: #f1f1f1;
+}
+
+.header-left .dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.header-left .dropdown:hover .dropbtn {
+  background-color: #9ab8a4; /* Lighter purple on hover */
+}
+
+.header-right span {
   font-size: 1.5rem;
   font-weight: bold;
   color: white; /* White text for the header */
@@ -189,44 +93,7 @@
   position: relative; /* Ensure the dropdown is positioned relative to this */
 }
 
-.dropbtn {
-  background-color: #a17dc3; /* Slightly darker purple for button */
-  color: white;
-  padding: 10px;
-  font-size: 16px;
-  border: none;
-  cursor: pointer;
-  border-radius: 5px;
-}
-
-.dropdown-content {
-  display: none; /* Default to hidden */
-  flex-direction: column;
-  position: absolute;
-  top: 100%; /* Position below the button */
-  left: 0; /* Align to the left */
-  background-color: #f9f9f9;
-  min-width: 160px;
-  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-  z-index: 1;
-}
-
-.dropdown-content button {
-  color: black;
-  padding: 12px 16px;
-  text-decoration: none;
-  display: block;
-  width: 100%;
-  border: none;
-  background: none;
-  text-align: left;
-  cursor: pointer;
-}
-
-.dropdown-content button:hover {
-  background-color: #f1f1f1;
-}
-
+/* Content Styles */
 .home-content {
   display: flex;
   flex-direction: column;
@@ -260,4 +127,54 @@
 
 .home-button:hover {
   background-color: #6c4b8a; /* Darker purple on hover */
+}
+
+/* Logout Confirmation Styles */
+.logout-confirm {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  text-align: center;
+}
+
+.logout-confirm button {
+  margin: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Language Select Styles */
+.language-select-container {
+  margin-top: 20px;
+}
+
+.language-select-label {
+  font-size: 16px;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.language-select {
+  background-color: #a17dc3; /* Purple background for language select button */
+  color: white;
+  border: none;
+  padding: 12px;
+  border-radius: 20px;
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 16px;
+  margin-top: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.language-select:hover {
+  background-color: #9a6fb4; /* Darker purple on hover */
 }
