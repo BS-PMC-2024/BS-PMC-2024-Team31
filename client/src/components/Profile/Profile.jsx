@@ -87,7 +87,6 @@ function Profile() {
 
   return (
     <div className="profile-container">
-      <div className="profile-header">
         <div className="header-left">
           <div className="dropdown">
             <button className="dropbtn">Setting</button>
@@ -97,10 +96,6 @@ function Profile() {
             </div>
           </div>
         </div>
-        <div className="header-right">
-          <span>Edit Profile</span>
-        </div>
-      </div>
       <div className="profile-content">
         <h2>Edit Profile</h2>
         <div className="profile-buttons">

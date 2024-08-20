@@ -23,8 +23,14 @@ router.post("/", async (req, res) => {
       return res.status(401).send({ message: "Invalid Password" });
     }
 
+    // Backend (auth.js)
     const token = user.generateAuthToken();
-    res.status(200).send({ data: { token, isAdmin: user.isAdmin }, message: "logged in successfully" });
+      res.status(200).send({
+      token,
+      isAdmin: user.isAdmin,
+       userType: user.userType
+});
+
   } catch (error) {
     console.log("Server error:", error);
     res.status(500).send({ message: "Internal Server Error" });

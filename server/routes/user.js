@@ -36,23 +36,21 @@ router.put("/id/:id", async (req, res) => {
 });
 
 // Route to handle role change request
+// routes/user.js
 router.post('/change-role', async (req, res) => {
   try {
-    // Extract email and changeRole from the request body
     const { email, changeRole } = req.body;
-
     console.log('Received request to change role:', { email, changeRole });
 
-    // Find the user by email and update the changeRole field
-    const result = await User.findOneAndUpdate(
+    const user = await User.findOneAndUpdate(
       { email: email },
       { changeRole: changeRole }, 
-      { new: true } // Returns the updated document
+      { new: true } // Return updated document
     );
 
-    if (result) {
-      console.log('Updated user:', result);
-      res.status(200).json({ message: 'Role change updated successfully', user: result });
+    if (user) {
+      console.log('Updated user:', user);
+      res.status(200).json({ message: 'Role change updated successfully', user });
     } else {
       res.status(404).json({ message: 'User not found' });
     }

@@ -1,27 +1,24 @@
-//models/user.js
+// models/user.js
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
+const bcrypt = require('bcrypt');
+const saltRounds = 10; // Adjust the salt rounds as needed
+
 const userSchema = new mongoose.Schema({
   firstName: { type: String, required: true },
   lastName: { type: String, required: true },
-  email: { type: String, required: true },
+  email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
-  //bio: { type: String, default: '' },
-  profileImage: { type: String, default: '' }, // إضافة حقل profileImage
   isAdmin: { type: Boolean, default: false },
   changeRole: { type: Boolean, default: false },
   userType: { type: String, enum: ["worker", "student"], required: true },
-  unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }], // Reference to UnitTest model
-  delete: { type: Boolean, default: false } // إضافة هذا السطر
-
-  
-
-  // Remove userType
+  unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }],
+  delete: { type: Boolean, default: false }
 });
 
-// Keep methods and validation logic as is
+// Generate authentication token
 userSchema.methods.generateAuthToken = function () {
   const token = jwt.sign({ _id: this._id }, process.env.JWTPRIVATEKEY, {
     expiresIn: "7d",
@@ -29,8 +26,24 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-const User = mongoose.model("User", userSchema);
+// Hash password before saving
+userSchema.pre('save', async function(next) {
+  if (this.isModified('password')) {
+    this.password = await bcrypt.hash(this.password, saltRounds); // Update saltRounds if needed
+  }
+  next();
+});
 
+
+// Compare hashed password
+userSchema.methods.comparePassword = async function(candidatePassword) {
+  console.log(`Comparing passwords: ${candidatePassword} vs ${this.password}`);
+  const isMatch = await bcrypt.compare(candidatePassword, this.password);
+  console.log(`Password comparison result: ${isMatch}`);
+  return isMatch;
+};
+
+// Validation schema
 const validate = (data) => {
   const schema = Joi.object({
     firstName: Joi.string().required().label("First Name"),
@@ -41,20 +54,7 @@ const validate = (data) => {
   });
   return schema.validate(data);
 };
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
 
-// Inside your schema methods or pre-save hook
-userSchema.pre('save', async function(next) {
-  if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, saltRounds);
-  }
-  next();
-});
-
-userSchema.methods.comparePassword = async function(candidatePassword) {
-  return bcrypt.compare(candidatePassword, this.password);
-};
+const User = mongoose.model("User", userSchema);
 
 module.exports = { User, validate };
-//////////

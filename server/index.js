@@ -129,6 +129,40 @@ app.post('/api/user/change-role', async (req, res) => {
     res.status(500).send('Error updating user role');
   }
 });
+app.post('/api/auth', async (req, res) => {
+  const { email, password } = req.body;
+
+  console.log(`Received auth request: ${email} - ${password}`);
+
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log(`User not found: ${email}`);
+      return res.status(401).send({ message: 'Invalid Email' });
+    }
+
+    console.log(`User found: ${user.email}`);
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log(`Password comparison result: ${isMatch}`);
+
+    if (!isMatch) {
+      console.log(`Invalid password for user: ${email}`);
+      return res.status(401).send({ message: 'Invalid Password' });
+    }
+
+    const token = user.generateAuthToken();
+    res.send({
+      token,
+      isAdmin: user.isAdmin,
+      userType: user.userType,
+      changeRole: user.changeRole,
+    });
+  } catch (error) {
+    console.error(`Error in auth endpoint: ${error}`);
+    res.status(500).send({ message: 'Server Error' });
+  }
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

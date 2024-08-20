@@ -5,21 +5,33 @@ const bcrypt = require("bcrypt");
 router.post("/", async (req, res) => {
   try {
     const { error } = validate(req.body);
-    if (error)
+    if (error) {
+      console.log("Validation error:", error.details[0].message);
       return res.status(400).send({ message: error.details[0].message });
+    }
 
-    const user = await User.findOne({ email: req.body.email });
-    if (user)
-      return res
-        .status(409)
-        .send({ message: "User with given email already Exist!" });
+    const user = new User({
+      firstName: req.body.firstName,
+      lastName: req.body.lastName,
+      email: req.body.email,
+      password: req.body.password,
+      isAdmin: false,
+      changeRole: false, // Set changeRole to false by default
+      userType: req.body.userType,
+    });
 
-    const salt = await bcrypt.genSalt(Number(process.env.SALT));
-    const hashPassword = await bcrypt.hash(req.body.password, salt);
+    await user.save();
 
-    await new User({ ...req.body, password: hashPassword }).save();
-    res.status(201).send({ message: "User created successfully" });
+    const token = user.generateAuthToken();
+    res.status(200).send({
+      token,
+      isAdmin: user.isAdmin,
+      userType: user.userType,
+      changeRole: user.changeRole,
+    });
+
   } catch (error) {
+    console.log("Server error:", error);
     res.status(500).send({ message: "Internal Server Error" });
   }
 });

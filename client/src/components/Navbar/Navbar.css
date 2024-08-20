@@ -1,37 +1,71 @@
 /* General Navbar Styles */
 nav {
-  height: 70px;
+  height: 100px;
   background-color: #b7a3c3;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 9px 1px;
+  padding: 0 20px; /* Adjust padding for spacing */
   box-shadow: 0 5px 15px rgba(53, 65, 89, 0.06);
 }
 
-/* Navbar Logo/Image Styles */
-.navbar-logo {
-  height: 60px; /* Increased height for a larger logo */
-  width: auto;
-  margin-left: 70px;
-}
-
-nav .logo-container {
+/* Navbar Container */
+.nav-container {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Left Side Container (Logo, Profile, and Welcome Message) */
+.left-side {
+  display: flex;
+  align-items: center;
+}
+
+/* Logo Styles */
+.logo {
+  width: 140px; /* Set a fixed width for the logo */
+  height: auto; /* Maintain aspect ratio */
+  margin-right: 20px; /* Space between logo and profile image */
+  margin-top: 30px;
+
+}
+
+/* Profile and Welcome Container Styles */
+.profile-welcome-container {
+  display: flex;
+  align-items: center;
+}
+
+/* Profile Image Styles */
+.profile-image {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  padding: 3px;
+
+  cursor: pointer;
+  margin-right: 10px; /* Space between profile image and welcome message */
+}
+
+/* Welcome Message Styles */
+.welcome-message {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #392b289f;
 }
 
 /* Navbar List Styles */
 #navbar {
-  flex-grow: 1;
   display: flex;
   align-items: center;
-  justify-content: flex-end;
+  margin-left: auto; /* Push navbar items to the right */
 }
 
 #navbar li {
   list-style: none;
-  padding: 3px 20px 1px 1px;
+  padding: 3px 20px;
   position: relative;
 }
 
@@ -50,7 +84,7 @@ nav .logo-container {
   background-color: #caa7c8;
   border-radius: 5px;
   width: 120px;
-  height: 35px;
+  height: 50px;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
@@ -80,37 +114,34 @@ nav .logo-container {
   left: 20px;
 }
 
-/* Profile Menu Styles */
-.profile-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-.profile-menu {
-  position: absolute;
-  right: 0;
-  top: 50px; /* Adjusted for proper positioning */
-  background-color: white;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  padding: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  z-index: 1000;
-}
-
-.profile-menu-item {
-  display: block;
-  margin: 5px 0;
-  text-decoration: none;
-  color: #333;
-}
-
-.profile-menu-item:hover {
-  color: #007bff;
-}
-
 /* Mobile Navbar Styles */
+#mobile {
+  display: none;
+}
+
+#mobile i {
+  color: #fff;
+  align-items: center;
+}
+
+.menu {
+  cursor: pointer;
+}
+
+/* Dropdown Styles */
+.dropdown {
+  background-color: #200421;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+}
+
+.dropdown a,
+.dropdown button {
+  color: #1f1313;
+}
+
+/* Responsive Styles */
 @media screen and (max-width: 768px) {
   #navbar {
     display: flex;
@@ -118,7 +149,7 @@ nav .logo-container {
     align-items: flex-start;
     justify-content: flex-start;
     position: fixed;
-    top: 90px;
+    top: 70px;
     right: -300px;
     width: 300px;
     height: 100vh;
@@ -144,4 +175,35 @@ nav .logo-container {
     font-size: 24px;
     cursor: pointer;
   }
+}
+
+/* Profile Container */
+.profile-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+/* Profile Menu */
+.profile-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  z-index: 1000;
+}
+
+.profile-menu-item {
+  padding: 10px 20px;
+  text-decoration: none;
+  color: #392b289f;
+  font-weight: 600;
+}
+
+.profile-menu-item:hover {
+  background-color: #f0f0f0;
 }

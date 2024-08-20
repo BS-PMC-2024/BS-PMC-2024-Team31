@@ -3,7 +3,7 @@ import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import StarRating from "../StarRating/StarRating";
 import logo from '../../assests/images/logo.png';
-import AccessibilityMenu from "../Navbar/AccessibilityMenu";
+import AccessibilityMenu from "./AccessibilityMenu";
 
 const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
@@ -15,6 +15,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
+    // Update the login status based on localStorage
     const handleStorageChange = () => {
       setIsLoggedIn(!!localStorage.getItem("token"));
       const user = JSON.parse(localStorage.getItem("user"));
@@ -23,9 +24,11 @@ const Navbar = () => {
       }
     };
 
-    handleStorageChange();
+    handleStorageChange(); // Check the initial state
+
     window.addEventListener('storage', handleStorageChange);
 
+    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
@@ -37,18 +40,16 @@ const Navbar = () => {
 
   const cancelLogout = () => {
     setShowLogoutConfirm(false);
-    setShowStarRating(false);
   };
 
   const completeLogout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
-    setShowLogoutConfirm(false);
+    setShowLogoutConfirm(false); // Hide confirmation message
     navigate('/homepage');
   };
 
   const submitStarRating = () => {
-    console.log("Rating submitted");
     setShowStarRating(false);
     setShowLogoutConfirm(true);
   };
@@ -61,19 +62,14 @@ const Navbar = () => {
     setShowProfileMenu(prev => !prev);
   };
 
-  const generateProfileImageURL = (name) => {
-    // Replace with actual logic to generate profile image URL
-    return `https://example.com/profile/${name}.png`;
-  };
-
   return (
     <>
-      <nav className="navbar">
+      <nav>
         <div className="nav-container">
           <div className="logo-container">
             <NavLink to="/" end>
-               <img src={logo} alt="Logo" className="navbar-logo" />
-            </NavLink>   
+              <img src={logo} alt="Logo" className="logo" />
+            </NavLink>
             {isLoggedIn && (
               <div className="profile-container">
                 <img
@@ -96,54 +92,30 @@ const Navbar = () => {
               </div>
             )}
           </div>
-        </div>
 
-        <ul id="navbar">
-          <li>
-            <NavLink
-              to="/homepage"
-              className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
-            >
-              Home
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/aboutus"
-              className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
-            >
-              About
-            </NavLink>
-          </li>
-          <li>
-            <NavLink
-              to="/contactus"
-              className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
-            >
-              Contact Us
-            </NavLink>
-          </li>
-          {isLoggedIn ? (
-            <>
-              <li className="profile-container">
-                <button
-                  className="white_btn"
-                  onClick={toggleProfileMenu}
-                  data-testid="Profile-button"
-                >
-                  Profile
-                </button>
-                {showProfileMenu && (
-                  <div className="profile-menu">
-                    <NavLink to="/edit-profile" className="profile-menu-item">
-                      Edit Profile
-                    </NavLink>
-                    <NavLink to="/profile" className="profile-menu-item">
-                      View Profile
-                    </NavLink>
-                  </div>
-                )}
+          <ul id="navbar">
+            <li>
+              <NavLink to="/homepage" className="nav-link" activeClassName="active-link">
+                Home
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/aboutus" className="nav-link" activeClassName="active-link">
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contactus" className="nav-link" activeClassName="active-link">
+                Contact Us
+              </NavLink>
+            </li>
+            {!isLoggedIn ? (
+              <li>
+                <NavLink to="/login" className="white_btn" data-testid="Login-button">
+                  Login
+                </NavLink>
               </li>
+            ) : (
               <li>
                 <button
                   className="white_btn"
@@ -153,24 +125,18 @@ const Navbar = () => {
                   Logout
                 </button>
               </li>
-            </>
-          ) : (
+            )}
             <li>
-              <NavLink to="/login" className="white_btn" data-testid="Login-button">
-                Login
-              </NavLink>
+              <button
+                className="white_btn"
+                onClick={toggleAccessibilityMenu}
+                data-testid="Accessibility-button"
+              >
+                Accessibility
+              </button>
             </li>
-          )}
-          <li>
-            <button
-              className="white_btn"
-              onClick={toggleAccessibilityMenu}
-              data-testid="Accessibility-button"
-            >
-              Accessibility
-            </button>
-          </li>
-        </ul>
+          </ul>
+        </div>
       </nav>
 
       {showStarRating && (
@@ -194,6 +160,12 @@ const Navbar = () => {
       )}
     </>
   );
+};
+
+// Function to generate profile image URL
+const generateProfileImageURL = (firstName) => {
+  const firstLetter = firstName ? firstName[0].toUpperCase() : 'U'; // Default to 'U' if name is not available
+  return `https://via.placeholder.com/100x100.png?text=${firstLetter}`;
 };
 
 export default Navbar;
