@@ -1,16 +1,35 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
-import StarRating from "../StarRating/StarRating"; // Import the StarRating component
-import logo from '../../assests/images/logo.png'; // Update the path to your logo image
-
-import AccessibilityMenu from "../Navbar/AccessibilityMenu"; // Import the AccessibilityMenu component
+import StarRating from "../StarRating/StarRating";
+import logo from '../../assests/images/logo.png';
+import AccessibilityMenu from "../Navbar/AccessibilityMenu";
 
 const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showStarRating, setShowStarRating] = useState(false);
   const [showAccessibilityMenu, setShowAccessibilityMenu] = useState(false);
-  const isLoggedIn = localStorage.getItem("token") ? true : false;
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [userFirstName, setUserFirstName] = useState("");
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleStorageChange = () => {
+      setIsLoggedIn(!!localStorage.getItem("token"));
+      const user = JSON.parse(localStorage.getItem("user"));
+      if (user) {
+        setUserFirstName(user.firstName);
+      }
+    };
+
+    handleStorageChange();
+    window.addEventListener('storage', handleStorageChange);
+
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const confirmLogout = () => {
     setShowStarRating(true);
@@ -18,14 +37,19 @@ const Navbar = () => {
 
   const cancelLogout = () => {
     setShowLogoutConfirm(false);
+    setShowStarRating(false);
   };
 
   const completeLogout = () => {
     localStorage.clear();
-    window.location = '/homepage';
+    setIsLoggedIn(false);
+    setShowLogoutConfirm(false);
+    navigate('/homepage');
   };
 
   const submitStarRating = () => {
+    console.log("Rating submitted");
+    setShowStarRating(false);
     setShowLogoutConfirm(true);
   };
 
@@ -33,31 +57,93 @@ const Navbar = () => {
     setShowAccessibilityMenu(prev => !prev);
   };
 
+  const toggleProfileMenu = () => {
+    setShowProfileMenu(prev => !prev);
+  };
+
+  const generateProfileImageURL = (name) => {
+    // Replace with actual logic to generate profile image URL
+    return `https://example.com/profile/${name}.png`;
+  };
+
   return (
     <>
-      <nav>
-        <NavLink exact to="/" activeClassName="active-link">
-          <img src={logo} alt="Logo" width="150" height="90" />
-        </NavLink>
+      <nav className="navbar">
+        <div className="nav-container">
+          <div className="logo-container">
+            <NavLink to="/" end>
+               <img src={logo} alt="Logo" className="navbar-logo" />
+            </NavLink>   
+            {isLoggedIn && (
+              <div className="profile-container">
+                <img
+                  src={generateProfileImageURL(userFirstName)}
+                  alt="Profile"
+                  className="profile-image"
+                  onClick={toggleProfileMenu}
+                />
+                {showProfileMenu && (
+                  <div className="profile-menu">
+                    <NavLink to="/edit-profile" className="profile-menu-item">
+                      Edit Profile
+                    </NavLink>
+                    <NavLink to="/profile" className="profile-menu-item">
+                      View Profile
+                    </NavLink>
+                  </div>
+                )}
+                <span className="welcome-message">Welcome, {userFirstName}!</span>
+              </div>
+            )}
+          </div>
+        </div>
 
-        <div>
-          <ul id="navbar">
-            <li>
-              <NavLink to="/homepage" className="nav-link" activeClassName="active-link">
-                Home
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/aboutus" className="nav-link" activeClassName="active-link">
-                About
-              </NavLink>
-            </li>
-            <li>
-              <NavLink to="/contactus" className="nav-link" activeClassName="active-link">
-                Contact Us
-              </NavLink>
-            </li>
-            {isLoggedIn ? (
+        <ul id="navbar">
+          <li>
+            <NavLink
+              to="/homepage"
+              className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
+            >
+              Home
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/aboutus"
+              className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
+            >
+              About
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/contactus"
+              className={({ isActive }) => (isActive ? "nav-link active-link" : "nav-link")}
+            >
+              Contact Us
+            </NavLink>
+          </li>
+          {isLoggedIn ? (
+            <>
+              <li className="profile-container">
+                <button
+                  className="white_btn"
+                  onClick={toggleProfileMenu}
+                  data-testid="Profile-button"
+                >
+                  Profile
+                </button>
+                {showProfileMenu && (
+                  <div className="profile-menu">
+                    <NavLink to="/edit-profile" className="profile-menu-item">
+                      Edit Profile
+                    </NavLink>
+                    <NavLink to="/profile" className="profile-menu-item">
+                      View Profile
+                    </NavLink>
+                  </div>
+                )}
+              </li>
               <li>
                 <button
                   className="white_btn"
@@ -67,24 +153,24 @@ const Navbar = () => {
                   Logout
                 </button>
               </li>
-            ) : (
-              <li>
-                <NavLink to="/login" className="white_btn" data-testid="Login-button">
-                  Login
-                </NavLink>
-              </li>
-            )}
+            </>
+          ) : (
             <li>
-              <button
-                className="white_btn"
-                onClick={toggleAccessibilityMenu}
-                data-testid="Accessibility-button"
-              >
-                Accessibility
-              </button>
+              <NavLink to="/login" className="white_btn" data-testid="Login-button">
+                Login
+              </NavLink>
             </li>
-          </ul>
-        </div>
+          )}
+          <li>
+            <button
+              className="white_btn"
+              onClick={toggleAccessibilityMenu}
+              data-testid="Accessibility-button"
+            >
+              Accessibility
+            </button>
+          </li>
+        </ul>
       </nav>
 
       {showStarRating && (

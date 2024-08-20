@@ -10,6 +10,9 @@ const authRoutes = require('./routes/auth');
 const { User } = require("./models/user");
 const profileRoutes = require('./routes/updateProfile');
 const unitTestRoutes = require('./routes/unitTests');
+const path = require('path');
+const bcrypt = require('bcrypt');
+const adminRoutes = require('./routes/admins');
 const mongoose = require('mongoose');
 
 const app = express();
@@ -27,7 +30,14 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// Import routes
+//const updateProfileRoute = require('./routes/updateProfile');
+
+
+// Use routes
+app.use("/api/admins", adminRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/unitTests', unitTestRoutes);
 app.use('/api/user', userRoutes);
@@ -75,26 +85,50 @@ app.post('/api/unitTests', async (req, res) => {
     res.status(400).json({ error: error.message });
   }
 });
+app.post('/api/user/delete-account', async (req, res) => {
+  const { email } = req.body;
 
-// Products routes
-app.post('/api/search', async (req, res) => {
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
+
   try {
-    const searchQueries = req.body.products;
-    if (!searchQueries || searchQueries.length === 0) {
-      return res.status(400).send({ message: 'No search queries provided' });
+    // Find and delete the user from the database
+    const user = await User.findOneAndDelete({ email });
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
     }
-    const response = await axios.post('http://localhost:3002/search', req.body, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    res.json(response.data);
+
+    res.status(200).json({ message: 'Account deleted successfully' });
   } catch (error) {
-    console.error("Error during search:", error);
-    res.status(500).send({ message: 'Internal server error' });
+    console.error('Error deleting account:', error.message);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
+app.post('/api/user/change-role', async (req, res) => {
+  const { email, changeRole } = req.body;
+  console.log('Received request to change role:', { email, changeRole });
 
+  try {
+    const user = await User.findOneAndUpdate(
+      { email },
+      { $set: { role: changeRole } },  // Ensure this field matches your database schema
+      { new: true }
+    );
+
+    if (!user) {
+      console.log('User not found');
+      return res.status(404).send('User not found');
+    }
+
+    console.log('Updated user:', user); // Log the updated user to confirm the change
+    res.status(200).send('Role change request received');
+  } catch (error) {
+    console.error('Error updating user role:', error);
+    res.status(500).send('Error updating user role');
+  }
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

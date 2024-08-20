@@ -8,10 +8,15 @@ const userSchema = new mongoose.Schema({
   lastName: { type: String, required: true },
   email: { type: String, required: true },
   password: { type: String, required: true },
-  profileImage: { type: String, default: '' },
+  //bio: { type: String, default: '' },
+  profileImage: { type: String, default: '' }, // إضافة حقل profileImage
   isAdmin: { type: Boolean, default: false },
+  changeRole: { type: Boolean, default: false },
   userType: { type: String, enum: ["worker", "student"], required: true },
-  unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }] // Reference to UnitTest model
+  unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }], // Reference to UnitTest model
+  delete: { type: Boolean, default: false } // إضافة هذا السطر
+
+  
 
   // Remove userType
 });
@@ -24,8 +29,7 @@ userSchema.methods.generateAuthToken = function () {
   return token;
 };
 
-
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 const validate = (data) => {
   const schema = Joi.object({
@@ -33,7 +37,7 @@ const validate = (data) => {
     lastName: Joi.string().required().label("Last Name"),
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().required().label("Password"),
-    // Remove userType validation
+    userType: Joi.string().valid("worker", "student").required().label("User Type"),
   });
   return schema.validate(data);
 };
@@ -53,3 +57,4 @@ userSchema.methods.comparePassword = async function(candidatePassword) {
 };
 
 module.exports = { User, validate };
+//////////

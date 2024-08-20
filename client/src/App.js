@@ -1,19 +1,37 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import './App.css';
-import Profile from './components/Edit/Profile'; 
+import ViewProfile from './components/Edit/ProfileView'; 
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login";
-import HomePageStudent from './components/HomePageStudent'; 
-import HomePageAdmin from './components/HomePageAdmin'; 
+import Signup from './components/Singup';
+import HomePageStudent from './components/HomePageStudent';
+import HomePageWorker from './components/HomePageWorker';
 import ContactUs from './components/Navbar/ContactUs'; // Adjust the import path as needed
-import AboutUs from './components/Navbar/AboutUs'; // Adjust the import path as needed
-
-import HomePageWorker from './components/HomePageWorker'; 
-import HomePage from './components/HomePage/HomePage'; 
+import AboutUs from './components/Navbar/AboutUs'; 
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
-import Signup from './components/Singup'; // תקן את השם מ-'Singup' ל-'Signup'
+import Edit from './components/Edit/EditProfile';
+import Profile from './components/Profile/Profile';
+import EditUsername from './components/EditUsername/EditUsername';
+import HomePageAdmin from './components/HomePageAdmin';
+import HomePage from './components/HomePage/HomePage'; 
 
+
+
+function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const handleLogin = () => {
+    setIsLoggedIn(true);
+  };
+
+  const handleLogout = () => {
+    setIsLoggedIn(false);
+    localStorage.clear();
+    window.location = '/';
+  }
+
+
+/*  
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -24,7 +42,7 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.clear();
-  };
+  };*/
 
   return (
     <Router>
@@ -39,7 +57,6 @@ function App() {
             <Route path="/homePageWorker" element={<HomePageWorker />} />
             <Route path="/homePageAdmin" element={<HomePageAdmin />} />
             <Route path="/contactus" element={<ContactUs />} />
-
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Navigate replace to="/homepage" />} /> {/* Redirect root to /homepage */}
             <Route path="/profile" element={<Profile />} />
@@ -51,5 +68,6 @@ function App() {
     </Router>
   );
 }
-
+  
 export default App;
+

@@ -5,16 +5,28 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background: #b7a3c3;
   padding: 9px 1px;
   box-shadow: 0 5px 15px rgba(53, 65, 89, 0.06);
 }
 
-/* Navbar List Styles */
-#navbar {
+/* Navbar Logo/Image Styles */
+.navbar-logo {
+  height: 60px; /* Increased height for a larger logo */
+  width: auto;
+  margin-left: 70px;
+}
+
+nav .logo-container {
   display: flex;
   align-items: center;
-  justify-content: center;
+}
+
+/* Navbar List Styles */
+#navbar {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
 
 #navbar li {
@@ -68,34 +80,37 @@ nav {
   left: 20px;
 }
 
-/* Mobile Navbar Styles */
-#mobile {
-  display: none;
-}
-
-#mobile i {
-  color: #fff;
-  align-items: center;
-}
-
-.menu {
-  cursor: pointer;
-}
-
-/* Dropdown Styles */
-.dropdown {
-  background-color: #200421;
-  position: absolute;
+/* Profile Menu Styles */
+.profile-container {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
-.dropdown a,
-.dropdown button {
-  color: #1f1313;
+.profile-menu {
+  position: absolute;
+  right: 0;
+  top: 50px; /* Adjusted for proper positioning */
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
 }
 
-/* Responsive Styles */
+.profile-menu-item {
+  display: block;
+  margin: 5px 0;
+  text-decoration: none;
+  color: #333;
+}
+
+.profile-menu-item:hover {
+  color: #007bff;
+}
+
+/* Mobile Navbar Styles */
 @media screen and (max-width: 768px) {
   #navbar {
     display: flex;
