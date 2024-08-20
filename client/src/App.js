@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import './App.css';
-import Profile from './components/Edit/Profile'; 
+import ViewProfile from './components/Edit/ProfileView'; 
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./components/Login";
 import Signup from './components/Singup';
@@ -29,17 +29,9 @@ function App() {
     localStorage.clear();
     window.location = '/';
   }
-}
-import HomePageStudent from './components/HomePageStudent'; 
-import HomePageAdmin from './components/HomePageAdmin'; 
-import ContactUs from './components/Navbar/ContactUs'; // Adjust the import path as needed
-import AboutUs from './components/Navbar/AboutUs'; // Adjust the import path as needed
 
-import HomePageWorker from './components/HomePageWorker'; 
-import HomePage from './components/HomePage/HomePage'; 
-import ForgotPassword from './components/ForgotPassword/ForgotPassword';
-import Signup from './components/Singup'; // תקן את השם מ-'Singup' ל-'Signup'
-  
+
+/*  
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -50,7 +42,7 @@ function App() {
   const handleLogout = () => {
     setIsLoggedIn(false);
     localStorage.clear();
-  };
+  };*/
 
   return (
     <Router>
