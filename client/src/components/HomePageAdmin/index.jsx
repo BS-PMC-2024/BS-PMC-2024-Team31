@@ -7,6 +7,7 @@ const HomePageAdmin = () => {
   const [admins, setAdmins] = useState([]);
   const [users, setUsers] = useState([]);
   const [deletedRequests, setDeletedRequests] = useState([]);
+  const [changeRoleUsers, setChangeRoleUsers] = useState([]);
   const [error, setError] = useState('');
   const [view, setView] = useState('');
   const [loading, setLoading] = useState(false);
@@ -15,6 +16,7 @@ const HomePageAdmin = () => {
   useEffect(() => {
     if (view === 'admins') fetchAdmins();
     else if (view === 'users') fetchUsers();
+    else if (view === 'changeRole') fetchChangeRoleUsers();
     else if (view === 'deleted') fetchDeletedRequests();
   }, [view]);
 
@@ -64,6 +66,20 @@ const HomePageAdmin = () => {
     }
   };
 
+  const fetchChangeRoleUsers = async () => {
+    setLoading(true);
+    try {
+      const response = await axios.get('http://localhost:3001/api/admins/changeRole-true');
+      setChangeRoleUsers(response.data);
+      setError('');
+    } catch (error) {
+      console.error('Error fetching users with changeRole true:', error);
+      setError('Failed to fetch users with changeRole true');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const fetchDeletedRequests = async () => {
     setLoading(true);
     try {
@@ -85,14 +101,18 @@ const HomePageAdmin = () => {
   const handleAddAdminClick = () => {
     navigate('/addAdmin'); // Navigate to the AddAdmin page
   };
-  
+
+  // Function to handle removal of users from changeRoleUsers table
+  const handleMarkAsDoneClick = (email) => {
+    setChangeRoleUsers(changeRoleUsers.filter(user => user.email !== email));
+  };
 
   return (
     <div className={styles.container}>
       <div className={styles.buttons}>
         <button className={styles.button} onClick={() => handleViewChange('admins')}>Show Admins List</button>
         <button className={styles.button} onClick={() => handleViewChange('users')}>Show Users List</button>
-        <button className={styles.button} onClick={() => handleViewChange('deleted')}>Show Deleted Requests</button>
+        <button className={styles.button} onClick={() => handleViewChange('changeRole')}>Show Users with Change Role</button>
         <button className={styles.button} onClick={handleEditProfileClick}>Edit Profile</button>
       </div>
 
@@ -135,6 +155,7 @@ const HomePageAdmin = () => {
           </table>
         </div>
       )}
+
       {view === 'users' && (
         <div className={styles.tableContainer}>
           <h2>Users List</h2>
@@ -161,27 +182,41 @@ const HomePageAdmin = () => {
         </div>
       )}
 
-      {view === 'deleted' && (
+      {view === 'changeRole' && (
         <div className={styles.tableContainer}>
-          <h2>Deleted Requests</h2>
+          <h2>Users with Change Role</h2>
           <table className={styles.table}>
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Details</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>User Type</th>
+                <th>Action</th> {/* New column for the Done button */}
               </tr>
             </thead>
             <tbody>
-              {deletedRequests.map((request) => (
-                <tr key={request._id}>
-                  <td>{request.id}</td>
-                  <td>{request.details}</td>
+              {changeRoleUsers.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.userType}</td>
+                  <td>
+                    <button 
+                      className={styles.button} 
+                      onClick={() => handleMarkAsDoneClick(user.email)}
+                    >
+                      Done
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
           </table>
         </div>
       )}
+
     </div>
   );
 };
