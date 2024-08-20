@@ -11,6 +11,7 @@ const userSchema = new mongoose.Schema({
   //bio: { type: String, default: '' },
   profileImage: { type: String, default: '' }, // إضافة حقل profileImage
   isAdmin: { type: Boolean, default: false },
+  changeRole: { type: Boolean, default: false },
   userType: { type: String, enum: ["worker", "student"], required: true },
   unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }], // Reference to UnitTest model
   delete: { type: Boolean, default: false } // إضافة هذا السطر

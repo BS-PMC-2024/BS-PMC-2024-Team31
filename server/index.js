@@ -106,10 +106,29 @@ app.post('/api/user/delete-account', async (req, res) => {
     res.status(500).json({ message: 'Internal server error', error: error.message });
   }
 });
+app.post('/api/user/change-role', async (req, res) => {
+  const { email, changeRole } = req.body;
+  console.log('Received request to change role:', { email, changeRole });
 
+  try {
+    const user = await User.findOneAndUpdate(
+      { email },
+      { $set: { role: changeRole } },  // Ensure this field matches your database schema
+      { new: true }
+    );
 
+    if (!user) {
+      console.log('User not found');
+      return res.status(404).send('User not found');
+    }
 
-
+    console.log('Updated user:', user); // Log the updated user to confirm the change
+    res.status(200).send('Role change request received');
+  } catch (error) {
+    console.error('Error updating user role:', error);
+    res.status(500).send('Error updating user role');
+  }
+});
 
 const port = process.env.PORT || 3001;
 app.listen(port, () => {

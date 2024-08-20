@@ -1,4 +1,5 @@
 //routes/user.js
+// Import necessary modules
 const router = require("express").Router();
 const { User } = require("../models/user");
 const { json } = require("express");
@@ -7,6 +8,8 @@ const authenticate = require('../middleware/authenticate'); // Authentication mi
 
 
 
+
+// Define routes
 router.get("/email/:email", async (req, res) => {
   try {
     const email = req.params.email;
@@ -56,6 +59,34 @@ router.post("/toggle-admin", async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 });
+
+// Route to handle role change request
+router.post('/change-role', async (req, res) => {
+  try {
+    // Extract email and changeRole from the request body
+    const { email, changeRole } = req.body;
+
+    console.log('Received request to change role:', { email, changeRole });
+
+    // Find the user by email and update the changeRole field
+    const result = await User.findOneAndUpdate(
+      { email: email },
+      { changeRole: changeRole }, 
+      { new: true } // Returns the updated document
+    );
+
+    if (result) {
+      console.log('Updated user:', result);
+      res.status(200).json({ message: 'Role change updated successfully', user: result });
+    } else {
+      res.status(404).json({ message: 'User not found' });
+    }
+  } catch (error) {
+    console.error('Error updating role:', error);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
+});
+
 router.put("/delete-account/:email", async (req, res) => {
   try {
     const { email } = req.params;
@@ -80,6 +111,7 @@ router.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send('Something broke!');
 });
+
 router.put('/update-name', async (req, res) => {
     const { userId, firstName, lastName } = req.body;
 
@@ -100,3 +132,11 @@ router.put('/update-name', async (req, res) => {
 });
 module.exports = router;
 
+
+// Error handling middleware
+router.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).send('Something broke!');
+});
+
+module.exports = router;

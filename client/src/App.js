@@ -57,7 +57,6 @@ function App() {
             <Route path="/homePageWorker" element={<HomePageWorker />} />
             <Route path="/homePageAdmin" element={<HomePageAdmin />} />
             <Route path="/contactus" element={<ContactUs />} />
-
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Navigate replace to="/homepage" />} /> {/* Redirect root to /homepage */}
             <Route path="/profile" element={<Profile />} />
