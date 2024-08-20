@@ -15,7 +15,9 @@ const userSchema = new mongoose.Schema({
   changeRole: { type: Boolean, default: false },
   userType: { type: String, enum: ["worker", "student"], required: true },
   unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }],
-  delete: { type: Boolean, default: false }
+  delete: { type: Boolean, default: false },
+  language: { type: String, enum: ["Python", "Java"], default: "Python" },
+
 });
 
 // Generate authentication token

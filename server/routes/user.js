@@ -129,6 +129,31 @@ router.put('/update-name', async (req, res) => {
     }
 });
 module.exports = router;
+router.put('/update-language', async (req, res) => {
+  try {
+    const { email, language } = req.body;
+
+    console.log('Received email and language:', { email, language });
+
+    if (!['Python', 'Java'].includes(language)) {
+      return res.status(400).send({ message: 'Invalid language value' });
+    }
+
+    const user = await User.findOne({ email });
+    if (!user) {
+      return res.status(404).send({ message: 'User not found' });
+    }
+
+    user.language = language;
+    await user.save();
+
+    res.status(200).send({ message: 'Language updated successfully' });
+  } catch (error) {
+    console.error('Error updating language:', error);
+    res.status(500).send({ message: 'Internal Server Error', error });
+  }
+});
+
 
 
 // Error handling middleware

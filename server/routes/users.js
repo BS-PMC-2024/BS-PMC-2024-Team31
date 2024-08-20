@@ -18,6 +18,7 @@ router.post("/", async (req, res) => {
       isAdmin: false,
       changeRole: false, // Set changeRole to false by default
       userType: req.body.userType,
+
     });
 
     await user.save();
