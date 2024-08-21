@@ -14,7 +14,6 @@ import Profile from './components/Profile/Profile';
 import EditUsername from './components/EditUsername/EditUsername';
 import HomePageAdmin from './components/HomePageAdmin';
 import HomePage from './components/HomePage/HomePage'; 
-import TypeUnit from './components/TypeUnit/typeUnit'; // Adjust the path if necessary
 
 
 
@@ -62,7 +61,6 @@ function App() {
             <Route path="/profile" element={<Profile />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/homePageStudent" element={<HomePageStudent />} />
-            <Route path="/type-unit" element={<TypeUnit />} />
 
           </Routes>
         </div>

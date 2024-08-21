@@ -96,15 +96,29 @@ function Profile() {
             </div>
           </div>
         </div>
-      <div className="profile-content">
-        <h2>Edit Profile</h2>
-        <div className="profile-buttons">
-          <button className="profile-button" onClick={handleUsernameClick}>Username</button>
-          <button className="profile-button">Change Password</button>
-          <button className="profile-button" onClick={handleDeleteClick}>Delete</button>
-          <button className="profile-button" onClick={handleRoleChangeClick}>Change My Role</button>
-        </div>
-      </div>
+        <div className="profile-content">
+  <h2>Edit Profile</h2>
+  <div className="profile-buttons">
+    <div className="tooltip-wrapper">
+      <button className="profile-button" onClick={handleUsernameClick}>Username</button>
+      <span className="tooltiptext">Click to edit your username</span>
+    </div>
+    <div className="tooltip-wrapper">
+      <button className="profile-button">Change Password</button>
+      <span className="tooltiptext">Click to change your password</span>
+    </div>
+    <div className="tooltip-wrapper">
+      <button className="profile-button" onClick={handleDeleteClick}>Delete</button>
+      <span className="tooltiptext">Click to delete your account</span>
+    </div>
+    <div className="tooltip-wrapper">
+      <button className="profile-button" onClick={handleRoleChangeClick}>Change My Role</button>
+      <span className="tooltiptext">Click to request a role change</span>
+    </div>
+  </div>
+</div>
+
+     
 
       {showReasonDropdown && (
         <div className="reason-dropdown">

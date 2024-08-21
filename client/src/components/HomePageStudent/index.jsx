@@ -35,7 +35,10 @@ function Home() {
       <div className="home-header">
         <div className="header-left">
           <div className="dropdown">
-            <button className="dropbtn">Setting</button>
+            <button className="dropbtn">
+              Setting
+              <span className="tooltiptext">Click here to change settings</span>
+            </button>
             <div className="dropdown-content">
               <button onClick={handleEdit}>Edit</button>
               <button onClick={handleLogout}>Log Out</button>
@@ -47,19 +50,23 @@ function Home() {
         </div>
       </div>
       <div className="home-content">
-        <div className="language-select-container">
-          <label htmlFor="language-select" className="language-select-label">Select a language:</label>
+      <div className="language-select-container">
+        <label htmlFor="language-select" className="language-select-label">Select a language:</label>
+         <div className="tooltip-wrapper">
           <select
-            id="language-select"
-            className="language-select"
-            value={language}
-            onChange={handleLanguageChange}
-          >
-            <option value="">--Please choose an option--</option>
-            <option value="python">Python</option>
-            <option value="java">Java</option>
-          </select>
-        </div>
+           id="language-select"
+           className="language-select"
+           value={language}
+           onChange={handleLanguageChange}
+    >
+      <option value="">--Please choose an option--</option>
+      <option value="python">Python</option>
+      <option value="java">Java</option>
+    </select>
+    <span className="tooltiptext">Choose your preferred programming language</span>
+  </div>
+</div>
+
       </div>
     </div>
   );

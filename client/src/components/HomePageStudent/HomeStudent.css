@@ -152,6 +152,62 @@
   .language-select:hover {
     background-color: #b58eab; /* لون أغمق للتفاعل عند المرور بالماوس */
   }
-  
+  /* Tooltip container */
+.dropbtn {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 140px;
+  background-color: rgb(68, 65, 65);
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: -65%; /* يظهر النص التوضيحي تحت الزر */
+  left: 105%;
+  margin-left: -70px; /* استخدم نصف العرض السلبي لتوسيط النص التوضيحي */
+  opacity: 0;
+  font-size: 12px; /* تصغير حجم الخط */
+  transition: opacity 0.3s;
+}
+
+.dropbtn:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip-wrapper .tooltiptext {
+  visibility: hidden;
+  width: 180px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 125%;
+  left: 35%; /* يظهر النص التوضيحي بجانب عنصر select */
+  transform: translateY(-50%);
+  opacity: 0;
+  font-size: 12px; /* تصغير حجم الخط */
+  transition: opacity 0.3s;
+}
+
+.tooltip-wrapper:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+
   
   

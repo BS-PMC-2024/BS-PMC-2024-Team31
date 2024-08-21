@@ -158,3 +158,32 @@
   border-radius: 5px;
   color: #333;
 }
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px; /* لزيادة المسافة بين الأزرار */
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 105%; /* يجعل النص التوضيحي يظهر على يمين الزر */
+  transform: translateY(-50%);
+  opacity: 0;
+  font-size: 12px; /* تصغير حجم الخط */
+  transition: opacity 0.3s;
+}
+
+.tooltip-wrapper:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
