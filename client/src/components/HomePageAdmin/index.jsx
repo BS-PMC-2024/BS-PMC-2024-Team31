@@ -182,6 +182,40 @@ const HomePageAdmin = () => {
         </div>
       )}
 
+      {view === 'changeRole' && (
+        <div className={styles.tableContainer}>
+          <h2>Users with Change Role</h2>
+          <table className={styles.table}>
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>User Type</th>
+                <th>Action</th> {/* New column for the Done button */}
+              </tr>
+            </thead>
+            <tbody>
+              {changeRoleUsers.map((user) => (
+                <tr key={user._id}>
+                  <td>{user.firstName}</td>
+                  <td>{user.lastName}</td>
+                  <td>{user.email}</td>
+                  <td>{user.userType}</td>
+                  <td>
+                    <button 
+                      className={styles.button} 
+                      onClick={() => handleMarkAsDoneClick(user.email)}
+                    >
+                      Done
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      )}
 
     </div>
   );
