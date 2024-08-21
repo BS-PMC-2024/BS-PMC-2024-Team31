@@ -9,6 +9,7 @@ function Profile() {
   const [selectedReason, setSelectedReason] = useState('');
   const [showReasonDropdown, setShowReasonDropdown] = useState(false);
   const [roleChangeMessage, setRoleChangeMessage] = useState('');
+  const [dropdownVisible, setDropdownVisible] = useState(false);
   const navigate = useNavigate();
 
   const email = localStorage.getItem("email");
@@ -62,14 +63,14 @@ function Profile() {
     console.log('Role change button clicked'); // Debugging
     setShowRoleConfirm(true); // Show role change confirmation modal
   };
+
   const handleConfirmRoleChange = async () => {
     setRoleChangeMessage('Your request is being processed.');
     try {
       console.log('Sending role change request');
       const response = await axios.post("http://localhost:3001/api/user/change-role", { email,
         changeRole: true // Include the changeRole field set to true
-
-       });
+      });
       console.log('Response:', response.data); // Log the response
       setRoleChangeMessage('Role change request received!');
     } catch (error) {
@@ -79,10 +80,13 @@ function Profile() {
       setShowRoleConfirm(false);
     }
   };
-  
 
   const handleCancelRoleChange = () => {
     setShowRoleConfirm(false);
+  };
+
+  const toggleDropdown = () => {
+    setDropdownVisible(!dropdownVisible);
   };
 
   return (

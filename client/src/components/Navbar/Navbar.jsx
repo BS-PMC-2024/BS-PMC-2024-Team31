@@ -80,7 +80,7 @@ const Navbar = () => {
                 />
                 {showProfileMenu && (
                   <div className="profile-menu">
-                    <NavLink to="/edit-profile" className="profile-menu-item">
+                    <NavLink to="/profile" className="profile-menu-item">
                       Edit Profile
                     </NavLink>
                     <NavLink to="/profile" className="profile-menu-item">
@@ -143,7 +143,6 @@ const Navbar = () => {
         <div className="star-rating-container">
           <h3>Please rate your experience before you leave:</h3>
           <StarRating />
-          <button onClick={submitStarRating}>Submit Rating</button>
         </div>
       )}
 

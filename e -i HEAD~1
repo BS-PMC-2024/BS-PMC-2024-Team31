@@ -1,0 +1,269 @@
+[33mcommit 5150e58ad13b69861720a24b001b6e284b1962d0[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Wed Aug 21 00:31:07 2024 +0300
+
+    BSPMS2431-208+BSPMS2431-8
+
+[33mcommit 02a53f000e5e6f99b66a9b93057bc004c9ccb984[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Wed Aug 21 00:29:52 2024 +0300
+
+    BSPMS2431-208+BSPMS2431-8
+
+[33mcommit fac2ccc9d6ff623411a8f49157a02ea8ab494c57[m
+Merge: b4ceefe0 b7a866c1
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Tue Aug 20 22:39:43 2024 +0300
+
+    Merge branch 'main' of https://github.com/BS-PMC-2024/BS-PMC-2024-Team31
+
+[33mcommit b4ceefe05d272a247ff93046ef6dc4b16c56f939[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Tue Aug 20 22:35:15 2024 +0300
+
+    BSPMS2431-53
+
+[33mcommit b7a866c10e8e9df157c7fbfd103b23f632a8b214[m
+Author: Tasneem-sh2 <162573898+Tasneem-sh2@users.noreply.github.com>
+Date:   Tue Aug 20 18:33:48 2024 +0300
+
+    BSPMS2431-7
+
+[33mcommit 392a80b697d987832e7b9900c11e1005250b3f44[m
+Merge: 342ffa6d 149ada6d
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Tue Aug 20 15:08:53 2024 +0300
+
+    Merge branch 'main' of https://github.com/BS-PMC-2024/BS-PMC-2024-Team31
+
+[33mcommit 342ffa6d3c1117dfba5e1230b94bfa1ad42f5032[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Tue Aug 20 15:07:41 2024 +0300
+
+    BSPMS2431-41
+
+[33mcommit 28a60d95bf0aea2dd3245a9cbc2eeda424f6d34f[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Tue Aug 20 15:07:19 2024 +0300
+
+    BSPMS2431-41
+
+[33mcommit 149ada6d5d9159a6c328b2b990b8aec388db3922[m
+Merge: ca60d3bc 8d49c310
+Author: BayanAljaar <bayanal3@ac.sce.ac.il>
+Date:   Tue Aug 20 14:28:41 2024 +0300
+
+    Merge branch 'main' of https://github.com/BS-PMC-2024/BS-PMC-2024-Team31
+
+[33mcommit ca60d3bc7fe3e25d0d50461a34c4b15c0e1a45f6[m
+Author: BayanAljaar <bayanal3@ac.sce.ac.il>
+Date:   Tue Aug 20 14:04:48 2024 +0300
+
+    testAddAdmin
+
+[33mcommit 8d49c310f1b1fc7d1054fb33a9430669599fa05e[m
+Merge: 714adb93 3f404457
+Author: Tasneem-sh2 <162573898+Tasneem-sh2@users.noreply.github.com>
+Date:   Tue Aug 20 13:16:58 2024 +0300
+
+    Merge branch 'main' of https://github.com/BS-PMC-2024/BS-PMC-2024-Team31
+
+[33mcommit 714adb93884b9f810eefc0ad46098e6adaeba216[m
+Author: Tasneem-sh2 <162573898+Tasneem-sh2@users.noreply.github.com>
+Date:   Tue Aug 20 13:03:46 2024 +0300
+
+    update
+
+[33mcommit 3f4044574ab62d409316c7a9192714e5d2205a84[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Mon Aug 19 23:06:21 2024 +0300
+
+    BSPMS2431-48
+
+[33mcommit 55886e57fe9a310b21e190951f466db6c322604f[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Mon Aug 19 17:37:40 2024 +0300
+
+    BSPMS2431-11
+
+[33mcommit b34a48125668f1dc3fe4fb3a5fe1bfd1bf4a32fe[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Mon Aug 19 17:32:17 2024 +0300
+
+    BSPMS2431-11
+
+[33mcommit dccdb39632660f0ec341be6e289a28a273defe4e[m
+Merge: 0e3b1f5e c766403b
+Author: Tasneem-sh2 <162573898+Tasneem-sh2@users.noreply.github.com>
+Date:   Sun Aug 18 14:13:40 2024 +0300
+
+    Merge branch 'main' of https://github.com/BS-PMC-2024/BS-PMC-2024-Team31
+
+[33mcommit 0e3b1f5e33b9e018b4ec698342996d337bead68a[m
+Author: Tasneem-sh2 <162573898+Tasneem-sh2@users.noreply.github.com>
+Date:   Sat Aug 17 19:05:51 2024 +0300
+
+    BSPMS2431-113
+
+[33mcommit c766403b2a92c0ec3c8704c0abe350f568042dda[m
+Author: Asraa <aisrael@ac.sce.ac.il>
+Date:   Fri Aug 9 17:48:58 2024 +0300
+
+    BSPMS2431-224+BSPMS2431-225+BSPMS2431-226
+
+[33mcommit cc6d9f10b0f1c9a90dd275136ef9e8843ef41dde[m
+Author: Asraa <aisrael@ac.sce.ac.il>
+Date:   Fri Aug 9 16:19:24 2024 +0300
+
+    BSPMS2431-221+BSPMS2431-222+BSPMS2431-223
+
+[33mcommit 46d05a4939068803cf9f5a894fd4695446ec06f6[m
+Author: Asraa <aisrael@ac.sce.ac.il>
+Date:   Fri Aug 9 15:02:49 2024 +0300
+
+    BSPMS2431-218
+
+[33mcommit 9f64f1bda2a48eb383e2e6a76d617615f832f236[m
+Merge: e8794485 d225b6a5
+Author: Asraa <aisrael@ac.sce.ac.il>
+Date:   Thu Aug 8 22:55:51 2024 +0300
+
+    updated homepage worker
+
+[33mcommit e8794485f76a7d83965a3c4ea20a87acf4895b0b[m
+Merge: 8caebfc7 22b02bf3
+Author: Asraa <aisrael@ac.sce.ac.il>
+Date:   Thu Aug 8 22:18:04 2024 +0300
+
+    BSPMS2431-38+BSPMS2431-40+BSPMS2431-12
+
+[33mcommit d225b6a517039248bf4a8a1381a17535bc3d53cc[m
+Author: Asraa <aisrael@ac.sce.ac.il>
+Date:   Thu Aug 8 21:02:49 2024 +0300
+
+    BSPMS2431-38+BSPMS2431-40+BSPMS2431-12
+
+[33mcommit bc94c9f26ec1fb0401eabc143dbbb01b6d9c24ef[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Thu Aug 8 19:17:29 2024 +0300
+
+    BSPMS2431-90+BSPMS2431-53
+
+[33mcommit d7b17fe9dbbe9f8b5287f631b57b06a33ad22d7d[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Thu Aug 8 18:42:48 2024 +0300
+
+    BSPMS2431-49
+
+[33mcommit 8caebfc7059a8670e5ab893a457da2b1a9552cbe[m
+Author: Asraa <aisrael@ac.sce.ac.il>
+Date:   Thu Aug 8 12:37:18 2024 +0300
+
+    BSPMS2431-40+BSPMS2431-38+BSPMS2431-12
+
+[33mcommit 22b02bf3914385f49d154a3c5ea708d60062d5b4[m
+Merge: da3bcccf 714b62a7
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Thu Aug 8 12:00:40 2024 +0300
+
+    Merge branch 'main' of https://github.com/BS-PMC-2024/BS-PMC-2024-Team31
+
+[33mcommit da3bcccf8d5fbb0bbe25b2bb0ed4dcc884119250[m[33m ([m[1;31morigin/bayan[m[33m, [m[1;32mbayan[m[33m)[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Thu Aug 8 11:57:51 2024 +0300
+
+    BSPMS2431-52
+
+[33mcommit 714b62a7ee24ac037c9fa37e5f3f04dad390b1bb[m
+Author: BayanAljaar <121791781+BayanAljaar@users.noreply.github.com>
+Date:   Thu Aug 8 03:10:58 2024 +0300
+
+    Create JenkinsFile
+
+[33mcommit 32201a59bdfee9c2633687cbfa15ea7c4f9d5e24[m
+Merge: 3df498e0 6a60fbb6
+Author: Tasneem-sh2 <162573898+Tasneem-sh2@users.noreply.github.com>
+Date:   Tue Aug 6 19:11:46 2024 +0300
+
+    Merge branch 'main' of https://github.com/BS-PMC-2024/BS-PMC-2024-Team31
+
+[33mcommit 3df498e0e052e82a0d408a7f0159867e7f5e201e[m
+Author: Tasneem-sh2 <162573898+Tasneem-sh2@users.noreply.github.com>
+Date:   Tue Aug 6 18:22:53 2024 +0300
+
+    BSPMS2431-127
+
+[33mcommit 6a60fbb668d571611d2216923004dff6c345bcac[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Tue Aug 6 14:08:38 2024 +0300
+
+    BSPMS2431-2
+
+[33mcommit 1e88848a102409e1c92721c7dbf81b7e1214ad33[m
+Author: somayabusamor <somayab@ac.sce.ac.il>
+Date:   Tue Aug 6 10:59:43 2024 +0300
+
+    BSPMS2431-2+ BSPMS2431-47
+
+[33mcommit ace6f3e7d397923fbd2de9953af901a985b7920a[m
+Author: Tasneem-sh2 <162573898+Tasneem-sh2@users.noreply.github.com>
+Date:   Sun Aug 4 13:24:06 2024 +0300
+
+    update
+
+[33mcommit f1040a948b609ba7b8c64493ab094bea0afddb49[m
+Merge: bbbc93d6 2ec144bf
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Sun Jul 28 17:03:58 2024 +0300
+
+    Merge branch 'main' of https://github.com/BS-PMC-2024/BS-PMC-2024-Team31
+
+[33mcommit bbbc93d6cee85f40f4fdf3168c0113c69ea8d045[m
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Sun Jul 28 16:58:57 2024 +0300
+
+    update
+
+[33mcommit d4f601e52e403825362747d9e69acade4ae4f1f5[m[33m ([m[1;31morigin/Israa[m[33m, [m[1;32mIsraa[m[33m)[m
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Sun Jul 28 16:29:59 2024 +0300
+
+    BSPMS2431-94
+
+[33mcommit dc9cc16bf9f04703965d1d0d664a9a90e216833b[m
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Sat Jul 27 01:34:25 2024 +0300
+
+    update reset password
+
+[33mcommit 7cc7d528c70224ef2fc81773297fd87e7467fe68[m
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Fri Jul 26 23:31:09 2024 +0300
+
+    ResetPassword
+
+[33mcommit bb415781678588ddf1af28ca88a6ad095689d463[m
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Fri Jul 26 21:41:57 2024 +0300
+
+    sprint1
+
+[33mcommit 2ec144bf6650d448d5539c52cb65d3baf159f286[m
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Fri Jul 26 19:45:23 2024 +0300
+
+    first commit
+
+[33mcommit 52e752ef6b7bf7c0a06e0d4572cb464ab2961869[m
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Fri Jul 26 19:10:30 2024 +0300
+
+    data base connection
+
+[33mcommit fc1a29c939348255390d24c7b7fb72ac034329d4[m
+Author: aisrael <aisrael@ac.sce.ac.il>
+Date:   Fri Jul 26 19:00:48 2024 +0300
+
+    SPRINT 1
+
+[33mcommit 75916c44a0479e430619616c278757b6dc863954[m[33m ([m[1;31morigin/tasneem[

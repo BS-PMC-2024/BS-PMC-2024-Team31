@@ -5,13 +5,13 @@ import axios from 'axios'; // إضافة axios لإجراء طلبات HTTP
 function Home() {
   const [language, setLanguage] = useState(''); // حالة لتخزين اللغة المحددة
 
+  const [dropdownVisible, setDropdownVisible] = useState(false);
+
   const handleEdit = () => {
-    // الانتقال إلى صفحة التعديل
     window.location = '/profile';
   };
 
   const handleLogout = () => {
-    // مسح بيانات المستخدم من localStorage وتسجيل الخروج
     localStorage.clear();
     window.location = '/';
   };
@@ -30,25 +30,20 @@ function Home() {
     //   });
   };
 
+  const toggleDropdown = () => {
+    setDropdownVisible(prev => !prev);
+  };
+
   return (
     <div className="home-container">
       <div className="home-header">
-        <div className="header-left">
-          <div className="dropdown">
-            <button className="dropbtn">
-              Setting
-              <span className="tooltiptext">Click here to change settings</span>
-            </button>
-            <div className="dropdown-content">
-              <button onClick={handleEdit}>Edit</button>
-              <button onClick={handleLogout}>Log Out</button>
-            </div>
+        <div className="header-content">
+          <div className="header-right">
+            <span>Student</span>
           </div>
         </div>
-        <div className="header-right">
-          <span>Student</span>
-        </div>
       </div>
+
       <div className="home-content">
       <div className="language-select-container">
         <label htmlFor="language-select" className="language-select-label">Select a language:</label>

@@ -5,7 +5,7 @@ nav {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 20px; /* Adjust padding for spacing */
+  padding: 0 20px;
   box-shadow: 0 5px 15px rgba(53, 65, 89, 0.06);
 }
 
@@ -17,25 +17,19 @@ nav {
   width: 100%;
 }
 
-/* Left Side Container (Logo, Profile, and Welcome Message) */
-.left-side {
-  display: flex;
-  align-items: center;
-}
-
 /* Logo Styles */
 .logo {
-  width: 140px; /* Set a fixed width for the logo */
-  height: auto; /* Maintain aspect ratio */
-  margin-right: 20px; /* Space between logo and profile image */
-  margin-top: 30px;
-
+  width: 140px;
+  height: auto;
+  margin-right: 20px;
+  margin-top: 10px; /* Slightly raised logo */
 }
 
 /* Profile and Welcome Container Styles */
-.profile-welcome-container {
+.profile-container {
   display: flex;
   align-items: center;
+  position: relative;
 }
 
 /* Profile Image Styles */
@@ -44,9 +38,8 @@ nav {
   height: 40px;
   border-radius: 50%;
   padding: 3px;
-
   cursor: pointer;
-  margin-right: 10px; /* Space between profile image and welcome message */
+  margin-right: 10px;
 }
 
 /* Welcome Message Styles */
@@ -60,7 +53,7 @@ nav {
 #navbar {
   display: flex;
   align-items: center;
-  margin-left: auto; /* Push navbar items to the right */
+  margin-left: auto;
 }
 
 #navbar li {
@@ -72,89 +65,51 @@ nav {
 /* Navbar Link Styles */
 #navbar li a {
   text-decoration: none;
-  font-size: 1.3rem;
-  font-weight: 600;
+  font-size: 1.4rem; /* Larger font size */
+  font-weight: 700; /* Bolder text */
   color: #392b289f;
-  transition: 0.3s ease-in-out;
-}
-
-#navbar li .white_btn {
-  border: none;
-  outline: none;
-  background-color: #caa7c8;
-  border-radius: 5px;
-  width: 120px;
-  height: 50px;
-  font-weight: bold;
-  font-size: 16px;
-  cursor: pointer;
-  margin-right: 15px;
-  margin-top: -5px;
-  padding-top: 7px;
-}
-
-#navbar li .white_btn:hover {
-  background-color: #cddaec;
-  color: #fff;
+  transition: color 0.3s ease-in-out;
 }
 
 #navbar li a:hover,
 #navbar li a.active {
-  color: #cfebd6;
+  color: #ffffff; /* Change text color on hover */
 }
 
-#navbar li a:hover::after,
-#navbar li a.active::after {
-  content: "";
-  width: 30%;
-  height: 2px;
-  background: #d2e8ec;
-  position: absolute;
-  bottom: -4px;
-  left: 20px;
+/* Login Button Styles */
+#navbar li .white_btn {
+  border: none;
+  outline: none;
+  background-color: #ffffff; /* Background color changed to white */
+  color: #b7a3c3; /* Text color */
+  border-radius: 5px;
+  width: 140px; /* Increased width for larger size */
+  height: 55px; /* Increased height for larger size */
+  font-weight: bold;
+  font-size: 18px; /* Increased font size for better visibility */
+  cursor: pointer;
+  margin-right: 15px;
+  margin-top: -5px;
+  padding-top: 7px;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Hover effect */
+#navbar li .white_btn:hover {
+  background-color: #b7a3c3; /* Background changes to purple */
+  color: #ffffff; /* Text changes to white */
 }
 
 /* Mobile Navbar Styles */
-#mobile {
-  display: none;
-}
-
-#mobile i {
-  color: #fff;
-  align-items: center;
-}
-
-.menu {
-  cursor: pointer;
-}
-
-/* Dropdown Styles */
-.dropdown {
-  background-color: #200421;
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-}
-
-.dropdown a,
-.dropdown button {
-  color: #1f1313;
-}
-
-/* Responsive Styles */
 @media screen and (max-width: 768px) {
   #navbar {
-    display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
     position: fixed;
     top: 70px;
     right: -300px;
     width: 300px;
     height: 100vh;
     background: #dbefea;
-    box-shadow: 0 50px 60px rgba(184, 54, 134, 0.308);
     padding: 40px 0 0 10px;
     transition: 0.3s ease-in-out;
   }
@@ -175,35 +130,4 @@ nav {
     font-size: 24px;
     cursor: pointer;
   }
-}
-
-/* Profile Container */
-.profile-container {
-  display: flex;
-  align-items: center;
-  position: relative;
-}
-
-/* Profile Menu */
-.profile-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  background-color: #fff;
-  border: 1px solid #ccc;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-  display: flex;
-  flex-direction: column;
-  z-index: 1000;
-}
-
-.profile-menu-item {
-  padding: 10px 20px;
-  text-decoration: none;
-  color: #392b289f;
-  font-weight: 600;
-}
-
-.profile-menu-item:hover {
-  background-color: #f0f0f0;
 }

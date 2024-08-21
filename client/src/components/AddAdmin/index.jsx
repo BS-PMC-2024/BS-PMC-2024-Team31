@@ -27,11 +27,11 @@ const AddAdmin = () => {
         setPassword('');
       }
     } catch (error) {
-      setError('Failed to add admin');
+      setError(error.response.data.message || 'Failed to add admin');
       console.error('Error adding admin:', error);
     }
   };
-
+  
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Add New Admin</h2>
