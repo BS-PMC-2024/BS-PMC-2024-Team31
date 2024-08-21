@@ -74,25 +74,6 @@
   transition: background-color 0.3s, transform 0.2s;
 }
 
-.button:hover {
-  background-color:#c6b6cd;
-  transform: scale(1.05);
-}
 
-.button:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px #d0bfd8;
-}
-
-.error {
-  color: red;
-  margin-top: 15px; /* Reduced margin */
-}
-
-.adminButtons {
-  display: flex;
-  gap: 10px; /* Reduced space between buttons */
-  margin-bottom: 15px; /* Reduced space below the buttons */
-}
 /* styles.module.css */
 

@@ -2,16 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { User, validate } = require('../models/user');
 const bcrypt = require('bcrypt');
-// Route to get users with changeRole true
-router.get('/changeRole-true', async (req, res) => {
-    try {
-      const users = await User.find({ changeRole: true });
-      res.json(users);
-    } catch (error) {
-      console.error('Error fetching users with changeRole true:', error);
-      res.status(500).send('Server error');
-    }
-  });
+
 // Route to add a new admin
 router.post('/add', async (req, res) => {
     const { firstName, lastName, email, password } = req.body;
