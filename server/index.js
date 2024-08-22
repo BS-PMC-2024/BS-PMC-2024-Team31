@@ -1,4 +1,3 @@
-require("dotenv").config();
 const axios = require("axios");
 const express = require("express");
 const app = express();
@@ -6,7 +5,7 @@ const cors = require("cors");
 const connection = require("./db");
 const usersRoutes = require("./routes/users");
 const userRoutes = require("./routes/user");
-const dotenv = require('dotenv');
+const dotenv = require('dotenv').config();
 const authRoutes = require('./routes/auth');
 const path = require('path');
 const bcrypt = require('bcrypt');
