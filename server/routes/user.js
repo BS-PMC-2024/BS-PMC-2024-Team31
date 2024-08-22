@@ -5,10 +5,6 @@ const { User } = require("../models/user");
 const { json } = require("express");
 
 const authenticate = require('../middleware/authenticate'); // Authentication middleware
-
-
-
-
 // Define routes
 router.get("/email/:email", async (req, res) => {
   try {

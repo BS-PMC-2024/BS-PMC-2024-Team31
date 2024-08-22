@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from 'react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import axios from 'axios';
-import './HomeWorker.css';
-import EditProfile from '../Edit/EditProfile'; // Ensure this path is correct
+import './styles.module.css';
+import Edit from '../Edit'; // Adjust the path based on the location of HomeWorker.js
 
 const generateDefaultImageURL = (email) => {
   const firstLetter = email ? email[0].toUpperCase() : 'U'; // Default to 'U' if email is not available
@@ -238,7 +238,7 @@ function HomeWorker() {
                       <button className="close-button" onClick={handleCloseEditProfile}>
                         &times;
                       </button>
-                      <EditProfile
+                      <Edit
                         user={user}
                         onSave={handleSaveProfile}
                         onCancel={handleCloseEditProfile}
@@ -324,7 +324,7 @@ function HomeWorker() {
       )}
 
       {showEditProfile && (
-        <EditProfile
+        <setShowEditProfile
           user={user}
           onSave={handleSaveProfile}
           onCancel={() => setShowEditProfile(false)}

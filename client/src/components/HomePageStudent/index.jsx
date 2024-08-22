@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './HomeStudent.css';
+import './styles.module.css';
 import axios from 'axios'; // إضافة axios لإجراء طلبات HTTP
 
 function Home() {

@@ -9,9 +9,8 @@ import HomePageWorker from './components/HomePageWorker';
 import ContactUs from './components/Navbar/ContactUs'; // Adjust the import path as needed
 import AboutUs from './components/Navbar/AboutUs'; 
 import ForgotPassword from './components/ForgotPassword/ForgotPassword';
-import Edit from './components/Edit/EditProfile';
+import Edit from './components/Edit'; // Import your Edit component
 import Profile from './components/Profile/Profile';
-import EditUsername from './components/EditUsername/EditUsername';
 import HomePageAdmin from './components/HomePageAdmin';
 import HomePage from './components/HomePage/HomePage'; 
 import AddAdmin from './components/AddAdmin/'; 
@@ -65,8 +64,7 @@ function App() {
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/homePageStudent" element={<HomePageStudent />} />
             <Route path="/addAdmin" element={<AddAdmin />} />
-
-
+            <Route path="/edit" element={<Edit />} /> {/* Admin Edit route */}
           </Routes>
         </div>
       </div>

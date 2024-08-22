@@ -6,7 +6,6 @@ import styles from './styles.module.css';
 const HomePageAdmin = () => {
   const [admins, setAdmins] = useState([]);
   const [users, setUsers] = useState([]);
-  const [deletedRequests, setDeletedRequests] = useState([]);
   const [changeRoleUsers, setChangeRoleUsers] = useState([]);
   const [error, setError] = useState('');
   const [view, setView] = useState('');
@@ -17,11 +16,10 @@ const HomePageAdmin = () => {
     if (view === 'admins') fetchAdmins();
     else if (view === 'users') fetchUsers();
     else if (view === 'changeRole') fetchChangeRoleUsers();
-    else if (view === 'deleted') fetchDeletedRequests();
   }, [view]);
 
   const handleEditProfileClick = () => {
-    navigate('/edit-profile');
+    navigate('/edit');
   };
 
   const fetchAdmins = async () => {
@@ -75,20 +73,6 @@ const HomePageAdmin = () => {
     } catch (error) {
       console.error('Error fetching users with changeRole true:', error);
       setError('Failed to fetch users with changeRole true');
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const fetchDeletedRequests = async () => {
-    setLoading(true);
-    try {
-      const response = await axios.get('http://localhost:3001/api/admins/deleted-requests');
-      setDeletedRequests(response.data);
-      setError('');
-    } catch (error) {
-      console.error('Error fetching deleted requests:', error);
-      setError('Failed to fetch deleted requests');
     } finally {
       setLoading(false);
     }

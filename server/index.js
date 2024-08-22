@@ -17,6 +17,7 @@ const mongoose = require('mongoose');
 const adminsRoutes = require('./routes/admins');
 
 const app = express();
+app.use(express.json());
 
 // Database connection
 connection();
@@ -33,6 +34,7 @@ app.use(express.json());
 app.use(cors());
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/admins', adminsRoutes);
+app.use('/api', authRoutes); // Ensure the route is correctly integrated
 
 // Import routes
 //const updateProfileRoute = require('./routes/updateProfile');
@@ -154,19 +156,27 @@ app.post('/api/auth', async (req, res) => {
     }
 
     const token = user.generateAuthToken();
-    res.send({
+    res.status(200).send({
       token,
-      isAdmin: user.isAdmin,
-      userType: user.userType,
-      changeRole: user.changeRole,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        isAdmin: user.isAdmin,
+        userType: user.userType
+      }
     });
+    
   } catch (error) {
     console.error(`Error in auth endpoint: ${error}`);
     res.status(500).send({ message: 'Server Error' });
   }
 });
 
+
+
 const port = process.env.PORT || 3001;
 app.listen(port, () => {
-  console.log(`Listening on port ${port}...`);
+  console.log(`Server is running on port ${port}`);
 });

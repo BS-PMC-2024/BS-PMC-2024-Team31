@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   isAdmin: { type: Boolean, default: false },
   changeRole: { type: Boolean, default: false },
-  userType: { type: String, enum: ["worker", "student"], required: true },
+  userType: { type: String, enum: ["worker", "student"], required: true, immutable: true },
   unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }],
   delete: { type: Boolean, default: false },
   language: { type: String, enum: ["Python", "Java"], default: "Python" },
@@ -31,7 +31,7 @@ userSchema.methods.generateAuthToken = function () {
 // Hash password before saving
 userSchema.pre('save', async function(next) {
   if (this.isModified('password')) {
-    this.password = await bcrypt.hash(this.password, saltRounds); // Update saltRounds if needed
+    this.password = await bcrypt.hash(this.password, saltRounds);
   }
   next();
 });
@@ -39,11 +39,9 @@ userSchema.pre('save', async function(next) {
 
 // Compare hashed password
 userSchema.methods.comparePassword = async function(candidatePassword) {
-  console.log(`Comparing passwords: ${candidatePassword} vs ${this.password}`);
-  const isMatch = await bcrypt.compare(candidatePassword, this.password);
-  console.log(`Password comparison result: ${isMatch}`);
-  return isMatch;
+  return await bcrypt.compare(candidatePassword, this.password);
 };
+
 
 // Validation schema
 const validate = (data) => {

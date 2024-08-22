@@ -14,25 +14,7 @@ const Navbar = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    // Update the login status based on localStorage
-    const handleStorageChange = () => {
-      setIsLoggedIn(!!localStorage.getItem("token"));
-      const user = JSON.parse(localStorage.getItem("user"));
-      if (user) {
-        setUserFirstName(user.firstName);
-      }
-    };
 
-    handleStorageChange(); // Check the initial state
-
-    window.addEventListener('storage', handleStorageChange);
-
-    // Clean up the event listener on component unmount
-    return () => {
-      window.removeEventListener('storage', handleStorageChange);
-    };
-  }, []);
 
   const confirmLogout = () => {
     setShowStarRating(true);
