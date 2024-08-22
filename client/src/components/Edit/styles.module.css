@@ -1,82 +1,90 @@
 .edit-profile-frame {
   position: fixed;
-  top: 50%;
+  top: 69%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 400px;
-  background-color: #ffffff;
-  border-radius: 8px;
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  padding: 20px;
+  background-color: #f7f4fc; /* Light lilac background */
+  border-radius: 12px; /* Slightly more rounded corners */
+  box-shadow: 0px 8px 16px rgba(122, 99, 161, 0.2); /* Softer purple shadow */
+  padding: 25px; /* Increased padding */
   z-index: 1000;
 }
 
 .edit-profile-content {
   position: relative;
-  padding-top: 20px; /* Adjust padding as needed */
+  padding-top: 15px; /* Reduced padding for a more compact look */
 }
 
 .close-button {
   position: absolute;
-  top: -15px;
-  right: -15px;
+  top: -20px;
+  right: -20px;
   background-color: #ffffff;
-  border: 2px solid #ddd;
+  border: 2px solid #7a63a1; /* Purple border */
   border-radius: 50%;
-  width: 30px;
-  height: 30px;
+  width: 35px;
+  height: 35px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
-  color: #999;
+  font-size: 20px;
+  color: #7a63a1; /* Purple color */
   cursor: pointer;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, border-color 0.3s ease;
 }
 
 .close-button:hover {
-  color: #333;
+  color: #503f75; /* Darker purple on hover */
+  border-color: #503f75;
 }
 
 h2 {
   margin-top: 0;
   text-align: center;
-  font-size: 24px;
-  color: #333;
+  font-size: 26px;
+  color: #7a63a1; /* Purple color for the header */
 }
 
 .form-group {
-  margin-bottom: 15px;
+  margin-bottom: 20px; /* More space between form groups */
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 5px;
+  margin-bottom: 8px; /* More space below the label */
   font-weight: bold;
-  color: #555;
+  color: #7a63a1; /* Purple color for labels */
 }
 
 .form-group input {
   width: 100%;
-  padding: 10px;
-  border-radius: 4px;
-  border: 1px solid #ddd;
+  padding: 12px; /* Larger padding for inputs */
+  border-radius: 6px; /* Slightly more rounded inputs */
+  border: 1px solid #ccc; /* Light gray border */
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.form-group input:focus {
+  border-color: #7a63a1; /* Purple border on focus */
+  box-shadow: 0px 0px 8px rgba(122, 99, 161, 0.2); /* Subtle purple shadow */
 }
 
 .save-button {
-  background-color: #27ae60;
+  background-color: #7a63a1; /* Purple background */
   color: #fff;
   border: none;
-  padding: 10px 20px;
+  padding: 12px 25px; /* Larger padding for the button */
   cursor: pointer;
-  border-radius: 4px;
-  font-size: 16px;
+  border-radius: 6px;
+  font-size: 18px; /* Slightly larger font size */
   display: block;
   width: 100%;
-  margin-top: 10px;
-  transition: background-color 0.3s ease;
+  margin-top: 15px;
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .save-button:hover {
-  background-color: #1e8449;
+  background-color: #5c4880; /* Darker purple on hover */
+  box-shadow: 0px 6px 12px rgba(122, 99, 161, 0.2); /* Slight shadow on hover */
 }

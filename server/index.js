@@ -1,3 +1,4 @@
+require("dotenv").config();
 const axios = require("axios");
 const express = require("express");
 const bodyParser = require('body-parser');
@@ -25,7 +26,6 @@ mongoose.connect(process.env.DB, { // تأكد من أن `DB_URI` هو اسم ا
   useUnifiedTopology: true,
   useFindAndModify: false
 });
-
 // Middlewares
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -37,8 +37,6 @@ app.use('/api', authRoutes); // Ensure the route is correctly integrated
 
 // Import routes
 //const updateProfileRoute = require('./routes/updateProfile');
-
-
 // Use routes
 app.use("/api/admins", adminRoutes);
 app.use('/api/profile', profileRoutes);
@@ -46,16 +44,14 @@ app.use('/api/unitTests', unitTestRoutes);
 app.use('/api/user', userRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/api/users', usersRoutes);
-
 // Endpoint for resetting the password and role
 app.post('/api/forgot-password', async (req, res) => {
   const { email, newPassword, role } = req.body;
-
   if (!email || !newPassword || role === undefined) { // تأكد من أنك تتحقق من القيمة المناسبة لدور المستخدم
     return res.status(400).json({ message: 'Email, new password, and role are required' });
   }
-
   try {
+    // Find user by email
     // Find user by email
     const user = await User.findOne({ email });
 
@@ -77,7 +73,7 @@ app.post('/api/forgot-password', async (req, res) => {
   }
 });
 
-// Example Node.js/Express route
+// Example Node.js/Express routae
 app.post('/api/unitTests', async (req, res) => {
   try {
     const UnitTestModel = require('./models/unitTest'); // تأكد من أن المسار صحيح هنا

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import styles from './styles.module.css'; // Ensure the path is correct
 
 const Edit = () => {
   const [email, setEmail] = useState('');
@@ -42,37 +43,54 @@ const Edit = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="Email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Old Password"
-        value={oldPassword}
-        onChange={(e) => setOldPassword(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="New Password"
-        value={newPassword}
-        onChange={(e) => setNewPassword(e.target.value)}
-        required
-      />
-      <input
-        type="password"
-        placeholder="Confirm New Password"
-        value={confirmNewPassword}
-        onChange={(e) => setConfirmNewPassword(e.target.value)}
-        required
-      />
-      <button type="submit">Change Password</button>
-    </form>
+    <div className={styles['edit-profile-frame']}>
+      <div className={styles['edit-profile-content']}>
+        <h2>Edit Profile</h2>
+        <form onSubmit={handleSubmit}>
+          <div className={styles['form-group']}>
+            <label>Email</label>
+            <input
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <label>Old Password</label>
+            <input
+              type="password"
+              placeholder="Old Password"
+              value={oldPassword}
+              onChange={(e) => setOldPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <label>New Password</label>
+            <input
+              type="password"
+              placeholder="New Password"
+              value={newPassword}
+              onChange={(e) => setNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <div className={styles['form-group']}>
+            <label>Confirm New Password</label>
+            <input
+              type="password"
+              placeholder="Confirm New Password"
+              value={confirmNewPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+              required
+            />
+          </div>
+          <button type="submit" className={styles['save-button']}>Change Password</button>
+        </form>
+      </div>
+    </div>
   );
 };
 

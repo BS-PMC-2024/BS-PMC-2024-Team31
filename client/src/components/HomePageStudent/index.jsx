@@ -1,67 +1,55 @@
 import React, { useState } from 'react';
-import './styles.module.css';
-import axios from 'axios'; // إضافة axios لإجراء طلبات HTTP
+import styles from './styles.module.css'; // Import CSS module
 
 function Home() {
-  const [language, setLanguage] = useState(''); // حالة لتخزين اللغة المحددة
-
-  const [dropdownVisible, setDropdownVisible] = useState(false);
-
-  const handleEdit = () => {
-    window.location = '/profile';
-  };
-
-  const handleLogout = () => {
-    localStorage.clear();
-    window.location = '/';
-  };
+  const [language, setLanguage] = useState('');
+  const [testType, setTestType] = useState('');
 
   const handleLanguageChange = (event) => {
     const selectedLanguage = event.target.value;
     setLanguage(selectedLanguage);
-    // هنا يمكنك إضافة الكود لتحديث اللغة في قاعدة البيانات إذا لزم الأمر
-    // axios.post('/api/updateLanguage', { language: selectedLanguage })
-    //   .then(response => {
-    //     console.log(response.data);
-    //     window.location = '/UnitStudent';
-    //   })
-    //   .catch(error => {
-    //     console.error('There was an error updating the language!', error);
-    //   });
   };
 
-  const toggleDropdown = () => {
-    setDropdownVisible(prev => !prev);
+  const handleTestTypeChange = (event) => {
+    const selectedTestType = event.target.value;
+    setTestType(selectedTestType);
   };
 
   return (
-    <div className="home-container">
-      <div className="home-header">
-        <div className="header-content">
-          <div className="header-right">
-            <span>Student</span>
+    <div className={styles.homeContainer}>
+      <div className={styles.homeContent}>
+        <div className={styles.selectionsContainer}>
+          <div className={styles.languageSelectContainer}>
+            <label htmlFor="language-select" className={styles.languageSelectLabel}>Select a language:</label>
+            <select
+              id="language-select"
+              className={styles.languageSelect}
+              value={language}
+              onChange={handleLanguageChange}
+            >
+              <option value="">--Please choose an option--</option>
+              <option value="python">Python</option>
+              <option value="java">Java</option>
+            </select>
+          </div>
+
+          <div className={styles.testTypeSelectContainer}>
+            <label htmlFor="test-type-select" className={styles.testTypeSelectLabel}>Choose Types:</label>
+            <select
+              id="test-type-select"
+              className={styles.testTypeSelect}
+              value={testType}
+              onChange={handleTestTypeChange}
+            >
+              <option value="">--Please choose an option--</option>
+              <option value="unit-test">Unit Test</option>
+              <option value="functional-test">Functional Test</option>
+              <option value="regression-test">Regression Test</option>
+              <option value="performance-test">Performance Test</option>
+              <option value="integration-test">Integration Test</option>
+            </select>
           </div>
         </div>
-      </div>
-
-      <div className="home-content">
-      <div className="language-select-container">
-        <label htmlFor="language-select" className="language-select-label">Select a language:</label>
-         <div className="tooltip-wrapper">
-          <select
-           id="language-select"
-           className="language-select"
-           value={language}
-           onChange={handleLanguageChange}
-    >
-      <option value="">--Please choose an option--</option>
-      <option value="python">Python</option>
-      <option value="java">Java</option>
-    </select>
-    <span className="tooltiptext">Choose your preferred programming language</span>
-  </div>
-</div>
-
       </div>
     </div>
   );
