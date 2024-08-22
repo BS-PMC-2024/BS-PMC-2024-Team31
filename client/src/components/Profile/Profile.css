@@ -1,0 +1,218 @@
+.profile-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 20px;
+  background-color: #7a63a1;
+  color: white;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  position: absolute; /* Absolute positioning to place items in the top-right corner */
+  top: 20px;
+  right: 20px; /* Adjust this to move the button towards the right */
+}
+
+.header-left .dropbtn {
+  background-color: #6c5290;
+  color: white;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  margin-left: 10px; /* Space between settings button and edit profile button */
+}
+
+.header-left .dropbtn:hover {
+  background-color: #5a4577;
+}
+.dropdown-content {
+  display: none; /* Hidden by default */
+  position: absolute;
+  top: 100%; /* Position below the button */
+  right: 0; /* Align to the right */
+  background-color: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  z-index: 1000;
+}
+
+.dropdown-content button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: #7a63a1;
+  color: white;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-bottom: 1px solid #ddd;
+}
+.dropdown-content button:hover {
+  background-color: #6c5290;
+}
+
+.dropdown-content button:last-child {
+  border-bottom: none; /* Remove border from the last item */
+}
+.profile-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  text-align: center;
+  padding: 20px;
+}
+
+.profile-content h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+  color: #7a63a1;
+  font-weight: bold;
+}
+
+.profile-buttons {
+  display: flex;
+  flex-direction: row; /* Arrange buttons horizontally */
+  width: 100%;
+  max-width: 600px; /* Limit the width of the buttons container */
+  margin: 0 auto; /* Center the buttons container */
+  gap: 10px; /* Space between buttons */
+}
+
+.profile-button {
+  padding: 15px;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #7a63a1;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  text-align: center;
+  flex: 1; /* Make buttons flexible */
+}
+
+.profile-button:hover {
+  background-color: #6c5290;
+  transform: translateY(-2px);
+}
+
+.modal {
+  position: fixed;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0px 4px 15px rgba(0,0,0,0.2);
+  width: 90%;
+  max-width: 500px;
+}
+
+.modal h3 {
+  color: #7a63a1;
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+.modal-button {
+  margin: 10px;
+  padding: 10px 20px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #7a63a1;
+  color: white;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+}
+
+.modal-button:hover {
+  background-color: #6c5290;
+}
+
+.reason-dropdown {
+  margin-top: 20px;
+  text-align: left;
+  width: 100%;
+  max-width: 400px;
+}
+
+.reason-dropdown label {
+  color: #7a63a1;
+  font-size: 1rem;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.reason-dropdown select {
+  width: 100%;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  background-color: #f9f9f9;
+  font-size: 14px;
+  color: #7a63a1;
+}
+
+.reason-dropdown select:focus {
+  outline: none;
+  border-color: #7a63a1;
+}
+
+.message {
+  background-color: #f4f4f4;
+  padding: 10px;
+  margin-top: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  color: #333;
+}
+
+.tooltip-wrapper {
+  position: relative;
+  display: inline-block;
+  margin-right: 20px; /* لزيادة المسافة بين الأزرار */
+}
+
+.tooltiptext {
+  visibility: hidden;
+  width: 160px;
+  background-color: black;
+  color: #fff;
+  text-align: center;
+  border-radius: 6px;
+  padding: 5px;
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 105%; /* يجعل النص التوضيحي يظهر على يمين الزر */
+  transform: translateY(-50%);
+  opacity: 0;
+  font-size: 12px; /* تصغير حجم الخط */
+  transition: opacity 0.3s;
+}
+
+.tooltip-wrapper:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}

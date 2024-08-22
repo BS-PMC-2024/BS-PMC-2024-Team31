@@ -1,129 +1,316 @@
-.home-container {
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    padding-top: 70px; /* Adjust for navbar height */
-  }
-  
-  .home-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 20px;
-    background-color: #bce7dc;
-    border-bottom: 1px solid #ddd;
-  }
-  
-  .header-left, .header-right {
-    display: flex;
-    align-items: center;
-  }
-  
-  .header-left .dropdown {
-    position: relative;
-    display: inline-block;
-  }
-  
-  .header-left .dropbtn {
-    background-color: #a7cab1;
-    color: white;
-    padding: 10px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  .header-left .dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 160px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
-  }
-  
-  .header-left .dropdown-content button {
-    color: black;
-    padding: 12px 16px;
-    text-decoration: none;
-    display: block;
-    width: 100%;
-    border: none;
-    background: none;
-    text-align: left;
-    cursor: pointer;
-  }
-  
-  .header-left .dropdown-content button:hover {
-    background-color: #f1f1f1;
-  }
-  
-  .header-left .dropdown:hover .dropdown-content {
-    display: block;
-  }
-  
-  .header-left .dropdown:hover .dropbtn {
-    background-color: #9ab8a4;
-  }
-  
-  .header-right span {
-    font-size: 1.2rem;
-    font-weight: bold;
-  }
-  
-  .home-content {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    flex-grow: 1;
-    text-align: center;
-  }
-  
-  .home-content h2 {
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    color: #392b289f;
-  }
-  
-  .buttons-container {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .home-button {
-    padding: 20px 40px;
-    font-size: 16px;
-    cursor: pointer;
-    background-color: #a7cab1;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    transition: background-color 0.3s ease;
-  }
-  
-  .home-button:hover {
-    background-color: #9ab8a4;
-  }
-  .logout-confirm {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background-color: white;
-    padding: 20px;
-    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
-    z-index: 1000;
-    text-align: center;
-  }
-  
-  .logout-confirm button {
-    margin: 5px;
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-  }
-  
-  
-  
+.home-worker {
+  font-family: Arial, sans-serif;
+  position: relative;
+}
+
+.home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color:white ;
+  padding: 1px;
+  box-shadow: 0 3px 3px rgba(240, 25, 25, 0.1);
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.dropdown-btn {
+  background: none;
+  border: none;
+  font-size: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #392b289f;
+  position: relative;
+}
+
+.profile-icon {
+  margin-right: 4px;
+}
+
+.logout-btn {
+  background: #9237bc;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color: #392b289f;
+  position: relative;
+  margin-left: 20px; /* لضمان وجود مسافة بين الزرين */
+}
+
+.profile-menu {
+  position: absolute;
+  top: 100%;
+  right: 10;
+  background-color: #fff;
+  color:none;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: none;
+  padding: 10px;
+  z-index: 1000;
+  text-align: right; /* Ensures the text and buttons are aligned to the right */
+}
+
+.profile-menu button {
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: right;
+  padding: 10px;
+  cursor: pointer;
+  padding-left: 20px;
+}
+
+.profile-menu button:hover {
+  background-color: #5f1d4e;
+}
+
+.header-right {
+  font-size: 18px;
+  color: #392b289f;
+}
+
+.top-buttons-container {
+  padding: 10px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.add-button {
+  background: #9237bc;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  color:none;
+  position: relative;
+  margin-left: 20px;
+}
+
+.add-button:hover {
+  background-color: #ac58c1;
+}
+
+.home-content {
+  padding: 15px;
+}
+
+.unit-test-form {
+  margin-top: 30px;
+}
+
+
+.done {
+  color:#9237bc;
+  font-weight: bold;
+}
+
+/* HomeWorker.css */
+
+.profile-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  background-color: #fff;
+  color: #e47c7c;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  padding: 10px;
+  z-index: 1000;
+}
+
+.profile-info {
+  margin-bottom: 10px;
+}
+
+.profile-info p {
+  margin: 0;
+}
+
+.profile-menu button {
+  display: block;
+  padding: 8px;
+  margin: 5px 0;
+  text-align: right; /* Add this line */
+  border: none;
+  background: none;
+  cursor: pointer;
+  width: auto; /* Adjust width as needed */
+}
+
+.profile-menu button:hover {
+  background-color: #f1f1f1;
+}
+
+.error-message {
+  background: none;
+  margin-bottom: 10px;
+}
+
+
+.error-message {
+  color: rgb(146, 56, 56);
+  font-size: 16px;
+  margin-top: 10px;
+}
+.close-button {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 24px;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+/* Add other styles as needed */
+/* Style for the 'Add Unit Test' button */
+/* Style for the 'Add Unit Test' button */
+.add-unit-test-button {
+  background-color: #3498db; /* Blue background */
+  color: #fff; /* White text */
+  border: none; /* Remove default border */
+  padding: 5px 5px; /* Smaller padding */
+  margin-right: 8px; /* Adjust space between buttons */
+  cursor: pointer; /* Change cursor to pointer */
+  border-radius: 4px; /* Slightly rounded corners */
+  font-size: 14px; /* Smaller font size */
+  transition: background-color 0.3s ease; /* Smooth transition for background color */
+}
+
+.add-unit-test-button:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+}
+
+/* Style for the 'Save All' button */
+.save-all-button {
+  background-color: #8c38b0; /* Green background */
+  color: #fff; /* White text */
+  border: none; /* Remove default border */
+  padding: 5px 10px; /* Smaller padding */
+  cursor: pointer; /* Change cursor to pointer */
+  border-radius: 4px; /* Slightly rounded corners */
+  font-size: 14px; /* Smaller font size */
+}
+
+.save-all-button:hover {
+  background-color: #cdc2cd; /* Darker green on hover */
+}
+
+/* Container for the unit test form and table */
+.unit-test-container {
+  margin: 20px;
+  padding: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
+    0px 3px 4px 0px rgb(0 0 0 / 14%),
+    0px 1px 8px 0px rgb(0 0 0 / 12%);
+}
+
+/* Input fields in the form */
+.unit-test-form input,
+.unit-test-form select {
+  outline: none;
+  border: 1px solid #ddd;
+  width: 50%;
+  padding: 12px;
+  border-radius: 5px;
+  background-color: #f5f5f5;
+  margin: 10px 0;
+  font-size: 14px;
+}
+
+/* Add Unit Test and Save All buttons */
+.unit-test-form button {
+  border: none;
+  outline: none;
+  padding: 12px 20px;
+  border-radius: 20px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  margin: 10px;
+}
+
+.unit-test-form .add-unit-test-button {
+  background-color:  #825c8a;
+  color: #ffffff;
+  width: 50%;
+}
+
+.unit-test-form .save-all-button {
+  background-color: #ba2bd7;
+  color: #ffffff;
+  width: 30%;
+} 
+
+.unit-test-form .add-unit-test-button:hover{
+  background-color:  #847088; /* Darker shade for hover effect */
+}
+
+/* Unit test table */
+.unit-test-table {
+  width: 80%;
+  border-collapse: collapse;
+  margin-top: 20px;
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0px 3px 3px -2px rgb(0 0 0 / 20%),
+    0px 3px 4px 0px rgba(52, 18, 18, 0.14),
+    0px 1px 8px 0px rgb(0 0 0 / 12%);
+}
+
+.unit-test-table th,
+.unit-test-table td {
+  border: 10px solid #ddd;
+  padding:30px;
+  text-align: left;
+}
+
+.unit-test-table th {
+  background-color: #ab72c1; /* Header background color */
+  color: #ffffff; /* Header text color */
+  font-weight: bold;
+}
+
+.unit-test-table td {
+  background-color: #f9f9f9; /* Cell background color */
+}
+
+.unit-test-table td.done {
+  background-color: #d4edda; /* Background for 'Done' status */
+}
+
+.unit-test-table tr:nth-child(even) {
+  background-color: #f2f2f2; /* Alternating row colors */
+}
+
+.unit-test-table tr:hover {
+  background-color: #e0e0e0; /* Row hover color */
+}
+
+.unit-test-table button {
+  border: none;
+  padding: 8px 12px;
+  border-radius: 5px;
+  background-color: #3498db; /* Button background color */
+  color: #ffffff; /* Button text color */
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.unit-test-table button:hover {
+  background-color: #2980b9; /* Button hover color */
+}

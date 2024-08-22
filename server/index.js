@@ -1,96 +1,171 @@
 const axios = require("axios");
 const express = require("express");
-const app = express();
+const bodyParser = require('body-parser');
 const cors = require("cors");
 const connection = require("./db");
 const usersRoutes = require("./routes/users");
 const userRoutes = require("./routes/user");
-const dotenv = require('dotenv').config();
 const authRoutes = require('./routes/auth');
+const { User } = require("./models/user");
+const profileRoutes = require('./routes/updateProfile');
+const unitTestRoutes = require('./routes/unitTests');
 const path = require('path');
 const bcrypt = require('bcrypt');
-const { User } = require("./models/user");
+const adminRoutes = require('./routes/admins');
+const mongoose = require('mongoose');
+const adminsRoutes = require('./routes/admins');
 
-// database connection
+const app = express();
+
+// Database connection
 connection();
-
-// middlewares
-app.use(express.json());
-app.use(cors());
-app.use(express.urlencoded({ extended: true }));
-app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-
-// Import routes
-const updateProfileRoute = require('./routes/updateProfile');
-
-// Use routes
-app.use(updateProfileRoute);
-app.use("/api/auth", authRoutes);
-app.use("/api/users", usersRoutes);
-app.use("/api/user", userRoutes);
-
-app.post('/api/search', async (req, res) => {
-  try {
-    const searchQueries = req.body.products;
-    if (!searchQueries || searchQueries.length === 0) {
-      return res.status(400).send({ message: 'No search queries provided' });
-    }
-    const response = await axios.post('http://localhost:3002/search', req.body, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-    });
-    res.json(response.data);
-  } catch (error) {
-    console.error("Error during search:", error);
-    res.status(500).send({ message: 'Internal server error' });
-  }
+mongoose.connect(process.env.DB, { // تأكد من أن `DB_URI` هو اسم المتغير الصحيح في .env
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
-app.post('/api/forgot-password', async (req, res) => {
-  const { email, newPassword } = req.body;
+// Middlewares
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.json());
+app.use(cors());
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
+app.use('/api/admins', adminsRoutes);
 
-  if (!email || !newPassword) {
-    return res.status(400).json({ message: 'Email and new password are required' });
+// Import routes
+//const updateProfileRoute = require('./routes/updateProfile');
+
+
+// Use routes
+app.use("/api/admins", adminRoutes);
+app.use('/api/profile', profileRoutes);
+app.use('/api/unitTests', unitTestRoutes);
+app.use('/api/user', userRoutes);
+app.use("/api/auth", authRoutes);
+app.use('/api/users', usersRoutes);
+
+// Endpoint for resetting the password and role
+app.post('/api/forgot-password', async (req, res) => {
+  const { email, newPassword, role } = req.body;
+
+  if (!email || !newPassword || role === undefined) { // تأكد من أنك تتحقق من القيمة المناسبة لدور المستخدم
+    return res.status(400).json({ message: 'Email, new password, and role are required' });
   }
 
   try {
+    // Find user by email
     const user = await User.findOne({ email });
 
     if (!user) {
       return res.status(404).json({ message: 'User not found' });
     }
 
+    // Hash the new password
     const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update password and role in the database
     user.password = hashedPassword;
+    user.role = role;
     await user.save();
 
-    res.status(200).json({ message: 'Password updated successfully' });
+    res.status(200).json({ message: 'Password and role updated successfully' });
   } catch (error) {
-    console.error('Error updating password:', error.message);
-    res.status(500).json({ message: 'Internal server error', error: error.message });
+    res.status(500).json({ message: 'Error updating password or role' });
   }
 });
 
-app.get('/api/product/{id}', async (req, res) => {
-  // Product details endpoint
+// Example Node.js/Express route
+app.post('/api/unitTests', async (req, res) => {
+  try {
+    const UnitTestModel = require('./models/unitTest'); // تأكد من أن المسار صحيح هنا
+    const UnitTest = new UnitTestModel(req.body);
+    await UnitTest.save();
+    res.status(201).json(UnitTest);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
 });
+app.post('/api/user/delete-account', async (req, res) => {
+  const { email } = req.body;
 
-app.get('/api/cart', async (req, res) => {
-  // Cart items endpoint
+  if (!email) {
+    return res.status(400).json({ message: 'Email is required' });
+  }
+
+  try {
+    // Find and delete the user from the database
+    const user = await User.findOneAndDelete({ email });
+    
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    res.status(200).json({ message: 'Account deleted successfully' });
+  } catch (error) {
+    console.error('Error deleting account:', error.message);
+    res.status(500).json({ message: 'Internal server error', error: error.message });
+  }
 });
+app.post('/api/user/change-role', async (req, res) => {
+  const { email, changeRole } = req.body;
+  console.log('Received request to change role:', { email, changeRole });
 
-app.post('/api/cart/add', async (req, res) => {
-  // Add item to cart endpoint
+  try {
+    const user = await User.findOneAndUpdate(
+      { email },
+      { $set: { role: changeRole } },  // Ensure this field matches your database schema
+      { new: true }
+    );
+
+    if (!user) {
+      console.log('User not found');
+      return res.status(404).send('User not found');
+    }
+
+    console.log('Updated user:', user); // Log the updated user to confirm the change
+    res.status(200).send('Role change request received');
+  } catch (error) {
+    console.error('Error updating user role:', error);
+    res.status(500).send('Error updating user role');
+  }
 });
+app.post('/api/auth', async (req, res) => {
+  const { email, password } = req.body;
 
-app.post('/api/cart/remove', async (req, res) => {
-  // Remove item from cart endpoint
-});
+  console.log(`Received auth request: ${email} - ${password}`);
 
-app.post('/api/cart/checkout', async (req, res) => {
-  // Checkout cart endpoint
+  try {
+    const user = await User.findOne({ email });
+    if (!user) {
+      console.log(`User not found: ${email}`);
+      return res.status(401).send({ message: 'Invalid Email' });
+    }
+
+    console.log(`User found: ${user.email}`);
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    console.log(`Password comparison result: ${isMatch}`);
+
+    if (!isMatch) {
+      console.log(`Invalid password for user: ${email}`);
+      return res.status(401).send({ message: 'Invalid Password' });
+    }
+
+    const token = user.generateAuthToken();
+    res.send({
+      token,
+      isAdmin: user.isAdmin,
+      userType: user.userType,
+      changeRole: user.changeRole,
+    });
+  } catch (error) {
+    console.error(`Error in auth endpoint: ${error}`);
+    res.status(500).send({ message: 'Server Error' });
+  }
 });
 
 const port = process.env.PORT || 3001;
-app.listen(port, console.log(`Listening on port ${port}...`));
+app.listen(port, () => {
+  console.log(`Listening on port ${port}...`);
+});
