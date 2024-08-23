@@ -228,11 +228,12 @@ nav {
   transition: color 0.2s ease-in-out;
 }
 
+/* Update Navbar Links Hover Color */
 .nav-link:hover {
-  color: #ffffff;
+  color: #6a1b9a; /* Purple color */
 }
 
-/* White Button Styles */
+/* Update White Button Styles */
 .white_btn {
   background-color: #caa7c8;
   color: #392b28;

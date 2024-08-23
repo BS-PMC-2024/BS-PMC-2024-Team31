@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { NavLink } from 'react-router-dom'; // Import NavLink for routing
 import styles from './styles.module.css'; // Import CSS module
 
-function HomePageStudent() {
+function Home() {
   const [language, setLanguage] = useState('');
   const [testType, setTestType] = useState('');
   const [tooltip, setTooltip] = useState(''); // State to store the tooltip text
 
   const handleLanguageChange = (event) => {
-    setLanguage(event.target.value);
-    setLanguage(event.target.value);
+    const selectedLanguage = event.target.value;
+    setLanguage(selectedLanguage);
   };
 
   const handleTestTypeChange = (event) => {
@@ -37,7 +36,6 @@ function HomePageStudent() {
         setTooltip('');
         break;
     }
-    setTestType(event.target.value);
   };
 
   return (
@@ -59,26 +57,27 @@ function HomePageStudent() {
           </div>
 
           <div className={styles.testTypeSelectContainer}>
-            <label htmlFor="test-type-select" className={styles.testTypeSelectLabel}>Choose Types:</label>
-            <select
-              id="test-type-select"
-              className={styles.testTypeSelect}
-              value={testType}
-              onChange={handleTestTypeChange}
-            >
-              <option value="">--Please choose an option--</option>
-              <option value="unit-test">Unit Test</option>
-              <option value="functional-test">Functional Test</option>
-              <option value="regression-test">Regression Test</option>
-              <option value="performance-test">Performance Test</option>
-              <option value="integration-test">Integration Test</option>
-            </select>
-          </div>
-
-          <div className={styles.buttonContainer}>
-            <NavLink to="/profile/edit" className={styles.editProfileButton}>
-              Edit Profile
-            </NavLink>
+            <label htmlFor="test-type-select" className={styles.testTypeSelectLabel}>Choose Type:</label>
+            <div className={styles.testTypeWithTooltip}>
+              <select
+                id="test-type-select"
+                className={styles.testTypeSelect}
+                value={testType}
+                onChange={handleTestTypeChange}
+              >
+                <option value="">--Please choose an option--</option>
+                <option value="unit-test">Unit Test</option>
+                <option value="functional-test">Functional Test</option>
+                <option value="regression-test">Regression Test</option>
+                <option value="performance-test">Performance Test</option>
+                <option value="integration-test">Integration Test</option>
+              </select>
+              {tooltip && (
+                <div className={styles.tooltip}>
+                  {tooltip}
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -86,4 +85,4 @@ function HomePageStudent() {
   );
 }
 
-export default HomePageStudent;
+export default Home;

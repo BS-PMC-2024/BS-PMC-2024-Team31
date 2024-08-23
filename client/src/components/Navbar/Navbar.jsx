@@ -1,3 +1,4 @@
+// Navbar.jsx
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
@@ -91,7 +92,7 @@ const Navbar = () => {
                     <button
                       className="profile-menu-item"
                       onClick={() => {
-                        navigate('/edit-profile');
+                        navigate('/edit');
                         setShowProfileMenu(false);
                       }}
                     >
