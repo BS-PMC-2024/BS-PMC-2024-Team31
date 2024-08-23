@@ -5,12 +5,38 @@ import styles from './styles.module.css'; // Import CSS module
 function HomePageStudent() {
   const [language, setLanguage] = useState('');
   const [testType, setTestType] = useState('');
+  const [tooltip, setTooltip] = useState(''); // State to store the tooltip text
 
   const handleLanguageChange = (event) => {
+    setLanguage(event.target.value);
     setLanguage(event.target.value);
   };
 
   const handleTestTypeChange = (event) => {
+    const selectedTestType = event.target.value;
+    setTestType(selectedTestType);
+
+    // Set appropriate tooltip based on selected test type
+    switch (selectedTestType) {
+      case 'unit-test':
+        setTooltip('Unit Testing: Tests individual units or components of a software.');
+        break;
+      case 'functional-test':
+        setTooltip('Functional Testing: Validates the software system against the functional requirements/specifications.');
+        break;
+      case 'regression-test':
+        setTooltip('Regression Testing: Ensures that code changes have not adversely affected existing functionalities.');
+        break;
+      case 'performance-test':
+        setTooltip('Performance Testing: Determines the speed, responsiveness, and stability of a software under a workload.');
+        break;
+      case 'integration-test':
+        setTooltip('Integration Testing: Tests the interaction between integrated units or components.');
+        break;
+      default:
+        setTooltip('');
+        break;
+    }
     setTestType(event.target.value);
   };
 
