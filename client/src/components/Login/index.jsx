@@ -1,4 +1,3 @@
-// src/components/Login.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -9,6 +8,7 @@ const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
+
   const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
@@ -19,19 +19,27 @@ const Login = () => {
     // Redirect to the forgot password page
     window.location.href = '/forgot-password';
   };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const url = "http://localhost:3001/api/auth";
+      console.log("Sending data:", data);
+  
       const response = await axios.post(url, data);
-      const { token, isAdmin, userType, firstName } = response.data;
-
-      // Store data in localStorage
+      console.log("Response received:", response.data);
+  
+      const { token, isAdmin, userType, user } = response.data;
+      if (user) {
+        localStorage.setItem("user", JSON.stringify(user)); // Store user data
+        console.log("User data stored:", localStorage.getItem("user"));
+      } else {
+        console.error("No user data received.");
+      }
+  
+      localStorage.setItem("email", data.email);
       localStorage.setItem("token", token);
-      localStorage.setItem("userData", JSON.stringify({ firstName }));
-
-      // Redirect based on user type or role
+      localStorage.setItem("isAdmin", isAdmin);
+  
       if (isAdmin) {
         navigate("/homePageAdmin");
       } else if (userType === "student") {
@@ -50,7 +58,7 @@ const Login = () => {
       }
     }
   };
-
+  
   return (
     <div>
       <div className={styles.login_container}>

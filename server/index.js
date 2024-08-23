@@ -20,8 +20,8 @@ const app = express();
 app.use(express.json());
 
 // Database connection
-connection();
-mongoose.connect(process.env.DB, { // تأكد من أن `DB_URI` هو اسم المتغير الصحيح في .env
+connection();// تأكد من أن `DB_URI` هو اسم المتغير الصحيح في .env
+mongoose.connect(process.env.DB, { 
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify: false

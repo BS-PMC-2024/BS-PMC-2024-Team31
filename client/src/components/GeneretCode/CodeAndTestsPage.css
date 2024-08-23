@@ -1,0 +1,55 @@
+.container {
+  width: 80%;
+  margin: auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+}
+
+.page-title {
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.code-frame, .tests-frame {
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 20px;
+  margin-bottom: 20px;
+  background-color: #2e2e2e; /* Dark background color */
+  color: #f8f8f2; /* Light text color */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  text-align: left; /* Align text to the left */
+}
+
+.code-frame h3, .tests-frame h3 {
+  margin-top: 0;
+  color: #f8f8f2; /* Light text color */
+}
+
+.code-content {
+  white-space: pre-wrap; /* Preserve whitespace and line breaks */
+  font-family: 'Courier New', Courier, monospace;
+  font-size: 16px; /* Adjust font size as needed */
+  background-color: #282c34; /* Darker background for code */
+  padding: 15px;
+  border-radius: 4px;
+  overflow-x: auto;
+  text-align: left; /* Align text to the left */
+}
+
+.tests-list {
+  list-style: none;
+  padding: 0;
+}
+
+.test-item {
+  background-color: #3c3c3c; /* Darker background for test items */
+  border: 1px solid #444;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 10px;
+  color: #f8f8f2; /* Light text color */
+  font-size: 14px; /* Adjust font size as needed */
+  text-align: left; /* Align text to the left */
+}

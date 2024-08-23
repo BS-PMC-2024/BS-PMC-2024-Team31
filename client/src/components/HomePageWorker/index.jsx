@@ -1,14 +1,7 @@
-//component/homeworker.js
-import React, { useState, useEffect } from 'react';
-import { AiOutlineLogout } from 'react-icons/ai';
+import React, { useState } from 'react';
 import axios from 'axios';
-import './styles.module.css';
-import Edit from '../Edit'; // Adjust the path based on the location of HomeWorker.js
-
-const generateDefaultImageURL = (email) => {
-  const firstLetter = email ? email[0].toUpperCase() : 'U'; // Default to 'U' if email is not available
-  return `https://via.placeholder.com/100x100.png?text=${firstLetter}`;
-};
+import './HomeWorker.css';
+import { useNavigate } from 'react-router-dom';
 
 function HomeWorker() {
   const [showTable, setShowTable] = useState(false);
@@ -16,47 +9,15 @@ function HomeWorker() {
     type: '',
     language: '',
     projectName: '',
-    status: 'Pending'
+    status: 'Pending',
+    code: ''
   });
   const [unitTests, setUnitTests] = useState([]);
-  const [showProfileMenu, setShowProfileMenu] = useState(false);
-  const [showEditProfile, setShowEditProfile] = useState(false);
-  const [user, setUser] = useState({ username: '', email: '', profileImage: '' });
   const [errorMessage, setErrorMessage] = useState('');
-  const [showProfileView, setShowProfileView] = useState(false);
+  const [generatedTests, setGeneratedTests] = useState([]);
+  const [insertCode, setInsertCode] = useState(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const fetchUserProfile = async () => {
-      try {
-        const token = localStorage.getItem('token');
-        const response = await fetch('/api/user/profile', {
-          method: 'GET',
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-    
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-    
-        const contentType = response.headers.get('content-type');
-        if (contentType && contentType.includes('application/json')) {
-          const data = await response.json();
-          setUser(data);
-        } else {
-          const text = await response.text();
-          console.error('Expected JSON but got:', text);
-          throw new Error('Expected JSON but got: ' + text);
-        }
-      } catch (error) {
-        console.error('Fetch error:', error);
-      }
-    };
-    
-    fetchUserProfile();
-  }, []);
-  
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setUnitTestData({ ...unitTestData, [name]: value });
@@ -65,11 +26,12 @@ function HomeWorker() {
   const handleAddUnitTest = () => {
     if (unitTestData.type && unitTestData.language && unitTestData.projectName) {
       setUnitTests([...unitTests, unitTestData]);
-      setUnitTestData({ type: '', language: '', projectName: '', status: 'Pending' });
+      setUnitTestData({ type: '', language: '', projectName: '', status: 'Pending', code: '' });
     } else {
       setErrorMessage('Please fill out all fields.');
     }
   };
+
   const handleSaveAllUnitTests = async (e) => {
     e.preventDefault();
   
@@ -99,177 +61,87 @@ function HomeWorker() {
       setErrorMessage(error.message);
     }
   };
-  
-  const handleViewProfile = async (email) => {
+
+  const handleGenerateTests = async () => {
+    if (!unitTestData.code.trim()) {
+      setErrorMessage('Please insert code before generating tests.');
+      setTimeout(() => setErrorMessage(''), 3000);
+      return;
+    }
+
     try {
-      const token = localStorage.getItem('token');
-      const url = `http://localhost:3001/api/user/user/${email}`; // Ensure this is the correct URL
-  
-      const response = await axios.get(url, {
-        headers: {
-          'Authorization': `Bearer ${token}`, // Include token if authentication is needed
-        },
+      const response = await axios.post('http://localhost:3001/api/unitTests/generateTests', {
+        code: unitTestData.code
       });
-  
-      if (response.status === 200) {
-        const userProfile = response.data;
-        setUser({
-          ...userProfile,
-          profileImage: userProfile.profileImage || generateDefaultImageURL(userProfile.email),
-        });
-        setShowProfileView(true); // Show the profile view
-      } else {
-        console.log('Failed to fetch user profile:', response.data);
-        setErrorMessage('Failed to fetch user profile: ' + response.data.message || 'Unknown error');
-      }
+      const generatedTests = response.data.tests || [];
+      console.log('Generated tests:', generatedTests);
+      setGeneratedTests(generatedTests);
+
+      navigate('/code-and-tests', { state: { code: unitTestData.code, generatedTests: response.data.tests } });
     } catch (error) {
-      console.error('Fetch error:', error.response ? error.response.data : error.message);
-      setErrorMessage('Fetch error: ' + (error.response ? error.response.data.message : error.message));
+      console.error('Generate tests error:', error.response ? error.response.data : error.message);
+      setErrorMessage('Failed to generate tests');
+      setTimeout(() => setErrorMessage(''), 3000);
     }
   };
-  
-  
+
+  const handleToggleInsertCode = () => {
+    setInsertCode(!insertCode);
+  };
+
   const markAsDone = (index) => {
     const updatedUnitTests = [...unitTests];
     updatedUnitTests[index].status = 'Done';
     setUnitTests(updatedUnitTests);
   };
 
-  /*const handleEditProfileClick = () => {
-    setShowEditProfile(true);
-  };*/
-
-  const handleCloseEditProfile = () => {
-    setShowEditProfile(false);
-  };
-
   const handleToggleTable = () => {
     setShowTable(!showTable);
-  };
-
-  const toggleProfileMenu = () => {
-    setShowProfileMenu(!showProfileMenu);
-  };
-
-  const handleEditProfile = () => {
-    setShowEditProfile(true);
-  };
-
-  const handleLogout = () => {
-    console.log('Logging out');
-    window.location.href = '/login'; // Or use routing library
-  };
-
-
-  const handleSaveProfile = async (updatedData) => {
-    const token = localStorage.getItem('token');
-
-    try {
-      const response = await fetch('/api/user/profile', {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(updatedData),
-      });
-
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-
-      const contentType = response.headers.get('content-type');
-      if (contentType && contentType.includes('application/json')) {
-        const data = await response.json();
-        console.log('Profile updated:', data); // Log response
-        setUser(data);
-        setShowEditProfile(false);
-      } else {
-        const text = await response.text();
-        console.error('Expected JSON but got:', text);
-        throw new Error('Expected JSON but got: ' + text);
-      }
-    } catch (error) {
-      console.error('Update error:', error);
-      setErrorMessage(error.message);
-    }
   };
 
   return (
     <div className="home-worker">
       <header className="home-header">
-        <div className="header-left">
-          <div className="dropdown">
-            <button
-              className="dropdown-btn"
-              onClick={toggleProfileMenu}
-              aria-haspopup="true"
-              aria-expanded={showProfileMenu}
-            >
-              <div className="profile-header">
-                <img
-                  src={user.profileImage || generateDefaultImageURL(user.email)}
-                  alt="Profile"
-                  className="profile-image"
-                />
-                <div className="profile-details">
-                  <span className="profile-username">{user.username || 'Loading...'}</span>
-                  <span className="profile-email">{user.email || 'Loading...'}</span>
-                </div>
-              </div>
-            </button>
-
-            {showProfileMenu && (
-              <div className="profile-menu">
-                <div className="profile-info">
-                  <img
-                    src={user.profileImage || generateDefaultImageURL(user.email)}
-                    alt="Profile"
-                    className="profile-image"
-                  />
-                  <p><strong>{user.username || 'Loading...'}</strong></p>
-                  <p>{user.email || 'Loading...'}</p>
-                </div>
-                <button onClick={handleViewProfile}>View Profile</button>
-                <button onClick={handleEditProfile}>Edit Profile</button>
-                {showEditProfile && (
-                  <div className="overlay">
-                    <div className="edit-profile-container">
-                      <button className="close-button" onClick={handleCloseEditProfile}>
-                        &times;
-                      </button>
-                      <Edit
-                        user={user}
-                        onSave={handleSaveProfile}
-                        onCancel={handleCloseEditProfile}
-                      />
-                    </div>
-                  </div>
-                )}
-              </div>
-            )}
-          </div>
-         
+        <span className="message">
+          We are pleased to have you as a <strong className="highlighted-word">Worker</strong> in our website.
+        </span>
+        <div className="header-buttons">
           <button className="add-button" onClick={handleToggleTable}>
             {showTable ? 'Hide Table' : '+ New Test'}
           </button>
-        </div>
-        <div className="header-right">
-          <span>Worker</span>
+          <button className="insert-code-button" onClick={handleToggleInsertCode}>
+            {insertCode ? 'Cancel Code Input' : 'Insert Code'}
+          </button>
         </div>
       </header>
 
       {errorMessage && <div className="error-message">{errorMessage}</div>}
 
-      {showTable && (
-        <div className="unit-test-form">
-          <input
-            type="text"
-            name="type"
-            placeholder="Unit Test Type"
-            value={unitTestData.type}
+      {insertCode && (
+        <div className="code-input">
+          <textarea
+            name="code"
+            placeholder="Insert your code here"
+            value={unitTestData.code}
             onChange={handleInputChange}
           />
+          <button className="generate-tests-button" onClick={handleGenerateTests}>Generate Tests</button>
+        </div>
+      )}
+
+      {showTable && (
+        <div className="unit-test-form">
+          <select
+            name="type"
+            value={unitTestData.type}
+            onChange={handleInputChange}
+          >
+            <option value="" disabled>Select Unit Test Type</option>
+            <option value="Boundary Tests">Boundary Tests</option>
+            <option value="Exception Tests">Exception Tests</option>
+            <option value="Functional Tests">Functional Tests</option>
+          </select>
+
           <input
             type="text"
             name="projectName"
@@ -285,7 +157,6 @@ function HomeWorker() {
             <option value="" disabled>Select Language</option>
             <option value="Python">Python</option>
             <option value="Java">Java</option>
-            {/* Add more languages as needed */}
           </select>
           <button className="add-unit-test-button" onClick={handleAddUnitTest}>Add Unit Test</button>
           <form onSubmit={handleSaveAllUnitTests}>
@@ -320,30 +191,19 @@ function HomeWorker() {
               ))}
             </tbody>
           </table>
+
+          {generatedTests.length > 0 && (
+            <div className="generated-tests">
+              <h3>Generated Unit Tests</h3>
+              <ul>
+                {generatedTests.map((test, index) => (
+                  <li key={index}>{test}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
       )}
-
-      {showEditProfile && (
-        <setShowEditProfile
-          user={user}
-          onSave={handleSaveProfile}
-          onCancel={() => setShowEditProfile(false)}
-        />
-      )}
-
-      {showProfileView && (
-  <div className="profile-view">
-    <button className="close-button" onClick={() => setShowProfileView(false)}>&times;</button>
-    <h2>Profile Information</h2>
-    <img
-      src={user.profileImage || generateDefaultImageURL(user.email)}
-      alt="Profile"
-      className="profile-image"
-    />
-    <p><strong>Username:</strong> {user.username || 'Loading...'}</p>
-    <p><strong>Email:</strong> {user.email || 'Loading...'}</p>
-  </div>
-)}
     </div>
   );
 }

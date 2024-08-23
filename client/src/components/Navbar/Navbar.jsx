@@ -1,39 +1,57 @@
-// Navbar.jsx
-import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
-import "./Navbar.css";
-import StarRating from "../StarRating/StarRating";
+import React, { useState, useEffect } from 'react';
+import { NavLink, useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import './Navbar.css';
+import StarRating from '../StarRating/StarRating';
 import logo from '../../assests/images/logo.png';
-import AccessibilityMenu from "./AccessibilityMenu";
+import AccessibilityMenu from './AccessibilityMenu';
 
 const Navbar = () => {
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false);
   const [showStarRating, setShowStarRating] = useState(false);
   const [showAccessibilityMenu, setShowAccessibilityMenu] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
-  const [userFirstName, setUserFirstName] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem('token'));
+  const [userFirstName, setUserFirstName] = useState('');
+  const [userRole, setUserRole] = useState('');
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const handleStorageChange = () => {
-      const token = localStorage.getItem("token");
-      const userData = JSON.parse(localStorage.getItem("userData"));
+    const email = localStorage.getItem('email');
 
-      if (token && userData) {
-        setIsLoggedIn(true);
-        setUserFirstName(userData.firstName);
-      } else {
-        setIsLoggedIn(false);
-        setUserFirstName("");
+    const fetchUserDetails = async () => {
+      if (email) {
+        try {
+          const { data } = await axios.get(`http://localhost:3001/api/user/email/${email}`);
+          setUserFirstName(data.firstName || '');
+          setUserRole(data.userType || '');
+        } catch (error) {
+          console.error('Error fetching user details:', error);
+        }
       }
     };
 
-    handleStorageChange(); // Check the initial state
+    fetchUserDetails();
+
+    const handleStorageChange = () => {
+      const token = localStorage.getItem('token');
+      setIsLoggedIn(!!token);
+      
+      const user = localStorage.getItem('user');
+      console.log('Stored user data:', user); // Check the data in the console
+      try {
+        const parsedUser = JSON.parse(user) || {};
+        setUserFirstName(parsedUser.firstName || '');
+        setUserRole(parsedUser.userType || '');
+      } catch (error) {
+        console.error('Error parsing user data:', error);
+      }
+    };
+
+    handleStorageChange();
 
     window.addEventListener('storage', handleStorageChange);
 
-    // Clean up the event listener on component unmount
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
@@ -52,6 +70,21 @@ const Navbar = () => {
     setIsLoggedIn(false);
     setShowLogoutConfirm(false);
     navigate('/homepage');
+  };
+  const handleEditProfileClick = () => {
+    console.log('Navigating to /edit');
+    navigate('/edit');
+  };
+  const handleHomeClick = () => {
+    if (userRole === 'worker') {
+      navigate('/homePageWorker');
+    } else if (userRole === 'student') {
+      navigate('/homePageStudent');
+    } else if (userRole === '') {
+      navigate('/homePageAdmin');
+    } else {
+      navigate('/homepage');
+    }
   };
 
   const submitStarRating = () => {
@@ -72,13 +105,9 @@ const Navbar = () => {
       <nav>
         <div className="nav-container">
           <div className="logo-container">
-            <img
-              src={logo}
-              alt="Logo"
-              className="logo"
-              onClick={() => navigate('/')}
-              style={{ cursor: 'pointer' }}
-            />
+            <NavLink to="/" end>
+              <img src={logo} alt="Logo" className="logo" />
+            </NavLink>
             {isLoggedIn && (
               <div className="profile-container">
                 <img
@@ -89,24 +118,13 @@ const Navbar = () => {
                 />
                 {showProfileMenu && (
                   <div className="profile-menu">
-                    <button
-                      className="profile-menu-item"
-                      onClick={() => {
-                        navigate('/edit');
-                        setShowProfileMenu(false);
-                      }}
-                    >
+              
+              <NavLink to="/profile" className="profile-menu-item">
                       Edit Profile
-                    </button>
-                    <button
-                      className="profile-menu-item"
-                      onClick={() => {
-                        navigate('/profile');
-                        setShowProfileMenu(false);
-                      }}
-                    >
+                    </NavLink>
+                    <NavLink to="/viewprofile" className="profile-menu-item">
                       View Profile
-                    </button>
+                    </NavLink>
                   </div>
                 )}
                 <span className="welcome-message">Welcome, {userFirstName}!</span>
@@ -114,41 +132,44 @@ const Navbar = () => {
             )}
           </div>
 
-          <ul className="navbar">
+          <ul id="navbar">
             <li>
               <button
-                className="nav-link"
-                onClick={() => navigate('/homepage')}
+              className="white_btn"
+                  data-testid="HOME-button"
+                onClick={handleHomeClick}
               >
                 Home
               </button>
             </li>
             <li>
-              <button
-                className="nav-link"
-                onClick={() => navigate('/aboutus')}
+              <NavLink
+                to="/aboutus"
+                className={({ isActive }) => (isActive ? 'active-link' : 'nav-link')}
               >
                 About
-              </button>
+              </NavLink>
             </li>
             <li>
-              <button
-                className="nav-link"
-                onClick={() => navigate('/contactus')}
+              <NavLink
+                to="/contactus"
+                className={({ isActive }) => (isActive ? 'active-link' : 'nav-link')}
               >
                 Contact Us
-              </button>
+              </NavLink>
             </li>
-            <li>
-              {!isLoggedIn ? (
-                <button
+            {!isLoggedIn ? (
+              <li>
+                <NavLink
+                  to="/login"
                   className="white_btn"
-                  onClick={() => navigate('/login')}
                   data-testid="Login-button"
                 >
                   Login
-                </button>
-              ) : (
+                </NavLink>
+              </li>
+            ) : (
+              <li>
                 <button
                   className="white_btn"
                   onClick={confirmLogout}
@@ -156,8 +177,8 @@ const Navbar = () => {
                 >
                   Logout
                 </button>
-              )}
-            </li>
+              </li>
+            )}
             <li>
               <button
                 className="white_btn"
@@ -171,37 +192,18 @@ const Navbar = () => {
         </div>
       </nav>
 
-      {/* Star Rating & Logout Confirmation */}
       {showStarRating && (
-        <div className="modal-overlay">
-          <div className="star-rating-container">
-            <h3>Please rate your experience before you leave:</h3>
-            <StarRating />
-            <div className="star-rating-buttons">
-              <button className="submit-btn" onClick={submitStarRating}>
-                Submit Rating
-              </button>
-              <button className="cancel-btn" onClick={() => setShowStarRating(false)}>
-                Cancel
-              </button>
-            </div>
-          </div>
+        <div className="star-rating-container">
+          <h3>Please rate your experience before you leave:</h3>
+          <StarRating onSubmit={submitStarRating} />
         </div>
       )}
 
       {showLogoutConfirm && (
-        <div className="modal-overlay">
-          <div className="logout-confirm">
-            <p>Are you sure you want to logout?</p>
-            <div className="logout-confirm-buttons">
-              <button className="confirm-btn" onClick={completeLogout}>
-                Yes
-              </button>
-              <button className="cancel-btn" onClick={cancelLogout}>
-                No
-              </button>
-            </div>
-          </div>
+        <div className="logout-confirm">
+          <p>Are you sure you want to logout?</p>
+          <button onClick={completeLogout}>Yes</button>
+          <button onClick={cancelLogout}>No</button>
         </div>
       )}
 
@@ -212,9 +214,8 @@ const Navbar = () => {
   );
 };
 
-// Function to generate profile image URL
 const generateProfileImageURL = (firstName) => {
-  const firstLetter = firstName ? firstName[0].toUpperCase() : 'U'; // Default to 'U' if name is not available
+  const firstLetter = firstName ? firstName[0].toUpperCase() : 'U';
   return `https://via.placeholder.com/100x100.png?text=${firstLetter}`;
 };
 
