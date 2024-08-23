@@ -17,27 +17,29 @@
   text-align: center;
   padding: 20px;
 }
+
 .homeContent h1 {
   margin-bottom: 30px;
   font-size: 2rem;
   color: #6a0dad; /* Deep purple */
 }
+
 /* Container for select elements */
 .selectionsContainer {
   display: flex;
-  flex-direction: column; /* Stack select elements vertically */
+  flex-direction: row; /* Arrange labels and selects horizontally */
+  justify-content: center;
   align-items: center;
+  gap: 20px; /* Add space between Select a language and Choose Type */
+  max-width: 800px;
 }
 
-/* Select elements styling */
-/* Select elements styling */
 .languageSelectContainer,
 .testTypeSelectContainer {
-  margin-top: 20px;
-  width: 100%; /* Ensure full width for better layout */
-  max-width: 400px; /* Optional: limit max width */
+  display: flex;
+  flex-direction: column;
+  max-width: 400px;
 }
-
 
 .languageSelectLabel,
 .testTypeSelectLabel {
@@ -66,30 +68,20 @@
 .testTypeSelect:hover {
   background-color: #8e44ad; /* Darker purple for hover effect */
 }
-/* Tooltip styling */
-.tooltipWrapper {
-  position: relative;
-  display: inline-block;
+
+/* Tooltip with select styling */
+.testTypeWithTooltip {
+  display: flex;
+  align-items: center;
 }
 
-.tooltiptext {
-  visibility: hidden;
-  width: 220px;
+.tooltip {
+  margin-left: 15px; /* Add space between select and tooltip */
   background-color: #333;
   color: #fff;
-  text-align: center;
+  padding: 10px;
   border-radius: 6px;
-  padding: 5px 0;
-  position: absolute;
-  z-index: 1;
-  bottom: 125%; /* Adjust position */
-  left: 50%;
-  margin-left: -110px;
-  opacity: 0;
-  transition: opacity 0.3s;
-}
-
-.tooltipWrapper:hover .tooltiptext {
-  visibility: visible;
-  opacity: 1;
+  font-size: 14px;
+  max-width: 300px;
+  text-align: left;
 }
