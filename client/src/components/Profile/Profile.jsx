@@ -26,7 +26,9 @@ function Profile() {
   const handleDeleteClick = () => {
     setShowReasonDropdown(true);
   };
-
+  const handleEditPasswordClick = () => {
+    navigate('/edit');
+  };
   const handleConfirmDelete = async () => {
     if (!selectedReason) {
       alert('Please select a reason for deleting your account.');
@@ -91,24 +93,13 @@ function Profile() {
 
   return (
     <div className="profile-container">
-        <div className="header-left">
-          <div className="dropdown">
-            <button className="dropbtn">Setting</button>
-            <div className="dropdown-content">
-              <button onClick={() => navigate('/home')}>Home</button>
-              <button onClick={() => navigate('/')}>Log Out</button>
-            </div>
-          </div>
-        </div>
+
         <div className="profile-content">
   <h2>Edit Profile</h2>
   <div className="profile-buttons">
+
     <div className="tooltip-wrapper">
-      <button className="profile-button" onClick={handleUsernameClick}>Username</button>
-      <span className="tooltiptext">Click to edit your username</span>
-    </div>
-    <div className="tooltip-wrapper">
-      <button className="profile-button">Change Password</button>
+      <button className="profile-button" onClick={handleEditPasswordClick}>Change Password</button>
       <span className="tooltiptext">Click to change your password</span>
     </div>
     <div className="tooltip-wrapper">

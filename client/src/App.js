@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate } from "react-router-dom";
 import './App.css';
 import Navbar from "./components/Navbar/Navbar";
@@ -15,62 +15,56 @@ import HomePageAdmin from './components/HomePageAdmin';
 import HomePage from './components/HomePage/HomePage'; 
 import AddAdmin from './components/AddAdmin/'; 
 
-//import TypeUnit from './components/TypeUnit/typeUnit'; // Adjust the path if necessary
-
-
-
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
+  const [userFirstName, setUserFirstName] = useState("");
+
+  useEffect(() => {
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) {
+      setUserFirstName(userData.firstName);
+    }
+  }, []);
+
   const handleLogin = () => {
     setIsLoggedIn(true);
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) {
+      setUserFirstName(userData.firstName);
+    }
   };
 
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserFirstName("");
     localStorage.clear();
     window.location = '/';
-  }
-
-
-/*  
-function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  const handleLogin = () => {
-    setIsLoggedIn(true);
   };
-
-  const handleLogout = () => {
-    setIsLoggedIn(false);
-    localStorage.clear();
-  };*/
 
   return (
     <Router>
       <div className="App">
-        <Navbar onLogout={handleLogout} /> {/* Navbar יהיה קבוע בכל הדפים */}
-        <div className="content"> {/* הוסף קונטיינר לתוכן */}
+        <Navbar isLoggedIn={isLoggedIn} userFirstName={userFirstName} onLogout={handleLogout} />
+        <div className="content">
           <Routes>
-          <Route path="/aboutus" element={<AboutUs />} />
-
+            <Route path="/aboutus" element={<AboutUs />} />
             <Route path="/homepage" element={<HomePage />} />
             <Route path="/login" element={<Login onLogin={handleLogin} />} />
             <Route path="/homePageWorker" element={<HomePageWorker />} />
             <Route path="/homePageAdmin" element={<HomePageAdmin />} />
             <Route path="/contactus" element={<ContactUs />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/" element={<Navigate replace to="/homepage" />} /> {/* Redirect root to /homepage */}
+            <Route path="/" element={<Navigate replace to="/homepage" />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/homePageStudent" element={<HomePageStudent />} />
             <Route path="/addAdmin" element={<AddAdmin />} />
-            <Route path="/edit" element={<Edit />} /> {/* Admin Edit route */}
+            <Route path="/edit" element={<Edit />} />
           </Routes>
         </div>
       </div>
     </Router>
   );
 }
-  
-export default App;
 
+export default App;

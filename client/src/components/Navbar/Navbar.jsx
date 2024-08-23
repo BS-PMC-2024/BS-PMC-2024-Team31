@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { NavLink, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import StarRating from "../StarRating/StarRating";
 import logo from '../../assests/images/logo.png';
@@ -14,7 +14,29 @@ const Navbar = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const handleStorageChange = () => {
+      const token = localStorage.getItem("token");
+      const userData = JSON.parse(localStorage.getItem("userData"));
 
+      if (token && userData) {
+        setIsLoggedIn(true);
+        setUserFirstName(userData.firstName);
+      } else {
+        setIsLoggedIn(false);
+        setUserFirstName("");
+      }
+    };
+
+    handleStorageChange(); // Check the initial state
+
+    window.addEventListener('storage', handleStorageChange);
+
+    // Clean up the event listener on component unmount
+    return () => {
+      window.removeEventListener('storage', handleStorageChange);
+    };
+  }, []);
 
   const confirmLogout = () => {
     setShowStarRating(true);
@@ -27,7 +49,7 @@ const Navbar = () => {
   const completeLogout = () => {
     localStorage.clear();
     setIsLoggedIn(false);
-    setShowLogoutConfirm(false); // Hide confirmation message
+    setShowLogoutConfirm(false);
     navigate('/homepage');
   };
 
@@ -49,9 +71,13 @@ const Navbar = () => {
       <nav>
         <div className="nav-container">
           <div className="logo-container">
-            <NavLink to="/" end>
-              <img src={logo} alt="Logo" className="logo" />
-            </NavLink>
+            <img
+              src={logo}
+              alt="Logo"
+              className="logo"
+              onClick={() => navigate('/')}
+              style={{ cursor: 'pointer' }}
+            />
             {isLoggedIn && (
               <div className="profile-container">
                 <img
@@ -62,12 +88,24 @@ const Navbar = () => {
                 />
                 {showProfileMenu && (
                   <div className="profile-menu">
-                    <NavLink to="/profile" className="profile-menu-item">
+                    <button
+                      className="profile-menu-item"
+                      onClick={() => {
+                        navigate('/edit-profile');
+                        setShowProfileMenu(false);
+                      }}
+                    >
                       Edit Profile
-                    </NavLink>
-                    <NavLink to="/profile" className="profile-menu-item">
+                    </button>
+                    <button
+                      className="profile-menu-item"
+                      onClick={() => {
+                        navigate('/profile');
+                        setShowProfileMenu(false);
+                      }}
+                    >
                       View Profile
-                    </NavLink>
+                    </button>
                   </div>
                 )}
                 <span className="welcome-message">Welcome, {userFirstName}!</span>
@@ -75,30 +113,41 @@ const Navbar = () => {
             )}
           </div>
 
-          <ul id="navbar">
+          <ul className="navbar">
             <li>
-              <NavLink to="/homepage" className="nav-link" activeClassName="active-link">
+              <button
+                className="nav-link"
+                onClick={() => navigate('/homepage')}
+              >
                 Home
-              </NavLink>
+              </button>
             </li>
             <li>
-              <NavLink to="/aboutus" className="nav-link" activeClassName="active-link">
+              <button
+                className="nav-link"
+                onClick={() => navigate('/aboutus')}
+              >
                 About
-              </NavLink>
+              </button>
             </li>
             <li>
-              <NavLink to="/contactus" className="nav-link" activeClassName="active-link">
+              <button
+                className="nav-link"
+                onClick={() => navigate('/contactus')}
+              >
                 Contact Us
-              </NavLink>
+              </button>
             </li>
-            {!isLoggedIn ? (
-              <li>
-                <NavLink to="/login" className="white_btn" data-testid="Login-button">
+            <li>
+              {!isLoggedIn ? (
+                <button
+                  className="white_btn"
+                  onClick={() => navigate('/login')}
+                  data-testid="Login-button"
+                >
                   Login
-                </NavLink>
-              </li>
-            ) : (
-              <li>
+                </button>
+              ) : (
                 <button
                   className="white_btn"
                   onClick={confirmLogout}
@@ -106,8 +155,8 @@ const Navbar = () => {
                 >
                   Logout
                 </button>
-              </li>
-            )}
+              )}
+            </li>
             <li>
               <button
                 className="white_btn"
@@ -121,18 +170,37 @@ const Navbar = () => {
         </div>
       </nav>
 
+      {/* Star Rating & Logout Confirmation */}
       {showStarRating && (
-        <div className="star-rating-container">
-          <h3>Please rate your experience before you leave:</h3>
-          <StarRating />
+        <div className="modal-overlay">
+          <div className="star-rating-container">
+            <h3>Please rate your experience before you leave:</h3>
+            <StarRating />
+            <div className="star-rating-buttons">
+              <button className="submit-btn" onClick={submitStarRating}>
+                Submit Rating
+              </button>
+              <button className="cancel-btn" onClick={() => setShowStarRating(false)}>
+                Cancel
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
       {showLogoutConfirm && (
-        <div className="logout-confirm">
-          <p>Are you sure you want to logout?</p>
-          <button onClick={completeLogout}>Yes</button>
-          <button onClick={cancelLogout}>No</button>
+        <div className="modal-overlay">
+          <div className="logout-confirm">
+            <p>Are you sure you want to logout?</p>
+            <div className="logout-confirm-buttons">
+              <button className="confirm-btn" onClick={completeLogout}>
+                Yes
+              </button>
+              <button className="cancel-btn" onClick={cancelLogout}>
+                No
+              </button>
+            </div>
+          </div>
         </div>
       )}
 

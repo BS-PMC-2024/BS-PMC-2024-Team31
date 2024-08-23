@@ -1,3 +1,4 @@
+// src/components/Login.jsx
 import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -8,7 +9,6 @@ const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
   const [error, setError] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false); // State for password visibility
-
   const navigate = useNavigate();
 
   const handleChange = ({ currentTarget: input }) => {
@@ -20,43 +20,37 @@ const Login = () => {
     window.location.href = '/forgot-password';
   };
 
-const handleSubmit = async (e) => {
-  e.preventDefault();
-  try {
-    const url = "http://localhost:3001/api/auth";
-    console.log("Sending data:", data); // Log the data being sent
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = "http://localhost:3001/api/auth";
+      const response = await axios.post(url, data);
+      const { token, isAdmin, userType, firstName } = response.data;
 
-    // Send login request
-    const response = await axios.post(url, data);
-    console.log("Response received:", response.data); // Log the response data
+      // Store data in localStorage
+      localStorage.setItem("token", token);
+      localStorage.setItem("userData", JSON.stringify({ firstName }));
 
-    const { token, isAdmin, userType } = response.data;
-
-    localStorage.setItem("email", data.email);
-    localStorage.setItem("token", token);
-    localStorage.setItem("isAdmin", isAdmin);
-
-    // Navigate based on user type
-    if (isAdmin) {
-      navigate("/homePageAdmin");
-    } else if (userType === "student") {
-      navigate("/homePageStudent");
-    } else if (userType === "worker") {
-      navigate("/homePageWorker");
-    } else {
-      navigate("/login");
+      // Redirect based on user type or role
+      if (isAdmin) {
+        navigate("/homePageAdmin");
+      } else if (userType === "student") {
+        navigate("/homePageStudent");
+      } else if (userType === "worker") {
+        navigate("/homePageWorker");
+      } else {
+        navigate("/login");
+      }
+    } catch (error) {
+      console.error("Login Error:", error.response ? error.response.data : error.message);
+      if (error.response && error.response.status >= 400 && error.response.status <= 500) {
+        setError(error.response.data.message);
+      } else {
+        setError("Server error");
+      }
     }
-  } catch (error) {
-    console.error("Login Error:", error.response ? error.response.data : error.message);
-    if (error.response && error.response.status >= 400 && error.response.status <= 500) {
-      setError(error.response.data.message);
-    } else {
-      setError("Server error");
-    }
-  }
-};
+  };
 
-  
   return (
     <div>
       <div className={styles.login_container}>

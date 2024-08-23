@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom'; // Import NavLink for routing
 import styles from './styles.module.css'; // Import CSS module
 
-function Home() {
+function HomePageStudent() {
   const [language, setLanguage] = useState('');
   const [testType, setTestType] = useState('');
 
   const handleLanguageChange = (event) => {
-    const selectedLanguage = event.target.value;
-    setLanguage(selectedLanguage);
+    setLanguage(event.target.value);
   };
 
   const handleTestTypeChange = (event) => {
-    const selectedTestType = event.target.value;
-    setTestType(selectedTestType);
+    setTestType(event.target.value);
   };
 
   return (
@@ -49,10 +48,16 @@ function Home() {
               <option value="integration-test">Integration Test</option>
             </select>
           </div>
+
+          <div className={styles.buttonContainer}>
+            <NavLink to="/profile/edit" className={styles.editProfileButton}>
+              Edit Profile
+            </NavLink>
+          </div>
         </div>
       </div>
     </div>
   );
 }
 
-export default Home;
+export default HomePageStudent;

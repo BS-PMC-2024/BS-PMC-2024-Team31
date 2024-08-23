@@ -12,7 +12,7 @@ const profileRoutes = require('./routes/updateProfile');
 const unitTestRoutes = require('./routes/unitTests');
 const path = require('path');
 const bcrypt = require('bcrypt');
-const adminRoutes = require('./routes/admins');
+const adminRoutes = require('./routes/admin');
 const mongoose = require('mongoose');
 const adminsRoutes = require('./routes/admins');
 
