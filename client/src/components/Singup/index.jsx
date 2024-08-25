@@ -10,6 +10,7 @@ const Signup = () => {
     lastName: "",
     email: "",
     password: "",
+    confirmPassword: "", // New field
     userType: "student", // Default value
   });
   const [error, setError] = useState("");
@@ -21,31 +22,31 @@ const Signup = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
+
+    if (data.password !== data.confirmPassword) {
+      setError("Passwords do not match");
+      return;
+    }
+
     try {
-      // Post user data to the API
       const url = `http://localhost:3001/api/users`;
       const { data: res } = await axios.post(url, data);
-  
-      // Send an email using EmailJS
+
       try {
         await emailjs.send(
-          "service_061uyjc", // Your EmailJS service ID
-          "template_qejy7ja", // Your EmailJS template ID
-          { to_email: data.email }, // Email template variables
-          "Ac1RL4TgJZVZgpMSY" // Your EmailJS user ID
+          "service_061uyjc",
+          "template_qejy7ja",
+          { to_email: data.email },
+          "Ac1RL4TgJZVZgpMSY"
         );
         console.log("Email sent successfully");
       } catch (emailError) {
         console.error("Failed to send email:", emailError.text);
       }
-  
-      // Navigate to the login page
+
       navigate("/login");
       console.log("User created successfully:", res.message);
-  
     } catch (error) {
-      // Handle errors from the API call
       if (error.response) {
         if (error.response.status >= 400 && error.response.status <= 500) {
           setError(error.response.data.message);
@@ -57,7 +58,6 @@ const Signup = () => {
       }
     }
   };
-  
 
   return (
     <div className={styles.signup_container}>
@@ -100,6 +100,15 @@ const Signup = () => {
               name="password"
               onChange={handleChange}
               value={data.password}
+              required
+              className={styles.input}
+            />
+            <input
+              type="password"
+              placeholder="Confirm Password"
+              name="confirmPassword"
+              onChange={handleChange}
+              value={data.confirmPassword}
               required
               className={styles.input}
             />

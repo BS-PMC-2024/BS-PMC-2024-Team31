@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const Joi = require("joi");
 const jwt = require("jsonwebtoken"); // Assuming you're using JWT for authentication
 const auth = require("../middleware/auth"); // Middleware to verify JWT
+const nodemailer = require('nodemailer');
 
 // Login Route
 router.post("/", async (req, res) => {
@@ -80,34 +81,70 @@ router.post('/change-password', async (req, res) => {
 });
 
 // Forgot-Password Route
-router.post("/forgot-password", async (req, res) => {
+
+function generateRandomPassword() {
+  const length = 8;
+  const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  let password = "";
+  let hasNumber = false;
+  let hasUpperCase = false;
+
+  while (password.length < length || !hasNumber || !hasUpperCase) {
+    const randomIndex = Math.floor(Math.random() * charset.length);
+    const char = charset[randomIndex];
+    
+    if (/\d/.test(char)) hasNumber = true;
+    if (/[A-Z]/.test(char)) hasUpperCase = true;
+
+    password += char;
+  }
+
+  return password;
+}
+
+router.post('/forgetpassword', async (req, res) => {
+  const { email } = req.body;
+
   try {
-    const { email, newPassword, confirmNewPassword } = req.body;
+    // Generate a random password
+    const newPassword = generateRandomPassword();
 
-    if (!email || !newPassword || !confirmNewPassword) {
-      return res.status(400).send({ message: "All fields are required" });
-    }
+    // Hash the new password
+    const saltRounds = 10;
+    const hashedPassword = await bcrypt.hash(newPassword, saltRounds);
 
-    if (newPassword !== confirmNewPassword) {
-      return res.status(400).send({ message: "New password and confirm new password do not match" });
-    }
+    // Find the user and update the password in the database
+    const user = await User.findOneAndUpdate({ email }, { password: hashedPassword });
 
-    const user = await User.findOne({ email });
     if (!user) {
-      return res.status(404).send({ message: "User not found" });
+      return res.status(404).send({ message: "User not found." });
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-    user.password = hashedPassword;
-    await user.save();
+    // Create a transporter object using SMTP
+    let transporter = nodemailer.createTransport({
+      service: 'gmail',
+      auth: {
+        user: 'Aisrael@ac.sce.ac.il', // Replace with your email
+        pass: 'gxrc pfle owpn padf',  // Replace with your email password or app-specific password
+      },
+    });
 
-    res.status(200).send({ message: "Password updated successfully in MongoDB" });
+    // Send the email with the new password
+    let info = await transporter.sendMail({
+      from: '"Testify web" <Aisrael@ac.sce.ac.il>', // Sender address
+      to: email, // Receiver's email address
+      subject: 'Password Reset', // Subject line
+      text: `Your new password is: ${newPassword}`, // Plain text body
+      html: `<b>Your new password is: ${newPassword}</b>`, // HTML body
+    });
+
+    console.log('Message sent: %s', info.messageId);
+    res.send({ message: "A new password has been sent to your email." });
   } catch (error) {
-    console.error("Error updating password:", error);
-    res.status(500).send({ message: "Internal server error" });
+    console.error('Error sending email:', error);
+    res.status(500).send({ message: "Error sending email. Please try again later." });
   }
 });
-
 // Validation schemas
 const validateLogin = (data) => {
   const schema = Joi.object({

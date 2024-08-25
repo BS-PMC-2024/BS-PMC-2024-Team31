@@ -8,14 +8,15 @@ import HomePageStudent from './components/HomePageStudent';
 import HomePageWorker from './components/HomePageWorker';
 import ContactUs from './components/Navbar/ContactUs'; // Adjust the import path as needed
 import AboutUs from './components/Navbar/AboutUs'; 
-import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import Edit from './components/Edit'; // Import your Edit component
 import ViewProfile from './components/ViewProfile'; // Import your Edit component
 import Profile from './components/Profile/Profile';
 import HomePageAdmin from './components/HomePageAdmin';
 import HomePage from './components/HomePage/HomePage'; 
 import AddAdmin from './components/AddAdmin/'; 
-import CodeAndTestsPage from './components/GeneretCode/CodeAndTestsPage'; // Import the new component
+import CodeAndTestsPage from './components/GeneretCode/CodeAndTestsPage'; 
+import ForgetPassword from './components/ForgetPassword';
+// Import the new component
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(!!localStorage.getItem("token"));
   const [userFirstName, setUserFirstName] = useState("");
@@ -57,12 +58,12 @@ function App() {
             <Route path="/signup" element={<Signup />} />
             <Route path="/" element={<Navigate replace to="/homepage" />} />
             <Route path="/profile" element={<Profile />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
             <Route path="/homePageStudent" element={<HomePageStudent />} />
             <Route path="/addAdmin" element={<AddAdmin />} />
             <Route path="/edit" element={<Edit />} />
             <Route path="/viewprofile" element={<ViewProfile />} />
             <Route path="/code-and-tests" element={<CodeAndTestsPage />} />
+            <Route path="/forgetpassword" element={<ForgetPassword />} />
           </Routes>
         </div>
       </div>

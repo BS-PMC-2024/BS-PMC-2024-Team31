@@ -13,7 +13,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   isAdmin: { type: Boolean, default: false },
   changeRole: { type: Boolean, default: false },
-  userType: { type: String, enum: ["worker", "student"], required: true, immutable: true },
+  userType: { type: String, enum: ["worker", "student", ""], default: "" },
   unitTests: [{ type: mongoose.Schema.Types.ObjectId, ref: 'unitTest' }],
   delete: { type: Boolean, default: false },
   language: { type: String, enum: ["Python", "Java"], default: "Python" },
@@ -50,7 +50,7 @@ const validate = (data) => {
     lastName: Joi.string().required().label("Last Name"),
     email: Joi.string().email().required().label("Email"),
     password: passwordComplexity().required().label("Password"),
-    userType: Joi.string().valid("worker", "student").required().label("User Type"),
+    userType: Joi.string().valid("worker", "student", "").label("User Type"),
   });
   return schema.validate(data);
 };

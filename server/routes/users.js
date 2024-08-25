@@ -10,6 +10,11 @@ router.post("/", async (req, res) => {
       return res.status(400).send({ message: error.details[0].message });
     }
 
+    // Check if password matches confirmPassword
+    if (req.body.password !== req.body.confirmPassword) {
+      return res.status(400).send({ message: "Passwords do not match" });
+    }
+
     const user = new User({
       firstName: req.body.firstName,
       lastName: req.body.lastName,
@@ -18,7 +23,6 @@ router.post("/", async (req, res) => {
       isAdmin: false,
       changeRole: false, // Set changeRole to false by default
       userType: req.body.userType,
-
     });
 
     await user.save();
@@ -36,7 +40,6 @@ router.post("/", async (req, res) => {
     res.status(500).send({ message: "Internal Server Error" });
   }
 });
-
 
 router.get("/all", async (req, res) => {
   try {
@@ -67,4 +70,3 @@ router.get('/:id', async (req, res) => {
 });
 
 module.exports = router;
-

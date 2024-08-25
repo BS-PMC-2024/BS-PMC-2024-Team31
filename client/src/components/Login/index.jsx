@@ -15,9 +15,9 @@ const Login = () => {
     setData({ ...data, [input.name]: input.value });
   };
 
-  const handleForgotPassword = () => {
+  const handleForgetPassword = () => {
     // Redirect to the forgot password page
-    window.location.href = '/forgot-password';
+    window.location.href = '/forgetpassword';
   };
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -93,7 +93,7 @@ const Login = () => {
                   {passwordVisible ? <AiFillEye /> : <AiFillEyeInvisible />} {/* Toggle icon */}
                 </span>
               </div>
-              <button type="button" onClick={handleForgotPassword} className={styles.green_btn}>
+              <button type="button" onClick={handleForgetPassword} className={styles.green_btn}>
                 Forgot Password?
               </button>
               {error && <div className={styles.error_msg}>{error}</div>}

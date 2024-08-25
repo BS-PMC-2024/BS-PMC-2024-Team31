@@ -11,77 +11,148 @@
 .homeContent {
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
-  flex-grow: 1;
-  text-align: center;
   padding: 20px;
 }
 
-.homeContent h1 {
-  margin-bottom: 30px;
-  font-size: 2rem;
-  color: #6a0dad; /* Deep purple */
-}
-
-/* Container for select elements */
+/* Selections container styling */
 .selectionsContainer {
   display: flex;
-  flex-direction: row; /* Arrange labels and selects horizontally */
-  justify-content: center;
-  align-items: center;
-  gap: 20px; /* Add space between Select a language and Choose Type */
-  max-width: 800px;
+  flex-direction: column;
+  gap: 20px; /* Space between elements */
+  max-width: 800px; /* Increase max-width for larger screen */
+  width: 80%;
 }
 
+/* Language and test type select container */
 .languageSelectContainer,
 .testTypeSelectContainer {
   display: flex;
   flex-direction: column;
-  max-width: 400px;
+  width: 100%;
 }
 
 .languageSelectLabel,
 .testTypeSelectLabel {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: bold;
   color: #333;
   margin-bottom: 8px;
-  display: block;
 }
 
 .languageSelect,
 .testTypeSelect {
-  background-color: #9b59b6; /* Medium purple */
+  background-color: #7a63a1; /* Match worker's design color */
   color: white;
   border: none;
   padding: 12px;
-  border-radius: 20px;
+  border-radius: 5px;
   cursor: pointer;
   font-weight: bold;
-  font-size: 16px;
+  font-size: 14px;
   margin-top: 8px;
   transition: background-color 0.3s ease;
 }
 
 .languageSelect:hover,
 .testTypeSelect:hover {
-  background-color: #8e44ad; /* Darker purple for hover effect */
+  background-color: #6a4b87; /* Darker shade of the same color */
 }
 
-/* Tooltip with select styling */
+/* Tooltip styling */
 .testTypeWithTooltip {
   display: flex;
   align-items: center;
 }
 
 .tooltip {
-  margin-left: 15px; /* Add space between select and tooltip */
+  margin-left: 10px; /* Space between select and tooltip */
   background-color: #333;
   color: #fff;
-  padding: 10px;
-  border-radius: 6px;
-  font-size: 14px;
-  max-width: 300px;
+  padding: 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  max-width: 250px;
   text-align: left;
+}
+
+/* Insert code button styling */
+.insertCodeButton {
+  padding: 10px 20px; /* Increased padding for better appearance */
+  background-color: #7a63a1; /* Match worker's design color */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px; /* Adjust font size for consistency */
+  margin: 20px 0; /* Margin for spacing */
+  transition: background-color 0.3s ease;
+}
+
+.insertCodeButton:hover {
+  background-color: #6a4b87; /* Darker shade of the same color */
+}
+
+/* Code input container styling */
+.codeInputContainer {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 800px; /* Match worker's design width */
+}
+
+.codeInput {
+  width: 100%; /* Full width */
+  max-width: 800px; /* Match worker's design width */
+  height: 300px; /* Increased height for more space */
+  padding: 12px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  font-family: monospace;
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Generate tests button styling */
+.generateTestsButton {
+  background-color: #7a63a1; /* Match worker's design color */
+  color: white;
+  border: none;
+  padding: 12px 20px; /* Increased padding for better appearance */
+  cursor: pointer;
+  border-radius: 5px;
+  font-size: 16px; /* Adjust font size for consistency */
+  transition: background-color 0.3s ease;
+}
+
+.generateTestsButton:hover {
+  background-color: #6a4b87; /* Darker shade of the same color */
+}
+
+/* Generated tests section styling */
+.generatedTests {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 800px; /* Match worker's design width */
+}
+
+.generatedTests h3 {
+  margin-bottom: 15px;
+  color: #4a4a4a;
+  font-size: 1.2rem;
+}
+
+.generatedTests ul {
+  list-style-type: disc;
+  padding-left: 20px;
+}
+
+.generatedTests li {
+  margin-bottom: 8px;
 }

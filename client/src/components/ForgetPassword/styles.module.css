@@ -1,0 +1,68 @@
+/* Container for the forgot password form */
+.forgot_password_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+  background-color: #f4f4f9; /* Light background color */
+  padding: 20px;
+}
+
+/* Form styling */
+.form_container {
+  background-color: #ffffff; /* White background for form */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  padding: 30px;
+  max-width: 400px; /* Limit form width */
+  width: 100%;
+  text-align: center;
+}
+
+/* Heading styling */
+.form_container h1 {
+  font-size: 24px;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Input field styling */
+.input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 16px;
+  margin-bottom: 20px;
+  box-sizing: border-box; /* Ensure padding and border are included in the width */
+}
+
+/* Button styling */
+.green_btn {
+  background-color: #7a63a1; /* Lilac color */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.3s ease;
+}
+
+.green_btn:hover {
+  background-color: #6a4b87; /* Darker shade of lilac */
+}
+
+/* Success message styling */
+.success_msg {
+  color: #28a745; /* Green color */
+  font-size: 16px;
+  margin-top: 20px;
+}
+
+/* Error message styling */
+.error_msg {
+  color: #dc3545; /* Red color */
+  font-size: 16px;
+  margin-top: 20px;
+}

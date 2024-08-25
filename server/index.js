@@ -45,7 +45,7 @@ app.use('/api/user', userRoutes);
 app.use("/api/auth", authRoutes);
 app.use('/api/users', usersRoutes);
 // Endpoint for resetting the password and role
-app.post('/api/forgot-password', async (req, res) => {
+app.post('/api/forgetpassword', async (req, res) => {
   const { email, newPassword, role } = req.body;
   if (!email || !newPassword || role === undefined) { // تأكد من أنك تتحقق من القيمة المناسبة لدور المستخدم
     return res.status(400).json({ message: 'Email, new password, and role are required' });
