@@ -21,7 +21,7 @@ npm install
 # For the frontend
 cd ../frontend
 npm install
-MONGO_URI=mongodb+srv://asraaalgergawi:fWSYi50E0JKrZR8t@cluster0.jnqdzu6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+MONGO_URI=[mongodb+srv://asraaalgergawi:fWSYi50E0JKrZR8t@cluster0.jnqdzu6.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0](https://eu-central-1.aws.data.mongodb-api.com/app/data-caelncb/endpoint/data/v1)
 PORT=5000
 JWT_SECRET=your_jwt_secret
 cd backend
@@ -65,5 +65,5 @@ We welcome contributions! If you'd like to contribute to the project, please for
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 ## Contact Information
 
-For any questions or feedback, please reach out to us at contact@example.com.
+For any questions or feedback, please reach out to us at somayab@ac.sce.ac.il.
 
