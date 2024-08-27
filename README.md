@@ -29,7 +29,7 @@ npm start
 cd frontend
 npm start
 
-### 4. Usage
+### Usage
 ```markdown
 ## Usage
 
